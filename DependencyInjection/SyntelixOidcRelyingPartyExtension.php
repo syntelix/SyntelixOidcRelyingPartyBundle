@@ -2,6 +2,7 @@
 
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\DependencyInjection;
 
+use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -101,7 +102,7 @@ class SyntelixOidcRelyingPartyExtension extends Extension
 
     private function createResoucerOwnerService(ContainerBuilder $container, $name, $config)
     {
-        $definition = new DefinitionDecorator("syntelix_oic_rp.abstract_resource_owner." . $name);
+        $definition = new ChildDefinition("syntelix_oic_rp.abstract_resource_owner." . $name);
         $definition->setClass("%syntelix_oic_rp.resource_owner.$name.class%");
 
         $container->setDefinition("syntelix_oic_rp.resource_owner." . $name, $definition);
