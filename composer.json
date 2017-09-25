@@ -7,6 +7,10 @@
         {
             "name": "Gonzalo Rodriguez",
             "email": "grb@syntelix.net"
+        },
+        {
+            "name": "Alberte Moço",
+            "email": "amq@syntelix.net"
         }
     ],
     "autoload": {
@@ -27,7 +31,7 @@
         "gree/jose": "~2.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "~4.2"
+        "phpunit/phpunit": "^4.8"
     },
     "repositories": [
         {
