@@ -17,9 +17,8 @@ use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception\InvalidReques
  */
 class OICResponseHandlerTest extends PHPUnit_Framework_TestCase
 {
-
     /**
-     * @expectedException InvalidRequestException
+     * @expectedException Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception\InvalidRequestException
      * @expectedExceptionMessage invalid request
      */
     public function testHandleHttpClientResponseBearerError()
@@ -40,7 +39,7 @@ class OICResponseHandlerTest extends PHPUnit_Framework_TestCase
     }
     
     /**
-     * @expectedException InvalidRequestException
+     * @expectedException Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception\InvalidRequestException
      * @expectedExceptionMessage Secured Area
      */
     public function testHandleHttpClientBasicAuthFailError()
@@ -61,7 +60,7 @@ class OICResponseHandlerTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException InvalidRequestException
+     * @expectedException Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception\InvalidRequestException
      * @expectedExceptionMessage bumber
      */
     public function testHandleUnknowError()
@@ -82,7 +81,7 @@ class OICResponseHandlerTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException InvalidRequestException
+     * @expectedException Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception\InvalidRequestException
      * @expectedExceptionMessage bumb
      */
     public function testHandleErrorWhithoutDescription()
@@ -104,7 +103,7 @@ class OICResponseHandlerTest extends PHPUnit_Framework_TestCase
     
     
     /**
-     * @expectedException InvalidAuthorizationCodeException
+     * @expectedException Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception\InvalidAuthorizationCodeException
      */
     public function testHandleHttpClientResponseInvalidAutorizationCode()
     {
@@ -227,7 +226,7 @@ class OICResponseHandlerTest extends PHPUnit_Framework_TestCase
     }
     
     /**
-     * @expectedException InvalidIdSignatureException
+     * @expectedException Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception\InvalidIdSignatureException
      */
     public function testHandleEndUserinfoResponseShouldFail()
     {

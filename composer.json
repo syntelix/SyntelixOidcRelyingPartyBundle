@@ -14,8 +14,8 @@
         }
     ],
     "autoload": {
-        "psr-0": {
-            "Syntelix\\Bundle\\OidcRelyingPartyBundle": ""
+        "psr-4": {
+            "Syntelix\\Bundle\\OidcRelyingPartyBundle\\": ""
         }
     },
     "target-dir": "Syntelix/Bundle/OidcRelyingPartyBundle",
