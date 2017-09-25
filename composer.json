@@ -21,8 +21,8 @@
         }
     },
     "require": {
-        "php": ">=5.3.3",
-        "symfony/symfony": ">=2.6",
+        "php": ">=5.5.9",
+        "symfony/symfony": ">=3.2",
         "kriswallsmith/buzz": "~0.7",
         "gree/jose": "~2.0",
         "ext-mcrypt":  "*"
