@@ -3,6 +3,7 @@
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\DependencyInjection\Security\Factory;
 
 use Symfony\Bundle\SecurityBundle\DependencyInjection\Security\Factory\AbstractFactory;
+use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\DefinitionDecorator;
 use Symfony\Component\DependencyInjection\Reference;
@@ -65,8 +66,8 @@ class OICFactory extends AbstractFactory
         $entryPointId = 'security.authentication.entrypoint.oic_rp.' . $id;
 
         $container
-                ->setDefinition($entryPointId, new DefinitionDecorator('syntelix_oic_rp.authentication.entrypoint'))
-                ->addArgument(new Reference('syntelix_oic_rp.resource_owner.generic'))
+            ->setDefinition($entryPointId, new ChildDefinition('syntelix_oic_rp.authentication.entrypoint'))
+            ->addArgument(new Reference('syntelix_oic_rp.resource_owner.generic'))
         ;
 
         return $entryPointId;
