@@ -177,10 +177,7 @@ class OICResponseHandlerTest extends PHPUnit_Framework_TestCase
         $response->addHeaders($header);
         $response->setContent("");
 
-        $oicResponseHandler = new OICResponseHandler(
-            $this->createJWKSetHandler(),
-            array()
-        );
+        $oicResponseHandler = new OICResponseHandler($this->createJWKSetHandler(), array());
         
         $res = $oicResponseHandler->handleTokenAndAccessTokenResponse($response);
         
@@ -203,8 +200,7 @@ class OICResponseHandlerTest extends PHPUnit_Framework_TestCase
         $response->addHeaders($header);
         $response->setContent($content);
 
-        $oicResponseHandler = new OICResponseHandler(
-                $this->createJWKSetHandler($jwkWithoutUse), array());
+        $oicResponseHandler = new OICResponseHandler($this->createJWKSetHandler($jwkWithoutUse), array());
         
         $res = $oicResponseHandler->handleEndUserinfoResponse($response);
         

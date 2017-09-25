@@ -139,7 +139,12 @@ class OICResponseHandler
      */
     protected function getJsonEncodedContent($content)
     {
+    	if (empty($content)) {
+    		return null;
+	    }
+
         $jsonDecode = new JsonDecode(true);
+
         return $jsonDecode->decode($content, JsonEncoder::FORMAT);
     }
     
