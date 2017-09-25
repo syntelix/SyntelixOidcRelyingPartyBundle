@@ -33,7 +33,7 @@
     "repositories": [
         {
             "type": "git",
-            "url": "git@github.com:waldo2188/jose.git"
+            "url": "https://github.com/waldo2188/jose"
         }
     ]
 }
