@@ -18,7 +18,6 @@
             "Syntelix\\Bundle\\OidcRelyingPartyBundle\\": ""
         }
     },
-    "target-dir": "Syntelix/Bundle/OidcRelyingPartyBundle",
     "extra": {
         "branch-alias": {
             "dev-master": "master-dev"
