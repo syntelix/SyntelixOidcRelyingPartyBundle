@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/syntelix/SyntelixOidcRelyingPartyBundle.svg?branch=master)](https://travis-ci.org/syntelix/SyntelixOidcRelyingPartyBundle)
-
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/afb6df43-fad0-4007-a1f2-7643a44b010d/mini.png)](https://insight.sensiolabs.com/projects/afb6df43-fad0-4007-a1f2-7643a44b010d)
 # SyntelixOidcRelyingPartyBundle
 
 This bundle is a fork of https://github.com/waldo2188/OpenIdConnectRelyingPartyBundle.
