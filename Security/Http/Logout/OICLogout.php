@@ -1,6 +1,6 @@
 <?php
 
-namespace Waldo\OpenIdConnect\RelyingPartyBundle\Security\Http\Logout;
+namespace Syntelix\Bundle\OidcRelyingPartyBundle\Security\Http\Logout;
 
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Http\HttpUtils;

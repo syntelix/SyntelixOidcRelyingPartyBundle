@@ -1,6 +1,6 @@
 <?php
 
-namespace Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\User;
+namespace Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\User;
 
 /**
  * UserFactoryInterface

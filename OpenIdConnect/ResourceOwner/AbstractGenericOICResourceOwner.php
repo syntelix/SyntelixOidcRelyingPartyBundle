@@ -1,14 +1,14 @@
 <?php
 
-namespace Waldo\OpenIdConnect\RelyingPartyBundle\OpenIdConnect\ResourceOwner;
+namespace Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\ResourceOwner;
 
-use Waldo\OpenIdConnect\RelyingPartyBundle\OpenIdConnect\ResourceOwnerInterface;
-use Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\Authentication\Token\OICToken;
-use Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\Exception\InvalidIdTokenException;
-use Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\Exception\InvalidRequestException;
-use Waldo\OpenIdConnect\RelyingPartyBundle\OpenIdConnect\Constraint\ValidatorInterface;
-use Waldo\OpenIdConnect\RelyingPartyBundle\OpenIdConnect\Response\OICResponseHandler;
-use Waldo\OpenIdConnect\RelyingPartyBundle\OpenIdConnect\NonceHelper;
+use Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\ResourceOwnerInterface;
+use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token\OICToken;
+use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception\InvalidIdTokenException;
+use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception\InvalidRequestException;
+use Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Constraint\ValidatorInterface;
+use Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Response\OICResponseHandler;
+use Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\NonceHelper;
 use Buzz\Client\AbstractCurl;
 use Buzz\Message\Request as HttpClientRequest;
 use Buzz\Message\Response as HttpClientResponse;
@@ -164,7 +164,7 @@ abstract class AbstractGenericOICResourceOwner implements ResourceOwnerInterface
      * @see http://openid.net/specs/openid-connect-basic-1_0.html#ObtainingTokens
      * 
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\Authentication\Token\OICToken $oicToken
+     * @param \Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token\OICToken $oicToken
      * @param type $code
      */
     protected function getIdTokenAndAccessToken(Request $request, OICToken $oicToken, $code)
@@ -182,7 +182,7 @@ abstract class AbstractGenericOICResourceOwner implements ResourceOwnerInterface
     /**
      * Call the OpenID Connect Provider to exchange a refresh_token value against an id_token and an access_token
      * 
-     * @param \Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\Authentication\Token\OICToken $oicToken
+     * @param \Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token\OICToken $oicToken
      */
     protected function refreshToken(OICToken $oicToken)
     {
@@ -197,7 +197,7 @@ abstract class AbstractGenericOICResourceOwner implements ResourceOwnerInterface
     /**
      * makes the request to the OpenID Connect Provider for get back an Access Token and an ID Token
      * 
-     * @param \Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\Authentication\Token\OICToken $oicToken
+     * @param \Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token\OICToken $oicToken
      * @param type $parameters
      * @throws InvalidIdTokenException
      */
@@ -209,7 +209,7 @@ abstract class AbstractGenericOICResourceOwner implements ResourceOwnerInterface
         $postParametersQuery = http_build_query($parameters);
         
         $headers = array(
-            'User-Agent: WaldoOICRelyingPartyhBundle',
+            'User-Agent: SyntelixOidcRelyingPartyBundle',
             'Content-Type: application/x-www-form-urlencoded',
             'Content-Length: ' . strlen($postParametersQuery)
         );
@@ -249,7 +249,7 @@ abstract class AbstractGenericOICResourceOwner implements ResourceOwnerInterface
      * 
      * @see http://openid.net/specs/openid-connect-basic-1_0.html#UserInfo
      * 
-     * @param \Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\Authentication\Token\OICToken $oicToken
+     * @param \Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token\OICToken $oicToken
      */
     public function getEndUserinfo(OICToken $oicToken)
     {

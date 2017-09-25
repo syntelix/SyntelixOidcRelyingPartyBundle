@@ -1,20 +1,20 @@
 {
-    "name": "waldo/openid-connect-relying-party-bundle",
+    "name": "syntelix/oidc-relying-party-bundle",
     "license": "MIT",
     "type": "bundle",
-    "description": "OpenId Connect Relying Party Bundle",
+    "description": "OpenID Connect Relying Party Bundle",
     "authors": [
         {
-            "name": "Valerian Girard",
-            "email": "waldo2188@gmail.com"
+            "name": "Gonzalo Rodriguez",
+            "email": "grb@syntelix.net"
         }
     ],
     "autoload": {
         "psr-0": {
-            "Waldo\\OpenIdConnect\\RelyingPartyBundle": ""
+            "Syntelix\\Bundle\\OidcRelyingPartyBundle": ""
         }
     },
-    "target-dir": "Waldo/OpenIdConnect/RelyingPartyBundle",
+    "target-dir": "Syntelix/OidcRelyingPartyBundle",
     "extra": {
         "branch-alias": {
             "dev-master": "master-dev"

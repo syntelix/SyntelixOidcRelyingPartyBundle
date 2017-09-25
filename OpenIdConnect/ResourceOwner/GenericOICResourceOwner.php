@@ -1,8 +1,8 @@
 <?php
 
-namespace Waldo\OpenIdConnect\RelyingPartyBundle\OpenIdConnect\ResourceOwner;
+namespace Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\ResourceOwner;
 
-use Waldo\OpenIdConnect\RelyingPartyBundle\OpenIdConnect\ResourceOwner\AbstractGenericOICResourceOwner;
+use Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\ResourceOwner\AbstractGenericOICResourceOwner;
 
 /**
  * GenericOICResourceOwner

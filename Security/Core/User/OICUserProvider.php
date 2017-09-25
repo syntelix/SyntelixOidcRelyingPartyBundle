@@ -1,9 +1,9 @@
 <?php
 
-namespace Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\User;
+namespace Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\User;
 
-use Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\User\OICUser;
-use Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\User\UserFactoryInterface;
+use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\User\OICUser;
+use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\User\UserFactoryInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -21,7 +21,7 @@ class OICUserProvider implements UserProviderInterface, UserFactoryInterface
      */
     private $session;
     
-    private $sessionKeyName = "waldo.oic.user.stored";
+    private $sessionKeyName = "syntelix.oic.user.stored";
     
     public function __construct(Session $session)
     {
@@ -64,7 +64,7 @@ class OICUserProvider implements UserProviderInterface, UserFactoryInterface
      */
     public function supportsClass($class)
     {
-        return $class === 'Waldo\\OpenIdConnect\\RelyingPartyBundle\\Security\\Core\\User\\OICUser';
+        return $class === 'Syntelix\\Bundle\\OidcRelyingPartyBundle\\Security\\Core\\User\\OICUser';
     }
 
     /**

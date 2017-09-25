@@ -1,6 +1,6 @@
 <?php
 
-namespace Waldo\OpenIdConnect\RelyingPartyBundle\DependencyInjection\Security\Factory;
+namespace Syntelix\Bundle\OidcRelyingPartyBundle\DependencyInjection\Security\Factory;
 
 use Symfony\Bundle\SecurityBundle\DependencyInjection\Security\Factory\AbstractFactory;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -44,9 +44,9 @@ class OICFactory extends AbstractFactory
         $providerId = 'security.authentication.provider.oic_rp.' . $id;
 
         $container
-                ->setDefinition($providerId, new DefinitionDecorator('waldo_oic_rp.authentication.provider'))
+                ->setDefinition($providerId, new DefinitionDecorator('syntelix_oic_rp.authentication.provider'))
                 ->addArgument(new Reference($userProviderId))
-                ->addArgument(new Reference('waldo_oic_rp.resource_owner.generic'))
+                ->addArgument(new Reference('syntelix_oic_rp.resource_owner.generic'))
                 ->addArgument($config['create_users'])
                 ->addArgument($config['created_users_roles'])
         ;
@@ -62,8 +62,8 @@ class OICFactory extends AbstractFactory
         $entryPointId = 'security.authentication.entrypoint.oic_rp.' . $id;
 
         $container
-                ->setDefinition($entryPointId, new DefinitionDecorator('waldo_oic_rp.authentication.entrypoint'))
-                ->addArgument(new Reference('waldo_oic_rp.resource_owner.generic'))
+                ->setDefinition($entryPointId, new DefinitionDecorator('syntelix_oic_rp.authentication.entrypoint'))
+                ->addArgument(new Reference('syntelix_oic_rp.resource_owner.generic'))
         ;
 
         return $entryPointId;
@@ -78,7 +78,7 @@ class OICFactory extends AbstractFactory
 
         $container
                 ->getDefinition($listenerId)
-                ->addMethodCall('setResourceOwner', array(new Reference('waldo_oic_rp.resource_owner.generic')))
+                ->addMethodCall('setResourceOwner', array(new Reference('syntelix_oic_rp.resource_owner.generic')))
                 ->addMethodCall('setSecurityContext', array(new Reference('security.context')))
         ;
 
@@ -90,7 +90,7 @@ class OICFactory extends AbstractFactory
      */
     protected function getListenerId()
     {
-        return 'waldo_oic_rp.authentication.listener';
+        return 'syntelix_oic_rp.authentication.listener';
     }
 
     /**

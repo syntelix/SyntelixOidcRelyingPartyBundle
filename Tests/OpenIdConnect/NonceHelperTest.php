@@ -1,6 +1,6 @@
 <?php
 
-namespace Waldo\OpenIdConnect\RelyingPartyBundle\OpenIdConnect;
+namespace Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect;
 
 use Symfony\Component\HttpFoundation\Request;
 
@@ -57,7 +57,7 @@ class NonceHelperTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * @expectedException Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\Exception\InvalidNonceException  
+     * @expectedException Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception\InvalidNonceException
      */
     public function testCheckStateAndNonceShouldFail()
     {

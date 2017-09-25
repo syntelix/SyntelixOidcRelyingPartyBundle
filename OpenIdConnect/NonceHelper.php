@@ -1,8 +1,8 @@
 <?php
 
-namespace Waldo\OpenIdConnect\RelyingPartyBundle\OpenIdConnect;
+namespace Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect;
 
-use Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\Exception\InvalidNonceException;
+use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception\InvalidNonceException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 

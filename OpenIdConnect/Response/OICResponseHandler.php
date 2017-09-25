@@ -1,9 +1,9 @@
 <?php
 
-namespace Waldo\OpenIdConnect\RelyingPartyBundle\OpenIdConnect\Response;
+namespace Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Response;
 
-use Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\Exception as OICException;
-use Waldo\OpenIdConnect\RelyingPartyBundle\OpenIdConnect\JWK\JWKSetHandler;
+use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception as OICException;
+use Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\JWK\JWKSetHandler;
 use Buzz\Message\Response as HttpClientResponse;
 use Symfony\Component\Serializer\Encoder\JsonDecode;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
@@ -30,7 +30,7 @@ class OICResponseHandler
     /**
      * __construct
      * 
-     * @param \Waldo\OpenIdConnect\RelyingPartyBundle\OpenIdConnect\JWK\JWKSetHandler $jwkHandler
+     * @param \Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\JWK\JWKSetHandler $jwkHandler
      * @param type $options
      */
     public function __construct(JWKSetHandler $jwkHandler, $options)

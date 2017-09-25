@@ -1,8 +1,8 @@
 <?php
 
-namespace Waldo\OpenIdConnect\RelyingPartyBundle\OpenIdConnect;
+namespace Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect;
 
-use Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\Authentication\Token\OICToken;
+use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token\OICToken;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -38,7 +38,7 @@ interface ResourceOwnerInterface
      * Use the code parameter set in request query for retrieve the enduser informations
      * 
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\Authentication\Token\OICToken
+     * @return \Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token\OICToken
      */
     public function authenticateUser(Request $request);
     
@@ -47,7 +47,7 @@ interface ResourceOwnerInterface
      * 
      * @see http://openid.net/specs/openid-connect-basic-1_0.html#UserInfo
      * 
-     * @param \Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\Authentication\Token\OICToken $oicToken
+     * @param \Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token\OICToken $oicToken
      * @return array
      */
     public function getEndUserinfo(OICToken $oicToken);

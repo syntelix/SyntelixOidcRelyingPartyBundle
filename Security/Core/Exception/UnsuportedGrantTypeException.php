@@ -1,6 +1,6 @@
 <?php
 
-namespace Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\Exception;
+namespace Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception;
 
 
 /**

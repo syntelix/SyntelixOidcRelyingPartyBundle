@@ -1,8 +1,8 @@
 <?php
 
-namespace Waldo\OpenIdConnect\RelyingPartyBundle\Security\Http\EntryPoint;
+namespace Syntelix\Bundle\OidcRelyingPartyBundle\Security\Http\EntryPoint;
 
-use Waldo\OpenIdConnect\RelyingPartyBundle\OpenIdConnect\ResourceOwnerInterface;
+use Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\ResourceOwnerInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Http\EntryPoint\AuthenticationEntryPointInterface;
 use Symfony\Component\Security\Http\HttpUtils;
@@ -27,7 +27,7 @@ class OICEntryPoint implements AuthenticationEntryPointInterface
 
     /**
      * @param \Symfony\Component\Security\Http\HttpUtils $httpUtils
-     * @param \Waldo\OpenIdConnect\RelyingPartyBundle\OpenIdConnect\ResourceOwnerInterface $resourceOwner
+     * @param \Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\ResourceOwnerInterface $resourceOwner
      */
     public function __construct(HttpUtils $httpUtils, ResourceOwnerInterface $resourceOwner)
     {

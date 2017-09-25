@@ -1,8 +1,8 @@
 <?php
 
-namespace Waldo\OpenIdConnect\RelyingPartyBundle\Tests\Security\Core\Authentication\Token;
+namespace Syntelix\Bundle\OidcRelyingPartyBundle\Tests\Security\Core\Authentication\Token;
 
-use Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\Authentication\Token\OICToken;
+use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token\OICToken;
 
 /**
  * OpenId Connect Token

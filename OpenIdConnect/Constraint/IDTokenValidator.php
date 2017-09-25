@@ -1,6 +1,6 @@
 <?php
 
-namespace Waldo\OpenIdConnect\RelyingPartyBundle\OpenIdConnect\Constraint;
+namespace Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Constraint;
 
 /**
  * IDTokenValidator

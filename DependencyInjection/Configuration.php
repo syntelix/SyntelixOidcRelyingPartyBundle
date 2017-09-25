@@ -1,6 +1,6 @@
 <?php
 
-namespace Waldo\OpenIdConnect\RelyingPartyBundle\DependencyInjection;
+namespace Syntelix\Bundle\OidcRelyingPartyBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -13,7 +13,7 @@ use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
  */
 class Configuration implements ConfigurationInterface
 {
-    public static function isHttpMethodSupproted($display)
+    public static function isHttpMethodSupported($display)
     {
         $displays = array(
             'POST',
@@ -22,7 +22,7 @@ class Configuration implements ConfigurationInterface
         
         return in_array($display, $displays);
     }
-    public static function isDisplaySupproted($display)
+    public static function isDisplaySupported($display)
     {
         $displays = array(
             'page',
@@ -34,7 +34,7 @@ class Configuration implements ConfigurationInterface
         return in_array($display, $displays);
     }
     
-    public static function isPromptSupproted($prompt)
+    public static function isPromptSupported($prompt)
     {
         $displays = array(
             'none',
@@ -53,7 +53,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('waldo_oic_rp');
+        $rootNode = $treeBuilder->root('syntelix_oic_rp');
 
         $this->addHttpClientConfiguration($rootNode);
         $this->addSignatureConfiguration($rootNode);
@@ -93,7 +93,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('enduserinfo_request_method')
                         ->validate()
                         ->ifTrue(function($display) {
-                            return !Configuration::isHttpMethodSupproted($display);
+                            return !Configuration::isHttpMethodSupported($display);
                         })
                         ->thenInvalid('Unknown request mathod "%s".')
                     ->end()
@@ -106,7 +106,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('display')
                     ->validate()
                         ->ifTrue(function($display) {
-                            return !Configuration::isDisplaySupproted($display);
+                            return !Configuration::isDisplaySupported($display);
                         })
                         ->thenInvalid('Unknown display type "%s".')
                     ->end()
@@ -115,7 +115,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('prompt')
                     ->validate()
                         ->ifTrue(function($display) {
-                            return !Configuration::isPromptSupproted($display);
+                            return !Configuration::isPromptSupported($display);
                         })
                         ->thenInvalid('Unknown prompt type "%s".')
                     ->end()

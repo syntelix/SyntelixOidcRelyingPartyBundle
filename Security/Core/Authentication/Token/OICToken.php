@@ -1,8 +1,8 @@
 <?php
 
-namespace Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\Authentication\Token;
+namespace Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token;
 
-use Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\User\OICUser;
+use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\User\OICUser;
 use Symfony\Component\Security\Core\Authentication\Token\AbstractToken;
 
 /**

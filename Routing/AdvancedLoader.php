@@ -1,6 +1,6 @@
 <?php
 
-namespace Waldo\OpenIdConnect\RelyingPartyBundle\Routing;
+namespace Syntelix\Bundle\OidcRelyingPartyBundle\Routing;
 
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Loader\LoaderResolverInterface;
@@ -29,7 +29,7 @@ class AdvancedLoader implements LoaderInterface
         // prepare a new route
         $path = '/oic-rp/logout';
         $defaults = array(
-            '_controller' => 'WaldoOpenIdConnectRelyingPartyBundle:Logout:logout',
+            '_controller' => 'SyntelixOidcRelyingPartyBundle:Logout:logout',
         );
         $requirements = array();
         

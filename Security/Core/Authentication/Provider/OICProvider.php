@@ -1,11 +1,11 @@
 <?php
 
-namespace Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\Authentication\Provider;
+namespace Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Provider;
 
-use Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\Authentication\Token\OICToken;
-use Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\User\UserFactoryInterface;
-use Waldo\OpenIdConnect\RelyingPartyBundle\OpenIdConnect\ResourceOwnerInterface;
-use Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\Exception\InvalidIdSignatureException;
+use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token\OICToken;
+use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\User\UserFactoryInterface;
+use Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\ResourceOwnerInterface;
+use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception\InvalidIdSignatureException;
 use Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;

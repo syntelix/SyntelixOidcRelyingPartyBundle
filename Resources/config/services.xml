@@ -5,7 +5,7 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="oic_rp.routing_loader" class="Waldo\OpenIdConnect\RelyingPartyBundle\Routing\AdvancedLoader">
+        <service id="oic_rp.routing_loader" class="Syntelix\Bundle\OidcRelyingPartyBundle\Routing\AdvancedLoader">
             <tag name="routing.loader" />
         </service>
     </services>

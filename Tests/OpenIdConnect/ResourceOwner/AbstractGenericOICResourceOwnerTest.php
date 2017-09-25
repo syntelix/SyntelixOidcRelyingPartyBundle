@@ -1,8 +1,8 @@
 <?php
 
-namespace Waldo\OpenIdConnect\RelyingPartyBundle\OpenIdConnect\Tests\ResourceOwner;
+namespace Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Tests\ResourceOwner;
 
-use Waldo\OpenIdConnect\RelyingPartyBundle\OpenIdConnect\ResourceOwner\GenericOICResourceOwner;
+use Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\ResourceOwner\GenericOICResourceOwner;
 use Symfony\Component\HttpFoundation\Request;
 /**
  * GenericOICResourceOwner
@@ -40,7 +40,7 @@ class AbstractGenericOICResourceOwnerTest extends \PHPUnit_Framework_TestCase
     
     public function testShouldAuthenticateUser()
     {
-        $responseHandler = $this->getMockBuilder('Waldo\OpenIdConnect\RelyingPartyBundle\OpenIdConnect\Response\OICResponseHandler')
+        $responseHandler = $this->getMockBuilder('Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Response\OICResponseHandler')
                 ->disableOriginalConstructor()->getMock();
         
         $jwt = new \JOSE_JWT(array('sub'=>'amy.pond'));
@@ -61,16 +61,16 @@ class AbstractGenericOICResourceOwnerTest extends \PHPUnit_Framework_TestCase
         
         $res = $resourseOwner->authenticateUser($request);
         
-        $this->assertInstanceOf("Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\Authentication\Token\OICToken", $res);
+        $this->assertInstanceOf("Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token\OICToken", $res);
         $this->assertEquals('amy.pond', $res->getUsername());
     }
     
     /**
-     * @expectedException Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\Exception\InvalidIdTokenException
+     * @expectedException Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception\InvalidIdTokenException
      */
     public function testShouldFailAuthenticateUser()
     {
-        $responseHandler = $this->getMockBuilder('Waldo\OpenIdConnect\RelyingPartyBundle\OpenIdConnect\Response\OICResponseHandler')
+        $responseHandler = $this->getMockBuilder('Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Response\OICResponseHandler')
                 ->disableOriginalConstructor()->getMock();
         
         $jwt = new \JOSE_JWT(array('sub'=>'amy.pond'));
@@ -85,28 +85,28 @@ class AbstractGenericOICResourceOwnerTest extends \PHPUnit_Framework_TestCase
     
 
     /**
-     * @expectedException Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\Exception\InvalidRequestException
+     * @expectedException Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception\InvalidRequestException
      * @expectedExceptionMessage no such access_token
      */
     public function testShouldFailAuthenticateUserNoSuchAccessToken()
     {
-        $responseHandler = $this->getMockBuilder('Waldo\OpenIdConnect\RelyingPartyBundle\OpenIdConnect\Response\OICResponseHandler')
+        $responseHandler = $this->getMockBuilder('Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Response\OICResponseHandler')
                 ->disableOriginalConstructor()->getMock();
                
         $resourseOwner = $this->createGenericOICResourceOwner(null, true, $responseHandler);
 
-        $oicToken = new \Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\Authentication\Token\OICToken();
+        $oicToken = new \Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token\OICToken();
         
         $resourseOwner->getEndUserinfo($oicToken);
     }
     
     /**
-     * @expectedException Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\Exception\InvalidIdTokenException
+     * @expectedException Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception\InvalidIdTokenException
      * @expectedExceptionMessage The sub value is not equal
      */
     public function testShouldFailAuthenticateUserSubValueNotEqual()
     {
-        $responseHandler = $this->getMockBuilder('Waldo\OpenIdConnect\RelyingPartyBundle\OpenIdConnect\Response\OICResponseHandler')
+        $responseHandler = $this->getMockBuilder('Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Response\OICResponseHandler')
                 ->disableOriginalConstructor()->getMock();
                 
         $resourseOwner = $this->createGenericOICResourceOwner(null, true, $responseHandler);
@@ -114,7 +114,7 @@ class AbstractGenericOICResourceOwnerTest extends \PHPUnit_Framework_TestCase
         $claims = new \stdClass();
         $claims->claims = array('sub' => "username");
         
-        $oicToken = new \Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\Authentication\Token\OICToken();
+        $oicToken = new \Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token\OICToken();
         $oicToken->setAccessToken("plop");
         $oicToken->setIdToken($claims);
         
@@ -145,7 +145,7 @@ class AbstractGenericOICResourceOwnerTest extends \PHPUnit_Framework_TestCase
         $httpClient = $this->getMockBuilder("Buzz\Client\AbstractCurl")
                 ->disableOriginalConstructor()->getMock();
         
-        $idTokenValidator = $this->getMockBuilder('Waldo\OpenIdConnect\RelyingPartyBundle\OpenIdConnect\Constraint\ValidatorInterface')
+        $idTokenValidator = $this->getMockBuilder('Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Constraint\ValidatorInterface')
                 ->disableOriginalConstructor()->getMock();
         $idTokenValidator->expects($this->any())
                 ->method('isValid')
@@ -154,11 +154,11 @@ class AbstractGenericOICResourceOwnerTest extends \PHPUnit_Framework_TestCase
                 ->method('getErrors')
                 ->willReturn(array());
         
-        $responseHandler = $responseHandler ? $responseHandler : $this->getMockBuilder('Waldo\OpenIdConnect\RelyingPartyBundle\OpenIdConnect\Response\OICResponseHandler')
+        $responseHandler = $responseHandler ? $responseHandler : $this->getMockBuilder('Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Response\OICResponseHandler')
                 ->disableOriginalConstructor()->getMock();
                
         
-        $nonceHelper = $this->getMockBuilder('Waldo\OpenIdConnect\RelyingPartyBundle\OpenIdConnect\NonceHelper')
+        $nonceHelper = $this->getMockBuilder('Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\NonceHelper')
                 ->disableOriginalConstructor()->getMock();
         
         return new GenericOICResourceOwner(

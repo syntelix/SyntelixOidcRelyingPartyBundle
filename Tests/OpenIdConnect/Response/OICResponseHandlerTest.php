@@ -1,8 +1,8 @@
 <?php
 
-namespace Waldo\OpenIdConnect\RelyingPartyBundle\OpenIdConnect\Tests\Response;
+namespace Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Tests\Response;
 
-use Waldo\OpenIdConnect\RelyingPartyBundle\OpenIdConnect\Response\OICResponseHandler;
+use Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Response\OICResponseHandler;
 
 /**
  * OICResponseHandler
@@ -13,7 +13,7 @@ class OICResponseHandlerTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @expectedException Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\Exception\InvalidRequestException
+     * @expectedException Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception\InvalidRequestException
      * @expectedExceptionMessage invalid request
      */
     public function testHandleHttpClientResponseBearerError()
@@ -35,7 +35,7 @@ class OICResponseHandlerTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * @expectedException Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\Exception\InvalidRequestException
+     * @expectedException Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception\InvalidRequestException
      * @expectedExceptionMessage Secured Area
      */
     public function testHandleHttpClientBasicAuthFailError()
@@ -57,7 +57,7 @@ class OICResponseHandlerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\Exception\InvalidRequestException
+     * @expectedException Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception\InvalidRequestException
      * @expectedExceptionMessage bumber
      */
     public function testHandleUnknowError()
@@ -79,7 +79,7 @@ class OICResponseHandlerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\Exception\InvalidRequestException
+     * @expectedException Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception\InvalidRequestException
      * @expectedExceptionMessage bumb
      */
     public function testHandleErrorWhithoutDescription()
@@ -103,7 +103,7 @@ class OICResponseHandlerTest extends \PHPUnit_Framework_TestCase
     
     
     /**
-     * @expectedException Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\Exception\InvalidAuthorizationCodeException
+     * @expectedException Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception\InvalidAuthorizationCodeException
      */
     public function testHandleHttpClientResponseInvalidAutorizationCode()
     {
@@ -207,7 +207,7 @@ class OICResponseHandlerTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * @expectedException Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\Exception\InvalidIdSignatureException
+     * @expectedException Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception\InvalidIdSignatureException
      */
     public function testHandleEndUserinfoResponseShouldFail()
     {
@@ -255,9 +255,9 @@ class OICResponseHandlerTest extends \PHPUnit_Framework_TestCase
     public function codeerrorDataProvider()
     {
         return array(
-            array('content' => 'invalid_response_type', 'exception' => 'Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\Exception\InvalidResponseTypeException'),
-            array('content' => 'invalid_client', 'exception' => 'Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\Exception\InvalidClientOrSecretException'),
-            array('content' => 'unsupported_grant_type', 'exception' => 'Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\Exception\UnsuportedGrantTypeException'),
+            array('content' => 'invalid_response_type', 'exception' => 'Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception\InvalidResponseTypeException'),
+            array('content' => 'invalid_client', 'exception' => 'Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception\InvalidClientOrSecretException'),
+            array('content' => 'unsupported_grant_type', 'exception' => 'Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception\UnsuportedGrantTypeException'),
         );
     }
 
@@ -265,7 +265,7 @@ class OICResponseHandlerTest extends \PHPUnit_Framework_TestCase
 
     private function createJWKSetHandler($jwkWithoutUse = false)
     {
-        $jwkHandler = $this->getMockBuilder('Waldo\OpenIdConnect\RelyingPartyBundle\OpenIdConnect\JWK\JWKSetHandler')
+        $jwkHandler = $this->getMockBuilder('Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\JWK\JWKSetHandler')
                            ->disableOriginalConstructor()
                            ->getMock();
                    $jwk = ($jwkWithoutUse) ? $this->getJWKWithoutUse() : $this->getJWK();

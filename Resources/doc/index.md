@@ -1,6 +1,9 @@
 OpenID Connect Relying Party Bundle
 ===================================
 
+# TODO
+Change this documentation. The following instructions are copied from the original and are kept for reference.
+
 ## Install
 With Composer
 Add the code below to your composer.json
@@ -33,7 +36,7 @@ public function registerBundles()
 {
     $bundles = array(
         // ...
-        new Waldo\OpenIdConnect\RelyingPartyBundle\WaldoOpenIdConnectRelyingPartyBundle(),
+        new Syntelix\Bundle\OidcRelyingPartyBundle\WaldoOpenIdConnectRelyingPartyBundle(),
     );
 }
 ```

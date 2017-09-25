@@ -1,6 +1,6 @@
 <?php
 
-namespace Waldo\OpenIdConnect\RelyingPartyBundle\OpenIdConnect\JWK;
+namespace Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\JWK;
 
 use Buzz\Client\AbstractCurl;
 use Buzz\Message\Request as HttpClientRequest;
@@ -40,7 +40,7 @@ class JWKSetHandler
     private $httpClient;
     
     private $jwkFileName = "op.jwk";
-    private $jwkFileFolder = "/waldo/OIC/jwk-cache/";
+    private $jwkFileFolder = "/syntelix/OIC/jwk-cache/";
 
     public function __construct($jwkUrl, $jwkCacheTtl, $cacheDir, AbstractCurl $httpClient)
     {

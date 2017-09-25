@@ -1,46 +1,46 @@
 <?php
 
-namespace Waldo\OpenIdConnect\RelyingPartyBundle\Tests\DependencyInjection;
+namespace Syntelix\Bundle\OidcRelyingPartyBundle\Tests\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Yaml\Parser;
-use Waldo\OpenIdConnect\RelyingPartyBundle\DependencyInjection\WaldoOpenIdConnectRelyingPartyExtension;
+use Syntelix\Bundle\OidcRelyingPartyBundle\DependencyInjection\SyntelixOidcRelyingPartyExtension;
 
 /**
  * This is the class that loads and manages your bundle configuration
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class WaldoOpenIdConnectRelyingPartyExtensionTest extends \PHPUnit_Framework_TestCase
+class SyntelixOidcRelyingPartyExtensionTest extends \PHPUnit_Framework_TestCase
 {
 
     public function testDefault()
     {
         $container = new ContainerBuilder();
-        $loader = new WaldoOpenIdConnectRelyingPartyExtension();
+        $loader = new SyntelixOidcRelyingPartyExtension();
         $config = array($this->getFullConfig());
         $loader->load(array($this->getFullConfig()), $container);
         
         $definitionArray = array(
-            "waldo_oic_rp.authentication.listener",
-            "waldo_oic_rp.authentication.provider",
-            "waldo_oic_rp.authentication.entrypoint",
-            "waldo_oic_rp.validator.id_token",
-            "waldo_oic_rp.http_client_response_handler",
-            "waldo_oic_rp.jwk_handler",
-            "waldo_oic_rp.helper.nonce",
-            "waldo_oic_rp.user.provider",
-            "waldo_oic_rp.abstract_resource_owner.generic",
+            "syntelix_oic_rp.authentication.listener",
+            "syntelix_oic_rp.authentication.provider",
+            "syntelix_oic_rp.authentication.entrypoint",
+            "syntelix_oic_rp.validator.id_token",
+            "syntelix_oic_rp.http_client_response_handler",
+            "syntelix_oic_rp.jwk_handler",
+            "syntelix_oic_rp.helper.nonce",
+            "syntelix_oic_rp.user.provider",
+            "syntelix_oic_rp.abstract_resource_owner.generic",
             "buzz.client",
-            "waldo_oic_rp.http_client",
-            "waldo_oic_rp.resource_owner.generic"
+            "syntelix_oic_rp.http_client",
+            "syntelix_oic_rp.resource_owner.generic"
         );
 
         foreach($definitionArray as $definition) {
             $this->assertTrue($container->hasDefinition($definition));
         }
         
-        $this->assertEquals('waldo_oic_rp', $loader->getAlias());
+        $this->assertEquals('syntelix_oic_rp', $loader->getAlias());
     }
 
     

@@ -1,8 +1,8 @@
 <?php
 
-namespace Waldo\OpenIdConnect\RelyingPartyBundle\Tests\Security\Http\EntryPoint;
+namespace Syntelix\Bundle\OidcRelyingPartyBundle\Tests\Security\Http\EntryPoint;
 
-use Waldo\OpenIdConnect\RelyingPartyBundle\Security\Http\EntryPoint\OICEntryPoint;
+use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Http\EntryPoint\OICEntryPoint;
 
 /**
  * OICEntryPoint
@@ -22,7 +22,7 @@ class OICEntryPointTest extends \PHPUnit_Framework_TestCase
                 ->willReturn("realUri")
                 ;
 
-        $ResourceOwner = $this->getMock('Waldo\OpenIdConnect\RelyingPartyBundle\OpenIdConnect\ResourceOwnerInterface');
+        $ResourceOwner = $this->getMock('Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\ResourceOwnerInterface');
         $ResourceOwner->expects($this->once())
                 ->method("getAuthenticationEndpointUrl")
                 ->with($this->equalTo($request))

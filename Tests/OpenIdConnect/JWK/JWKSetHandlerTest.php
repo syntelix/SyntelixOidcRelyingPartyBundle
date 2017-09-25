@@ -1,9 +1,9 @@
 <?php
 
-namespace Waldo\OpenIdConnect\RelyingPartyBundle\OpenIdConnect\Tests\JWK;
+namespace Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Tests\JWK;
 
-use Waldo\OpenIdConnect\RelyingPartyBundle\OpenIdConnect\JWK\JWKSetHandler;
-use Waldo\OpenIdConnect\RelyingPartyBundle\Tests\Mocks\HttpClientMock;
+use Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\JWK\JWKSetHandler;
+use Syntelix\Bundle\OidcRelyingPartyBundle\Tests\Mocks\HttpClientMock;
 use Buzz\Message\RequestInterface;
 /**
  * JWKSetHandler
@@ -29,7 +29,7 @@ class JWKSetHandlerTest extends \PHPUnit_Framework_TestCase
 
     private static function clearCache()
     {
-        $folder = sys_get_temp_dir() . "/waldo/OIC/jwk-cache/";
+        $folder = sys_get_temp_dir() . "/syntelix/OIC/jwk-cache/";
 
         $fs = new \Symfony\Component\Filesystem\Filesystem();
 
@@ -37,7 +37,7 @@ class JWKSetHandlerTest extends \PHPUnit_Framework_TestCase
             unlink($folder . "op.jwk");
         }
 
-        $fs->remove(sys_get_temp_dir() . "/waldo");
+        $fs->remove(sys_get_temp_dir() . "/syntelix");
 
     }
 

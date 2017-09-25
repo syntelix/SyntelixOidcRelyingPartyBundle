@@ -1,8 +1,8 @@
 <?php
 
-namespace Waldo\OpenIdConnect\RelyingPartyBundle\Tests\Security\Core\Authentication\Provider;
+namespace Syntelix\Bundle\OidcRelyingPartyBundle\Tests\Security\Core\Authentication\Provider;
 
-use Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\Authentication\Provider\OICProvider;
+use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Provider\OICProvider;
 
 
 /**
@@ -14,7 +14,7 @@ class OICProviderTest extends \PHPUnit_Framework_TestCase
 {
     public function testAuthenticateShoulReturnToken()
     {
-        $resouceOwner = $this->getMock("Waldo\OpenIdConnect\RelyingPartyBundle\OpenIdConnect\ResourceOwnerInterface");
+        $resouceOwner = $this->getMock("Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\ResourceOwnerInterface");
         
         $user = $this->getMock('Symfony\Component\Security\Core\User\UserInterface');
         $user->expects($this->once())
@@ -30,7 +30,7 @@ class OICProviderTest extends \PHPUnit_Framework_TestCase
                 ->with($this->equalTo('amy.pond'))
                 ->willReturn($user);
         
-        $token = $this->getMock('Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\Authentication\Token\OICToken');
+        $token = $this->getMock('Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token\OICToken');
         $token->expects($this->exactly(2))
                 ->method('getUsername')
                 ->willReturn('amy.pond');
@@ -67,7 +67,7 @@ class OICProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testAuthenticationShouldFailed()
     {
-        $resouceOwner = $this->getMock("Waldo\OpenIdConnect\RelyingPartyBundle\OpenIdConnect\ResourceOwnerInterface");
+        $resouceOwner = $this->getMock("Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\ResourceOwnerInterface");
         
         $user = $this->getMock('Symfony\Component\Security\Core\User\UserInterface');
         $user->expects($this->once())
@@ -79,7 +79,7 @@ class OICProviderTest extends \PHPUnit_Framework_TestCase
                 ->method('loadUserByUsername')
                 ->willReturn($user);
         
-        $token = $this->getMock('Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\Authentication\Token\OICToken');
+        $token = $this->getMock('Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token\OICToken');
         $token->expects($this->exactly(2))
                 ->method('getUsername')
                 ->willReturn('rory.willialms');

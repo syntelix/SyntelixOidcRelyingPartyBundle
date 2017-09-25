@@ -1,9 +1,9 @@
 <?php
 
-namespace Waldo\OpenIdConnect\RelyingPartyBundle\Test\Security\Core\User;
+namespace Syntelix\Bundle\OidcRelyingPartyBundle\Test\Security\Core\User;
 
-use Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\User\OICUserProvider;
-use Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\User\OICUser;
+use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\User\OICUserProvider;
+use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\User\OICUser;
 
 /**
  * OICUserProviderTest
@@ -17,7 +17,7 @@ class OICUserProviderTest extends \PHPUnit_Framework_TestCase
     {
         $username = 'amy.pond';
         
-        $oicUser = $this->getMockBuilder('Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\User\OICUser')
+        $oicUser = $this->getMockBuilder('Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\User\OICUser')
                 ->disableOriginalConstructor()->getMock();
         $oicUser->expects($this->exactly(2))
                 ->method("getUsername")
@@ -35,7 +35,7 @@ class OICUserProviderTest extends \PHPUnit_Framework_TestCase
         
         $oicUser = $oicUserProvider->loadUserByUsername($username);
 
-        $this->assertInstanceOf('Waldo\OpenIdConnect\RelyingPartyBundle\Security\Core\User\OICUser', $oicUser);
+        $this->assertInstanceOf('Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\User\OICUser', $oicUser);
         $this->assertEquals($username, $oicUser->getUsername());
     }
 

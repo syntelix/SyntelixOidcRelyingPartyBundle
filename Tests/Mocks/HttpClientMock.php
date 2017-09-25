@@ -1,6 +1,6 @@
 <?php
 
-namespace Waldo\OpenIdConnect\RelyingPartyBundle\Tests\Mocks;
+namespace Syntelix\Bundle\OidcRelyingPartyBundle\Tests\Mocks;
 
 use Buzz\Client\AbstractCurl;   
 use Buzz\Message\Request;
