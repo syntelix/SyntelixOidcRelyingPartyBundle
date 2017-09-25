@@ -11,7 +11,6 @@ use Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Constraint\IDTokenValid
  */
 class IDTokenValidatorTest extends \PHPUnit_Framework_TestCase
 {
-
     private $options = array(
         "issuer" => "anIssuer",
         "client_id" => "anclient_id",
@@ -117,7 +116,7 @@ class IDTokenValidatorTest extends \PHPUnit_Framework_TestCase
     public function testAllSouldFaildAtAzp()
     {
         $this->token["claims"]['aud'] = array('anclient_id', "anclient_id2");
-        unset($this->token["claims"]['azp'] );
+        unset($this->token["claims"]['azp']);
         $validator = new IDTokenValidator($this->options);
 
         $validator->setIdToken($this->token);
@@ -125,5 +124,4 @@ class IDTokenValidatorTest extends \PHPUnit_Framework_TestCase
         $res = $validator->isValid();
         $this->assertFalse($res);
     }
-
 }

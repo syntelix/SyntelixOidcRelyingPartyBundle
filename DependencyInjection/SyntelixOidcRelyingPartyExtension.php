@@ -32,7 +32,7 @@ class SyntelixOidcRelyingPartyExtension extends Extension
 
         $this->constructEndpointUrl($config);
 
-        $this->configureBuzz($container, $config);      
+        $this->configureBuzz($container, $config);
 
         $jwkHandler = $container->getDefinition('syntelix_oic_rp.jwk_handler');
         $jwkHandler->replaceArgument(0, $config['jwk_url']);
@@ -56,8 +56,8 @@ class SyntelixOidcRelyingPartyExtension extends Extension
         $this->createResoucerOwnerService($container, $name, $config);
         
         //Logout
-        if($config['redirect_after_logout'] === null) {
-           $config['redirect_after_logout'] = $config['base_url'];
+        if ($config['redirect_after_logout'] === null) {
+            $config['redirect_after_logout'] = $config['base_url'];
         }
         $container->getDefinition('syntelix_oic_rp.logout')
                 ->replaceArgument(0, $config);
@@ -107,5 +107,4 @@ class SyntelixOidcRelyingPartyExtension extends Extension
         $container->setDefinition("syntelix_oic_rp.resource_owner." . $name, $definition);
         $definition->replaceArgument(5, $config);
     }
-
 }

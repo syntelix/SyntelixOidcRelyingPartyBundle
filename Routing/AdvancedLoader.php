@@ -10,12 +10,11 @@ use Symfony\Component\Routing\RouteCollection;
 /**
  * AdvancedLoader
  * @see http://symfony.com/doc/current/cookbook/routing/custom_route_loader.html
- * 
+ *
  * @author valérian Girard <valerian.girard@educagri.fr>
  */
 class AdvancedLoader implements LoaderInterface
 {
-
     private $loaded = false;
 
     public function load($resource, $type = null)

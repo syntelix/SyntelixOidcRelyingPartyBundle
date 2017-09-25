@@ -2,12 +2,13 @@
 
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception;
 
+use InvalidArgumentException;
 
 /**
- * UnsuportedGrantTypeException
+ * UnsupportedGrantTypeException
  *
  */
-class UnsuportedGrantTypeException extends \InvalidArgumentException
+class UnsupportedGrantTypeException extends InvalidArgumentException
 {
     /**
      * {@inheritdoc}

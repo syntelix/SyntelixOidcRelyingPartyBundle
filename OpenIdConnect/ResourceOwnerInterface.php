@@ -24,7 +24,7 @@ interface ResourceOwnerInterface
     public function getAuthenticationEndpointUrl(Request $request, $redirectUri = null, array $extraParameters = array());
 
     /**
-     * 
+     *
      * @return string The token endpoint url
      */
     public function getTokenEndpointUrl();
@@ -36,7 +36,7 @@ interface ResourceOwnerInterface
 
     /**
      * Use the code parameter set in request query for retrieve the enduser informations
-     * 
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token\OICToken
      */
@@ -44,9 +44,9 @@ interface ResourceOwnerInterface
     
     /**
      * Call the OpenId Connect Provider to get userinfo against an access_token
-     * 
+     *
      * @see http://openid.net/specs/openid-connect-basic-1_0.html#UserInfo
-     * 
+     *
      * @param \Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token\OICToken $oicToken
      * @return array
      */

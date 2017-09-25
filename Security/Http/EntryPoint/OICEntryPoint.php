@@ -21,7 +21,7 @@ class OICEntryPoint implements AuthenticationEntryPointInterface
     protected $httpUtils;
 
     /**
-     * @var ResourceOwnerInterface 
+     * @var ResourceOwnerInterface
      */
     protected $resourceOwner;
 
@@ -39,11 +39,10 @@ class OICEntryPoint implements AuthenticationEntryPointInterface
      * {@inheritDoc}
      */
     public function start(Request $request, AuthenticationException $authException = null)
-    {   
+    {
         $authenticationEndpointUrl = $this->resourceOwner->getAuthenticationEndpointUrl($request);
 
         //Create and return the redirection request to the OpenId Provider
         return $this->httpUtils->createRedirectResponse($request, $authenticationEndpointUrl);
     }
-
 }

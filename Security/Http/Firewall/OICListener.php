@@ -16,12 +16,12 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class OICListener extends AbstractAuthenticationListener
 {
     /**
-     * @var SecurityContext 
+     * @var SecurityContext
      */
     private $securityContext;
 
     /**
-     * @var ResourceOwnerInterface  
+     * @var ResourceOwnerInterface
      */
     private $resourceOwner;
 
@@ -60,5 +60,4 @@ class OICListener extends AbstractAuthenticationListener
         
         return $this->authenticationManager->authenticate($oicToken);
     }
-
 }

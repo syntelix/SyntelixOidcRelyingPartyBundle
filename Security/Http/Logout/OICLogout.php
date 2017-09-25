@@ -16,22 +16,22 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class OICLogout
 {
     /**
-     * @var TokenStorageInterface 
+     * @var TokenStorageInterface
      */
     private $tokenStorage;
 
     /**
-     * @var HttpUtils  
+     * @var HttpUtils
      */
     private $httpUtils;
 
     /**
-     * @var RouterInterface  
+     * @var RouterInterface
      */
     private $router;
 
     /**
-     * @var array  
+     * @var array
      */
     private $options;
 
@@ -44,7 +44,7 @@ class OICLogout
         $this->tokenStorage = $tokenStorage;
         $this->httpUtils = $httpUtils;
         $this->router = $router;
-        $this->options = $options;  
+        $this->options = $options;
     }
 
     
@@ -56,20 +56,20 @@ class OICLogout
  
         $redirectResponse = new RedirectResponse($this->getRedirectAfterLogoutURI($request));
  
-        if($request->server->get("HTTP_REFERER") != $this->httpUtils->generateUri($request, "_oic_rp_logout")) {
+        if ($request->server->get("HTTP_REFERER") != $this->httpUtils->generateUri($request, "_oic_rp_logout")) {
             $redirectResponse = new RedirectResponse($this->getRedirectAfterLogoutURI($request));
         }
         
-        if(array_key_exists("logout", $this->options['endpoints_url'])) {
+        if (array_key_exists("logout", $this->options['endpoints_url'])) {
             $redirectResponse = new RedirectResponse($this->getOIDCLogoutEndPointURI($request));
-        }        
+        }
         
         return $redirectResponse;
     }
     
     private function getRedirectAfterLogoutURI(Request $request)
     {
-        if($this->router->getRouteCollection()->get($this->options['redirect_after_logout'])) {
+        if ($this->router->getRouteCollection()->get($this->options['redirect_after_logout'])) {
             return $this->httpUtils->generateUri($request, $this->options['redirect_after_logout']);
         }
         

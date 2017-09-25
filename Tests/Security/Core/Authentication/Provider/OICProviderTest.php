@@ -4,10 +4,9 @@ namespace Syntelix\Bundle\OidcRelyingPartyBundle\Tests\Security\Core\Authenticat
 
 use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Provider\OICProvider;
 
-
 /**
  * OICProvider
- * 
+ *
  * @author valérian Girard <valerian.girard@educagri.fr>
  */
 class OICProviderTest extends \PHPUnit_Framework_TestCase
@@ -59,7 +58,7 @@ class OICProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($tokenValue['getRefreshToken'], $resultToken->getRefreshToken());
         $this->assertEquals($tokenValue['getIdToken'], $resultToken->getIdToken());
         $this->assertInstanceOf("Symfony\Component\Security\Core\User\UserInterface", $resultToken->getUser());
-        $this->assertCount(1, $resultToken->getRoles());        
+        $this->assertCount(1, $resultToken->getRoles());
     }
     
     /**
@@ -87,6 +86,5 @@ class OICProviderTest extends \PHPUnit_Framework_TestCase
         $oicProvider = new OICProvider($userProvider, $resouceOwner);
         
         $resultToken = $oicProvider->authenticate($token);
-
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\Tests\Mocks;
 
-use Buzz\Client\AbstractCurl;   
+use Buzz\Client\AbstractCurl;
 use Buzz\Message\Request;
 use Buzz\Message\Response;
 use Buzz\Message\RequestInterface;

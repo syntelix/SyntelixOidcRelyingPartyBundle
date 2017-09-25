@@ -17,6 +17,7 @@ use Symfony\Component\Security\Http\HttpUtils;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AuthenticationServiceException;
 use Psr\Log\LoggerInterface;
+
 /**
  * GenericOICResourceOwner
  *
@@ -26,7 +27,7 @@ abstract class AbstractGenericOICResourceOwner implements ResourceOwnerInterface
 {
 
     /**
-     * @var HttpUtils 
+     * @var HttpUtils
      */
     private $httpUtils;
 
@@ -61,9 +62,9 @@ abstract class AbstractGenericOICResourceOwner implements ResourceOwnerInterface
     private $logger;
 
     public function __construct(
-            HttpUtils $httpUtils, AbstractCurl $httpClient, 
-            ValidatorInterface $idTokenValidator, 
-            OICResponseHandler $responseHandler, 
+            HttpUtils $httpUtils, AbstractCurl $httpClient,
+            ValidatorInterface $idTokenValidator,
+            OICResponseHandler $responseHandler,
             NonceHelper $nonceHelper, $options, LoggerInterface $logger = null)
     {
         $this->httpUtils = $httpUtils;
@@ -97,11 +98,11 @@ abstract class AbstractGenericOICResourceOwner implements ResourceOwnerInterface
             'max_age' => $this->options['authentication_ttl']
         );
 
-        if($this->nonceHelper->isNonceEnabled()) {
+        if ($this->nonceHelper->isNonceEnabled()) {
             $urlParameters['nonce'] = $this->nonceHelper->buildNonceValue($request->getClientIp());
         }
         
-        if($this->nonceHelper->isStateEnabled()) {
+        if ($this->nonceHelper->isStateEnabled()) {
             $urlParameters['state'] = $this->nonceHelper->buildNonceValue($request->getClientIp(), "state");
         }
         
@@ -146,7 +147,7 @@ abstract class AbstractGenericOICResourceOwner implements ResourceOwnerInterface
      * {@inheritDoc}
      */
     public function authenticateUser(Request $request)
-    {   
+    {
         $this->responseHandler->hasError($request->query->all());
 
         $code = $request->query->get('code');
@@ -160,9 +161,9 @@ abstract class AbstractGenericOICResourceOwner implements ResourceOwnerInterface
 
     /**
      * Call the OpenID Connect Provider to exchange a code value against an id_token and an access_token
-     * 
+     *
      * @see http://openid.net/specs/openid-connect-basic-1_0.html#ObtainingTokens
-     * 
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token\OICToken $oicToken
      * @param type $code
@@ -181,7 +182,7 @@ abstract class AbstractGenericOICResourceOwner implements ResourceOwnerInterface
     
     /**
      * Call the OpenID Connect Provider to exchange a refresh_token value against an id_token and an access_token
-     * 
+     *
      * @param \Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token\OICToken $oicToken
      */
     protected function refreshToken(OICToken $oicToken)
@@ -196,14 +197,13 @@ abstract class AbstractGenericOICResourceOwner implements ResourceOwnerInterface
     
     /**
      * makes the request to the OpenID Connect Provider for get back an Access Token and an ID Token
-     * 
+     *
      * @param \Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token\OICToken $oicToken
      * @param type $parameters
      * @throws InvalidIdTokenException
      */
     private function retrieveIdTokenAndAccessToken(OICToken $oicToken, $parameters, $redirectUri = 'login_check')
     {
-       
         $parameters['redirect_uri'] = $this->httpUtils->generateUri(new Request(), $redirectUri);
         
         $postParametersQuery = http_build_query($parameters);
@@ -224,20 +224,18 @@ abstract class AbstractGenericOICResourceOwner implements ResourceOwnerInterface
         $this->httpClient->setOption(CURLOPT_USERPWD, $this->options['client_id'] . ':' . $this->options['client_secret']);
         $this->httpClient->send($request, $response);
         
-        $content = $this->responseHandler->handleTokenAndAccessTokenResponse($response);            
+        $content = $this->responseHandler->handleTokenAndAccessTokenResponse($response);
         
         // Apply validation describe here: http://openid.net/specs/openid-connect-basic-1_0.html#IDTokenValidation
         $this->idTokenValidator->setIdToken($content['id_token']);
         if (!$this->idTokenValidator->isValid()) {
-
             $errors = sprintf("%s", implode(", ", $this->idTokenValidator->getErrors()));
             
-            if($this->logger !== null) {
+            if ($this->logger !== null) {
                 $this->logger->error("InvalidIdTokenException " . $errors, $content);
             }
             
             throw new InvalidIdTokenException($errors);
-            
         }
         
         $oicToken->setRawTokenData($content);
@@ -246,16 +244,16 @@ abstract class AbstractGenericOICResourceOwner implements ResourceOwnerInterface
     
     /**
      * Call the OpenId Connect Provider to get userinfo against an access_token
-     * 
+     *
      * @see http://openid.net/specs/openid-connect-basic-1_0.html#UserInfo
-     * 
+     *
      * @param \Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token\OICToken $oicToken
      */
     public function getEndUserinfo(OICToken $oicToken)
     {
         $this->idTokenValidator->setIdToken($oicToken->getIdToken());
-        if(!$this->idTokenValidator->isValid()) {
-            if($oicToken->getRefreshToken()) {
+        if (!$this->idTokenValidator->isValid()) {
+            if ($oicToken->getRefreshToken()) {
                 $this->refreshToken($oicToken);
             } else {
                 throw new AuthenticationServiceException("The ID Token has expired, we can't get End User info");
@@ -284,10 +282,10 @@ abstract class AbstractGenericOICResourceOwner implements ResourceOwnerInterface
 
         $content = $this->responseHandler->handleEndUserinfoResponse($response);
 
-        // Check if the sub value return by the OpenID connect Provider is the 
+        // Check if the sub value return by the OpenID connect Provider is the
         // same as previous. If Not, that isn't good...
         if ($content['sub'] !== $oicToken->getIdToken()->claims['sub']) {
-            if($this->logger !== null) {
+            if ($this->logger !== null) {
                 $this->logger->error("InvalidIdTokenException", $oicToken);
             }
             
@@ -299,5 +297,4 @@ abstract class AbstractGenericOICResourceOwner implements ResourceOwnerInterface
 
         return $content;
     }
-
 }

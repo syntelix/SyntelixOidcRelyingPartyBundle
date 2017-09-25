@@ -4,6 +4,7 @@ namespace Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Tests\ResourceOwn
 
 use Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\ResourceOwner\GenericOICResourceOwner;
 use Symfony\Component\HttpFoundation\Request;
+
 /**
  * GenericOICResourceOwner
  *
@@ -11,8 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AbstractGenericOICResourceOwnerTest extends \PHPUnit_Framework_TestCase
 {
-
-    
     public function testShouldAuthenticationEndpointUrl()
     {
         $resourseOwner = $this->createGenericOICResourceOwner('http://localhost/login_check');
@@ -21,7 +20,7 @@ class AbstractGenericOICResourceOwnerTest extends \PHPUnit_Framework_TestCase
         $expected = "http://oic.com/auth?client_id=my_client_id&display=page&max_age=300&redirect_uri=http%3A%2F%2Flocalhost%2Flogin_check&response_type=code&scope=openid%20profil%20other&ui_locales=F_fr";
         $res = $resourseOwner->getAuthenticationEndpointUrl($request, 'plop_uri', array('display' => 'page'));
         
-        $this->assertEquals($expected, $res);            
+        $this->assertEquals($expected, $res);
     }
     
     public function testShouldReturnTokenEndpointUrl()
@@ -131,11 +130,10 @@ class AbstractGenericOICResourceOwnerTest extends \PHPUnit_Framework_TestCase
     
     
     private function createGenericOICResourceOwner(
-            $httpUtilsRV = "", 
+            $httpUtilsRV = "",
             $idTokenValidatorRV= true,
             $responseHandler = null)
-    {               
-        
+    {
         $httpUtils = $this->getMockBuilder('\Symfony\Component\Security\Http\HttpUtils')
                 ->disableOriginalConstructor()->getMock();
         $httpUtils->expects($this->atMost(2))
@@ -181,6 +179,5 @@ class AbstractGenericOICResourceOwnerTest extends \PHPUnit_Framework_TestCase
                         )
                     )
                 );
-    }            
-            
+    }
 }

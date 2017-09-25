@@ -2,11 +2,13 @@
 
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception;
 
+use InvalidArgumentException;
+
 /**
  * InvalidAuthorizationCodeException
  *
  */
-class InvalidAuthorizationCodeException extends \InvalidArgumentException
+class InvalidAuthorizationCodeException extends InvalidArgumentException
 {
     /**
      * {@inheritdoc}

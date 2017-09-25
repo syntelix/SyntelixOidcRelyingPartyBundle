@@ -11,7 +11,7 @@ use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Http\EntryPoint\OICEntryPoin
  */
 class OICEntryPointTest extends \PHPUnit_Framework_TestCase
 {
-     public function testStart()
+    public function testStart()
     {
         $request = $this->getMock('Symfony\Component\HttpFoundation\Request');
 

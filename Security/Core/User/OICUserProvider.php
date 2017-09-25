@@ -33,11 +33,11 @@ class OICUserProvider implements UserProviderInterface, UserFactoryInterface
      * {@inheritDoc}
      */
     public function loadUserByUsername($username)
-    {   
-        if($this->session->has($this->sessionKeyName . $username)) {
+    {
+        if ($this->session->has($this->sessionKeyName . $username)) {
             $user = $this->session->get($this->sessionKeyName . $username);
             
-            if($user->getUsername() === $username) {
+            if ($user->getUsername() === $username) {
                 return $user;
             }
         }
@@ -71,14 +71,12 @@ class OICUserProvider implements UserProviderInterface, UserFactoryInterface
      * {@inheritDoc}
      */
     public function createUser($username, array $roles, array $attributes)
-    {       
-
+    {
         $user = new OICUser($username, $roles, $attributes);
        
         $this->session->set($this->sessionKeyName . $username, $user);
         
         
-        return $user;  
-        
+        return $user;
     }
 }

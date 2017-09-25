@@ -19,5 +19,4 @@ class GenericOICResourceOwner extends AbstractGenericOICResourceOwner
     {
         return "generic";
     }
-
 }

@@ -6,7 +6,7 @@ namespace Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\User;
  * UserFactoryInterface
  *
  * Interface implemented by user providers able to create new users.
- * 
+ *
  * @author valérian Girard <valerian.girard@educagri.fr>
  */
 interface UserFactoryInterface

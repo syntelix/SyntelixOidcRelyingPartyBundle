@@ -23,7 +23,7 @@ class NonceHelperTest extends \PHPUnit_Framework_TestCase
         $nonce = $nonceHelper->buildNonceValue("amy", 'test');
                 
         $this->assertTrue(is_string($nonce));
-        $this->assertGreaterThan(1, strlen($nonce));            
+        $this->assertGreaterThan(1, strlen($nonce));
     }
     
     public function testBuildNonceValueGreaterThan255()
@@ -38,7 +38,7 @@ class NonceHelperTest extends \PHPUnit_Framework_TestCase
         $nonce = $nonceHelper->buildNonceValue(hash('SHA512', "amy") . hash('SHA512', "amy"), 'test');
                 
         $this->assertTrue(is_string($nonce));
-        $this->assertGreaterThan(1, strlen($nonce));            
+        $this->assertGreaterThan(1, strlen($nonce));
     }
     
     public function testCheckStateAndNonceShouldBeValid()
@@ -72,6 +72,5 @@ class NonceHelperTest extends \PHPUnit_Framework_TestCase
         $nonceHelper = new NonceHelper($ession, array("nonce" => true, "state" => true));
         
         $nonceHelper->checkStateAndNonce($request);
-    }   
-
+    }
 }

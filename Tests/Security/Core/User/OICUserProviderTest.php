@@ -7,12 +7,11 @@ use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\User\OICUser;
 
 /**
  * OICUserProviderTest
- * 
+ *
  * @author valérian Girard <valerian.girard@educagri.fr>
  */
 class OICUserProviderTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testLoadUserByUsername()
     {
         $username = 'amy.pond';
@@ -71,5 +70,4 @@ class OICUserProviderTest extends \PHPUnit_Framework_TestCase
 
         $oicUserProvider->refreshUser($oicUser);
     }
-
 }

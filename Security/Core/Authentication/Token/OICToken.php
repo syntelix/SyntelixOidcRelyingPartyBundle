@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\Authentication\Token\AbstractToken;
  * @author valérian Girard <valerian.girard@educagri.fr>
  */
 class OICToken extends AbstractToken
-{    
+{
     /**
      * @var array
      */
@@ -89,8 +89,8 @@ class OICToken extends AbstractToken
      * @param array $idToken The OpenId Connect ID Token
      */
     public function setIdToken($idToken)
-    {        
-        if($this->getUser() === null) {
+    {
+        if ($this->getUser() === null) {
             $this->setUser(new OICUser($idToken->claims['sub']));
         }
         
@@ -119,7 +119,6 @@ class OICToken extends AbstractToken
     public function setRawTokenData($token)
     {
         if (is_array($token)) {
-            
             $this->rawTokenData = $token;
             
             if (array_key_exists('access_token', $token)) {
@@ -151,7 +150,7 @@ class OICToken extends AbstractToken
     
     public function getUserinfo($key = null)
     {
-        if($key !== null) {
+        if ($key !== null) {
             if (array_key_exists($key, $this->userinfo)) {
                 return $this->userinfo[$key];
             } else {
@@ -246,7 +245,6 @@ class OICToken extends AbstractToken
                 $parent,
                 ) = $data;
         
-        parent::unserialize($parent);            
+        parent::unserialize($parent);
     }
-
 }

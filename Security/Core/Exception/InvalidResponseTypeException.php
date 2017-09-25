@@ -2,11 +2,13 @@
 
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception;
 
+use InvalidArgumentException;
+
 /**
  * InvalidResponseTypeException
  *
  */
-class InvalidResponseTypeException extends \InvalidArgumentException
+class InvalidResponseTypeException extends InvalidArgumentException
 {
     /**
      * {@inheritdoc}

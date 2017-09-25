@@ -2,7 +2,6 @@
 
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception;
 
-
 /**
  * InvalidClientOrSecretException
  *

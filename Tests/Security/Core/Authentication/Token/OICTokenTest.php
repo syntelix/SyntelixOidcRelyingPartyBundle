@@ -11,7 +11,6 @@ use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token\OI
  */
 class OICTokenTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testIsAuthnticated()
     {
         $oicToken = new OICToken();
@@ -99,7 +98,7 @@ class OICTokenTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected['access_token'], $unserialized->getAccessToken());
         $this->assertEquals($expected['refresh_token'], $unserialized->getRefreshToken());
         $this->assertEquals($expected['expires_in'], $unserialized->getExpiresIn());
-        $this->assertEquals($expected['id_token'], $unserialized->getIdToken());        
+        $this->assertEquals($expected['id_token'], $unserialized->getIdToken());
     }
     
     private function getIdToken()
@@ -108,5 +107,4 @@ class OICTokenTest extends \PHPUnit_Framework_TestCase
         $claims->claims = array('sub' => "username");
         return $claims;
     }
-
 }

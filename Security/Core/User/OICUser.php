@@ -9,7 +9,7 @@ use Symfony\Component\Security\Core\User\EquatableInterface;
 /**
  * OICUser
  *
- * @author 
+ * @author
  */
 class OICUser implements AdvancedUserInterface, \Serializable, EquatableInterface
 {
@@ -44,7 +44,7 @@ class OICUser implements AdvancedUserInterface, \Serializable, EquatableInterfac
      */
     public function getRoles()
     {
-        if(count($this->roles) == 0) {
+        if (count($this->roles) == 0) {
             return array('ROLE_USER', 'ROLE_OIC_USER');
         }
         return $this->roles;
@@ -145,7 +145,6 @@ class OICUser implements AdvancedUserInterface, \Serializable, EquatableInterfac
      */
     public function isEqualTo(UserInterface $user)
     {
-        
     }
 
     /**
@@ -173,5 +172,4 @@ class OICUser implements AdvancedUserInterface, \Serializable, EquatableInterfac
     {
         return $this->getUsername();
     }
-
 }

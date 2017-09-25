@@ -13,7 +13,6 @@ use Syntelix\Bundle\OidcRelyingPartyBundle\DependencyInjection\SyntelixOidcRelyi
  */
 class SyntelixOidcRelyingPartyExtensionTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testDefault()
     {
         $container = new ContainerBuilder();
@@ -36,7 +35,7 @@ class SyntelixOidcRelyingPartyExtensionTest extends \PHPUnit_Framework_TestCase
             "syntelix_oic_rp.resource_owner.generic"
         );
 
-        foreach($definitionArray as $definition) {
+        foreach ($definitionArray as $definition) {
             $this->assertTrue($container->hasDefinition($definition));
         }
         
@@ -83,6 +82,4 @@ EOF;
     {
         $this->assertEquals($value, $this->containerBuilder->getParameter($key), sprintf('%s parameter is correct', $key));
     }
-    
 }
-        

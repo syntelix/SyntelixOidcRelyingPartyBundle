@@ -11,6 +11,4 @@ class LogoutController extends Controller
     {
         return $this->get('syntelix_oic_rp.logout')->logout($request);
     }
-    
-    
 }

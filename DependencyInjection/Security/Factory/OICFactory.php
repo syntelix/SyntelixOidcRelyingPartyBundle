@@ -14,7 +14,6 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 class OICFactory extends AbstractFactory
 {
-
     public function addConfiguration(\Symfony\Component\Config\Definition\Builder\NodeDefinition $node)
     {
         parent::addConfiguration($node);
@@ -24,8 +23,12 @@ class OICFactory extends AbstractFactory
                 ->arrayNode('created_users_roles')
                     ->treatNullLike(array())
                     ->beforeNormalization()
-                        ->ifTrue(function($v) { return !is_array($v); })
-                        ->then(function($v) { return array($v); })
+                        ->ifTrue(function ($v) {
+                            return !is_array($v);
+                        })
+                        ->then(function ($v) {
+                            return array($v);
+                        })
                     ->end()
                     ->prototype('scalar')->end()
                     ->defaultValue(array("ROLE_OIC_USER"))
@@ -95,7 +98,7 @@ class OICFactory extends AbstractFactory
 
     /**
      * {@inheritDoc}
-     * Allow to add a custom configuration in a firewall's configuration 
+     * Allow to add a custom configuration in a firewall's configuration
      * in the security.yml file.
      */
     public function getKey()
@@ -110,5 +113,4 @@ class OICFactory extends AbstractFactory
     {
         return 'pre_auth';
     }
-
 }

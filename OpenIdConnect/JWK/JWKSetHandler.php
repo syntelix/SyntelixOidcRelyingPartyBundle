@@ -13,7 +13,7 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
 /**
  * JWKSetHandler
- * 
+ *
  *
  * @author valérian Girard <valerian.girard@educagri.fr>
  */
@@ -52,9 +52,9 @@ class JWKSetHandler
 
     public function getJwk($jku = null)
     {
-        if($jku === null && $this->jwkUrl === null) {
+        if ($jku === null && $this->jwkUrl === null) {
             return false;
-        } else if($jku === null && $this->jwkUrl !== null) {
+        } elseif ($jku === null && $this->jwkUrl !== null) {
             $jku = $this->jwkUrl;
         }
         
@@ -74,7 +74,7 @@ class JWKSetHandler
         
         $this->jwkFileName = md5($url);
         
-        if(!$fs->exists($this->cacheDir . $this->jwkFileFolder . $this->jwkFileName)) {
+        if (!$fs->exists($this->cacheDir . $this->jwkFileFolder . $this->jwkFileName)) {
             $fs->mkdir($this->cacheDir . $this->jwkFileFolder);
             $this->makeCache();
             return;
@@ -97,7 +97,7 @@ class JWKSetHandler
             $needToBeUpdate |= $ctime < $now;
         }
 
-        if( (bool) $needToBeUpdate === true ) {
+        if ((bool) $needToBeUpdate === true) {
             $this->makeCache();
             return;
         }
@@ -106,13 +106,12 @@ class JWKSetHandler
     
     private function makeCache()
     {
-        $request = new HttpClientRequest(RequestInterface::METHOD_GET, $this->jwkUrl);        
+        $request = new HttpClientRequest(RequestInterface::METHOD_GET, $this->jwkUrl);
         $response = new HttpClientResponse();
         $this->httpClient->send($request, $response);
         
-        if($response->isOk()) {
+        if ($response->isOk()) {
             file_put_contents($this->cacheDir . $this->jwkFileFolder . $this->jwkFileName, $response->getContent());
         }
     }
-
 }

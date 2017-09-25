@@ -2,11 +2,13 @@
 
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception;
 
+use InvalidArgumentException;
+
 /**
  * InvalidIdSignatureException
  *
  */
-class InvalidIdSignatureException extends \InvalidArgumentException
+class InvalidIdSignatureException extends InvalidArgumentException
 {
     /**
      * {@inheritdoc}

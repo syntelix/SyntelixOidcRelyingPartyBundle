@@ -35,5 +35,4 @@ class SyntelixOidcRelyingPartyBundle extends Bundle
         }
         return $this->extension;
     }
-
 }

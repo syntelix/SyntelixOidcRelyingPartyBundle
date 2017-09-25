@@ -33,7 +33,7 @@ class NonceHelper
     /**
      * this method generate a nonce/state value, store it in a session and return
      * the string to put in http request.
-     * 
+     *
      * @param type $uniqueValue
      * @param type $type
      * @return string
@@ -48,31 +48,27 @@ class NonceHelper
 
     /**
      * Check validity for nonce and state value
-     * 
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @throws InvalidNonceException
      */
     public function checkStateAndNonce(Request $request)
     {
         $checkList = array();
-        if($this->isNonceEnabled()) {
+        if ($this->isNonceEnabled()) {
             $checkList[] = "nonce";
         }
-        if($this->isStateEnabled()) {
+        if ($this->isStateEnabled()) {
             $checkList[] = "state";
         }
         
         foreach ($checkList as $type) {
             if ($request->query->has($type)) {
-
                 if (!$this->isNonceValid($type, $request->query->get($type))) {
-
                     throw new InvalidNonceException(
                     sprintf("the %s value is not the one expected", $type)
                     );
-                    
                 }
-                
             } else {
                 $this->session->remove("auth.oic." . $type);
             }
@@ -81,8 +77,8 @@ class NonceHelper
 
     /**
      * Generate a nonce/state value.
-     * 
-     * @param string $uniqueValue 
+     *
+     * @param string $uniqueValue
      * @return string
      */
     public function generateNonce($uniqueValue)
@@ -100,7 +96,7 @@ class NonceHelper
 
     /**
      * Check if the nonce/state value is the right one
-     * 
+     *
      * @param string $type nonce ou state
      * @param type $uniqueValue the same as this passed to the generateNonce mehode
      * @param type $responseNonce the nonce reply by the OpenID Connect Provider

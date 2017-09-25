@@ -5,6 +5,7 @@ namespace Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Tests\JWK;
 use Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\JWK\JWKSetHandler;
 use Syntelix\Bundle\OidcRelyingPartyBundle\Tests\Mocks\HttpClientMock;
 use Buzz\Message\RequestInterface;
+
 /**
  * JWKSetHandler
  *
@@ -12,7 +13,6 @@ use Buzz\Message\RequestInterface;
  */
 class JWKSetHandlerTest extends \PHPUnit_Framework_TestCase
 {
-
     public static function setUpBeforeClass()
     {
         parent::setUpBeforeClass();
@@ -33,12 +33,11 @@ class JWKSetHandlerTest extends \PHPUnit_Framework_TestCase
 
         $fs = new \Symfony\Component\Filesystem\Filesystem();
 
-        if(is_file($folder . "op.jwk")) {
+        if (is_file($folder . "op.jwk")) {
             unlink($folder . "op.jwk");
         }
 
         $fs->remove(sys_get_temp_dir() . "/syntelix");
-
     }
 
     public function testGetJwkShoulReturnFalse()
@@ -90,5 +89,4 @@ class JWKSetHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($httpClient->getRequest());
         $this->assertEquals($expected, $res);
     }
-
 }
