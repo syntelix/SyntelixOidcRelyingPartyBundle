@@ -87,8 +87,7 @@ class NonceHelper
      */
     public function generateNonce($uniqueValue)
     {
-        $size = mcrypt_get_iv_size(MCRYPT_CAST_256, MCRYPT_MODE_CFB);
-        $hash = bin2hex(mcrypt_create_iv($size, MCRYPT_DEV_URANDOM));
+        $hash = random_bytes(10);
         $nonce = sprintf("%s-%s", $hash, \JOSE_URLSafeBase64::encode($uniqueValue));
         $nonceEnc = \JOSE_URLSafeBase64::encode($nonce);
 
