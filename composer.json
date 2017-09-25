@@ -24,8 +24,7 @@
         "php": ">=5.5.9",
         "symfony/symfony": ">=3.2",
         "kriswallsmith/buzz": "~0.7",
-        "gree/jose": "~2.0",
-        "ext-mcrypt":  "*"
+        "gree/jose": "~2.0"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.2"
