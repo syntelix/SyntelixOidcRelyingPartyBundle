@@ -176,12 +176,7 @@ class OICResponseHandler
             if (substr($jwt->header['alg'], 0, 2) == 'HS') {
                 $key = $this->options['client_secret'];
             } elseif (substr($jwt->header['alg'], 0, 2) == 'RS') {
-            
-                // TODO add the ability to use another jku. Don't forget the "kid" attribute.
-                // If the jku content more than one JWK, the KID must be used for select the right one
-                // if(array_key_exists('jku', $jwt->header))
-                
-                $jwkSetJsonObject = $this->jwkHandler->getJwk();
+				$jwkSetJsonObject = $this->jwkHandler->getJwk();
                 $jwkSet = new \JOSE_JWKSet();
                 $jwkSet->setJwksFromJsonObject($jwkSetJsonObject);
                 $key = $jwkSet->filterJwk("use", \JOSE_JWK::JWK_USE_SIG);
