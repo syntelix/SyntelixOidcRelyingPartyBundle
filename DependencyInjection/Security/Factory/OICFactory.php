@@ -5,7 +5,6 @@ namespace Syntelix\Bundle\OidcRelyingPartyBundle\DependencyInjection\Security\Fa
 use Symfony\Bundle\SecurityBundle\DependencyInjection\Security\Factory\AbstractFactory;
 use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\DefinitionDecorator;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
@@ -48,7 +47,7 @@ class OICFactory extends AbstractFactory
         $providerId = 'security.authentication.provider.oic_rp.' . $id;
 
         $container
-                ->setDefinition($providerId, new DefinitionDecorator('syntelix_oic_rp.authentication.provider'))
+                ->setDefinition($providerId, new ChildDefinition('syntelix_oic_rp.authentication.provider'))
                 ->addArgument(new Reference($userProviderId))
                 ->addArgument(new Reference('syntelix_oic_rp.resource_owner.generic'))
                 ->addArgument($config['create_users'])
