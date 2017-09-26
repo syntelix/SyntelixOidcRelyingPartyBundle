@@ -2,6 +2,7 @@
 
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\Tests\Security\Http\EntryPoint;
 
+use PHPUnit\Framework\TestCase;
 use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Http\EntryPoint\OICEntryPoint;
 
 /**
@@ -9,7 +10,7 @@ use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Http\EntryPoint\OICEntryPoin
  *
  * @author valérian Girard <valerian.girard@educagri.fr>
  */
-class OICEntryPointTest extends \PHPUnit_Framework_TestCase
+class OICEntryPointTest extends TestCase
 {
     public function testStart()
     {

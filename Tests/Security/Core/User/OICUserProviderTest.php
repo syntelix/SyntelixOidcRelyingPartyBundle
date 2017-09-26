@@ -2,6 +2,7 @@
 
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\Test\Security\Core\User;
 
+use PHPUnit\Framework\TestCase;
 use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\User\OICUserProvider;
 use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\User\OICUser;
 
@@ -10,7 +11,7 @@ use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\User\OICUser;
  *
  * @author valérian Girard <valerian.girard@educagri.fr>
  */
-class OICUserProviderTest extends \PHPUnit_Framework_TestCase
+class OICUserProviderTest extends TestCase
 {
     public function testLoadUserByUsername()
     {

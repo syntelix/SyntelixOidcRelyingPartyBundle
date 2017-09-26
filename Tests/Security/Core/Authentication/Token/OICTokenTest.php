@@ -2,6 +2,7 @@
 
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\Tests\Security\Core\Authentication\Token;
 
+use PHPUnit\Framework\TestCase;
 use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token\OICToken;
 
 /**
@@ -9,7 +10,7 @@ use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token\OI
  *
  * @author valérian Girard <valerian.girard@educagri.fr>
  */
-class OICTokenTest extends \PHPUnit_Framework_TestCase
+class OICTokenTest extends TestCase
 {
     public function testIsAuthnticated()
     {

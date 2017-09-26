@@ -2,6 +2,7 @@
 
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\Tests\DependencyInjection;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Yaml\Parser;
 use Syntelix\Bundle\OidcRelyingPartyBundle\DependencyInjection\SyntelixOidcRelyingPartyExtension;
@@ -11,7 +12,7 @@ use Syntelix\Bundle\OidcRelyingPartyBundle\DependencyInjection\SyntelixOidcRelyi
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class SyntelixOidcRelyingPartyExtensionTest extends \PHPUnit_Framework_TestCase
+class SyntelixOidcRelyingPartyExtensionTest extends TestCase
 {
     public function testDefault()
     {

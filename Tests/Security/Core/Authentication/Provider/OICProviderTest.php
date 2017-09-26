@@ -2,6 +2,7 @@
 
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\Tests\Security\Core\Authentication\Provider;
 
+use PHPUnit\Framework\TestCase;
 use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Provider\OICProvider;
 
 /**
@@ -9,7 +10,7 @@ use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Provider
  *
  * @author valérian Girard <valerian.girard@educagri.fr>
  */
-class OICProviderTest extends \PHPUnit_Framework_TestCase
+class OICProviderTest extends TestCase
 {
     public function testAuthenticateShoulReturnToken()
     {

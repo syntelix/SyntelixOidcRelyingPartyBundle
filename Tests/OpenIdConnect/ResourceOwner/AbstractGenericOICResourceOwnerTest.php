@@ -2,6 +2,7 @@
 
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Tests\ResourceOwner;
 
+use PHPUnit\Framework\TestCase;
 use Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\ResourceOwner\GenericOICResourceOwner;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -10,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @author valérian Girard <valerian.girard@educagri.fr>
  */
-class AbstractGenericOICResourceOwnerTest extends \PHPUnit_Framework_TestCase
+class AbstractGenericOICResourceOwnerTest extends TestCase
 {
     public function testShouldAuthenticationEndpointUrl()
     {

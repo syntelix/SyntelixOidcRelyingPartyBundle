@@ -2,6 +2,7 @@
 
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Tests\Constraint;
 
+use PHPUnit\Framework\TestCase;
 use Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Constraint\IDTokenValidator;
 
 /**
@@ -9,7 +10,7 @@ use Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Constraint\IDTokenValid
  *
  * @author valérian Girard <valerian.girard@educagri.fr>
  */
-class IDTokenValidatorTest extends \PHPUnit_Framework_TestCase
+class IDTokenValidatorTest extends TestCase
 {
     private $options = array(
         "issuer" => "anIssuer",

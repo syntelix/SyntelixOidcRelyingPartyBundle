@@ -2,6 +2,7 @@
 
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Tests\JWK;
 
+use PHPUnit\Framework\TestCase;
 use Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\JWK\JWKSetHandler;
 use Syntelix\Bundle\OidcRelyingPartyBundle\Tests\Mocks\HttpClientMock;
 use Buzz\Message\RequestInterface;
@@ -11,7 +12,7 @@ use Buzz\Message\RequestInterface;
  *
  * @author valérian Girard <valerian.girard@educagri.fr>
  */
-class JWKSetHandlerTest extends \PHPUnit_Framework_TestCase
+class JWKSetHandlerTest extends TestCase
 {
     public static function setUpBeforeClass()
     {

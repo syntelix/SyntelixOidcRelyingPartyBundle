@@ -2,6 +2,7 @@
 
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -9,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @author valérian Girard <valerian.girard@educagri.fr>
  */
-class NonceHelperTest extends \PHPUnit_Framework_TestCase
+class NonceHelperTest extends TestCase
 {
     public function testBuildNonceValue()
     {

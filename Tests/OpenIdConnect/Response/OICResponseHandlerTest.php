@@ -3,19 +3,16 @@
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Tests\Response;
 
 use Buzz\Message\Response;
+use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_MockObject_MockObject;
-use PHPUnit_Framework_TestCase;
 use Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Response\OICResponseHandler;
-use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception\InvalidAuthorizationCodeException;
-use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception\InvalidIdSignatureException;
-use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception\InvalidRequestException;
 
 /**
  * OICResponseHandler
  * @group OICResponseHandler
  * @author valérian Girard <valerian.girard@educagri.fr>
  */
-class OICResponseHandlerTest extends PHPUnit_Framework_TestCase
+class OICResponseHandlerTest extends TestCase
 {
     /**
      * @expectedException Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception\InvalidRequestException
