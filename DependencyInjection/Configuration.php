@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * This file is part of the SyntelixOidcRelayingPartyBundle package.
+ */
+
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -7,63 +11,63 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 
 /**
- * This is the class that validates and merges configuration from your app/config files
+ * This is the class that validates and merges configuration from your app/config files.
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html#cookbook-bundles-extension-config-class}
  */
 class Configuration implements ConfigurationInterface
 {
-	/**
-	 * @param $display
-	 *
-	 * @return bool
-	 */
-	public static function isHttpMethodSupported($display)
+    /**
+     * @param $display
+     *
+     * @return bool
+     */
+    public static function isHttpMethodSupported($display)
     {
         $displays = array(
             'POST',
-            'GET'
+            'GET',
             );
-        
+
         return in_array($display, $displays);
     }
 
-	/**
-	 * @param $display
-	 *
-	 * @return bool
-	 */
-	public static function isDisplaySupported($display)
+    /**
+     * @param $display
+     *
+     * @return bool
+     */
+    public static function isDisplaySupported($display)
     {
         $displays = array(
             'page',
             'popup',
             'touch',
-            'wap'
+            'wap',
             );
-        
+
         return in_array($display, $displays);
     }
 
-	/**
-	 * @param $prompt
-	 *
-	 * @return bool
-	 */
-	public static function isPromptSupported($prompt)
+    /**
+     * @param $prompt
+     *
+     * @return bool
+     */
+    public static function isPromptSupported($prompt)
     {
         $displays = array(
             'none',
             'login',
             'consent',
-            'select_account'
+            'select_account',
             );
-        
+
         return in_array($prompt, $displays);
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getConfigTreeBuilder()
     {
@@ -73,7 +77,7 @@ class Configuration implements ConfigurationInterface
         $this->addHttpClientConfiguration($rootNode);
         $this->addSignatureConfiguration($rootNode);
         $this->addReplayAttackParadeConfiguration($rootNode);
-        
+
         $rootNode
             ->children()
                 ->scalarNode('base_url')->end()
@@ -103,7 +107,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('authentication_ttl')->defaultValue(300)->end()
                 // @see http://openid.net/specs/openid-connect-core-1_0.html#AuthRequest
                 ->scalarNode('ui_locales')->end()
-                
+
                 // Define the method (POST, GET) used to request the Enduserinfo Endpoint of the OIDC Provider
                 ->scalarNode('enduserinfo_request_method')
                         ->validate()
@@ -112,8 +116,8 @@ class Configuration implements ConfigurationInterface
                         })
                         ->thenInvalid('Unknown request mathod "%s".')
                     ->end()
-                    ->defaultValue("POST")->end()
-                
+                    ->defaultValue('POST')->end()
+
                 // ASCII string value that specifies how the Authorization Server
                 // displays the authentication and consent user interface pages
                 // to the End-User. The defined values are:
@@ -126,7 +130,7 @@ class Configuration implements ConfigurationInterface
                         ->thenInvalid('Unknown display type "%s".')
                     ->end()
                 ->end()
-                                
+
                 ->scalarNode('prompt')
                     ->validate()
                         ->ifTrue(function ($display) {
@@ -135,7 +139,7 @@ class Configuration implements ConfigurationInterface
                         ->thenInvalid('Unknown prompt type "%s".')
                     ->end()
                 ->end()
-                
+
                 ->scalarNode('scope')
                     ->validate()
                         ->ifTrue(function ($v) {
@@ -189,14 +193,14 @@ class Configuration implements ConfigurationInterface
                 ->end()
             ->end()
         ;
-                                    
+
         return $treeBuilder;
     }
 
-	/**
-	 * @param ArrayNodeDefinition $node
-	 */
-	private function addHttpClientConfiguration(ArrayNodeDefinition $node)
+    /**
+     * @param ArrayNodeDefinition $node
+     */
+    private function addHttpClientConfiguration(ArrayNodeDefinition $node)
     {
         $node
             ->children()
@@ -214,10 +218,10 @@ class Configuration implements ConfigurationInterface
         ;
     }
 
-	/**
-	 * @param ArrayNodeDefinition $node
-	 */
-	private function addSignatureConfiguration(ArrayNodeDefinition $node)
+    /**
+     * @param ArrayNodeDefinition $node
+     */
+    private function addSignatureConfiguration(ArrayNodeDefinition $node)
     {
         $node
             ->children()
@@ -232,10 +236,10 @@ class Configuration implements ConfigurationInterface
         ;
     }
 
-	/**
-	 * @param ArrayNodeDefinition $node
-	 */
-	private function addReplayAttackParadeConfiguration(ArrayNodeDefinition $node)
+    /**
+     * @param ArrayNodeDefinition $node
+     */
+    private function addReplayAttackParadeConfiguration(ArrayNodeDefinition $node)
     {
         $node
             ->children()

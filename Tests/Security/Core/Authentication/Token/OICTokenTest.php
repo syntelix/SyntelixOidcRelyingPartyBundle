@@ -1,12 +1,16 @@
 <?php
 
+/*
+ * This file is part of the SyntelixOidcRelayingPartyBundle package.
+ */
+
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\Tests\Security\Core\Authentication\Token;
 
 use PHPUnit\Framework\TestCase;
 use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token\OICToken;
 
 /**
- * OpenId Connect Token
+ * OpenId Connect Token.
  *
  * @author valérian Girard <valerian.girard@educagri.fr>
  */
@@ -17,7 +21,7 @@ class OICTokenTest extends TestCase
         $oicToken = new OICToken();
         $this->assertFalse($oicToken->isAuthenticated());
 
-        $oicToken = new OICToken(array("ROLE_FAKE"));
+        $oicToken = new OICToken(array('ROLE_FAKE'));
         $this->assertFalse($oicToken->isAuthenticated());
     }
 
@@ -25,7 +29,7 @@ class OICTokenTest extends TestCase
     {
         $oicToken = new OICToken();
 
-        $oicToken->setRawTokenData("some string value");
+        $oicToken->setRawTokenData('some string value');
 
         $this->assertNull($oicToken->getRawTokenData());
         $this->assertNull($oicToken->getAccessToken());
@@ -37,12 +41,12 @@ class OICTokenTest extends TestCase
     public function testSetRawTokenDataShouldBeSet()
     {
         $oicToken = new OICToken();
-        
+
         $expected = array(
             'access_token' => 'access_token_value',
             'refresh_token' => 'refresh_token_value',
             'expires_in' => 'expires_in_value',
-            'id_token' => $this->getIdToken()
+            'id_token' => $this->getIdToken(),
         );
 
         $oicToken->setRawTokenData($expected);
@@ -59,7 +63,7 @@ class OICTokenTest extends TestCase
         $userinfo = array(
             'sub' => 'amy.pond',
             'name' => 'Amelia Pond',
-            'phone_number' => '123-456-7890'
+            'phone_number' => '123-456-7890',
         );
 
         $oicToken = new OICToken();
@@ -76,11 +80,11 @@ class OICTokenTest extends TestCase
 
         $oicToken->setExpiresIn(-30);
         $this->assertTrue($oicToken->isExpired());
-        
+
         $oicToken->setExpiresIn(30);
         $this->assertFalse($oicToken->isExpired());
     }
-    
+
     public function testSerialize()
     {
         $oicToken = new OICToken();
@@ -89,23 +93,24 @@ class OICTokenTest extends TestCase
             'access_token' => 'access_token_value',
             'refresh_token' => 'refresh_token_value',
             'expires_in' => 'expires_in_value',
-            'id_token' => $this->getIdToken()
+            'id_token' => $this->getIdToken(),
         );
 
         $oicToken->setRawTokenData($expected);
-        
+
         $unserialized = unserialize(serialize($oicToken));
-        
+
         $this->assertEquals($expected['access_token'], $unserialized->getAccessToken());
         $this->assertEquals($expected['refresh_token'], $unserialized->getRefreshToken());
         $this->assertEquals($expected['expires_in'], $unserialized->getExpiresIn());
         $this->assertEquals($expected['id_token'], $unserialized->getIdToken());
     }
-    
+
     private function getIdToken()
     {
         $claims = new \stdClass();
-        $claims->claims = array('sub' => "username");
+        $claims->claims = array('sub' => 'username');
+
         return $claims;
     }
 }

@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * This file is part of the SyntelixOidcRelayingPartyBundle package.
+ */
+
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\DependencyInjection\Security\Factory;
 
 use Symfony\Bundle\SecurityBundle\DependencyInjection\Security\Factory\AbstractFactory;
@@ -9,19 +13,19 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
- * OICFactory
+ * OICFactory.
  *
  * @author valérian Girard <valerian.girard@educagri.fr>
  */
 class OICFactory extends AbstractFactory
 {
-	/**
-	 * @param NodeDefinition $node
-	 */
-	public function addConfiguration( NodeDefinition $node)
+    /**
+     * @param NodeDefinition $node
+     */
+    public function addConfiguration(NodeDefinition $node)
     {
         parent::addConfiguration($node);
-        
+
         $node->children()
             ->scalarNode('create_users')->defaultFalse()->end()
             ->arrayNode('created_users_roles')
@@ -35,17 +39,17 @@ class OICFactory extends AbstractFactory
                     })
                 ->end()
                 ->prototype('scalar')->end()
-                ->defaultValue(array("ROLE_OIC_USER"))->end()
+                ->defaultValue(array('ROLE_OIC_USER'))->end()
             ->end()
         ;
     }
-    
+
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function createAuthProvider(ContainerBuilder $container, $id, $config, $userProviderId)
     {
-        $providerId = 'security.authentication.provider.oic_rp.' . $id;
+        $providerId = 'security.authentication.provider.oic_rp.'.$id;
 
         $container
                 ->setDefinition($providerId, new ChildDefinition('syntelix_oic_rp.authentication.provider'))
@@ -59,11 +63,11 @@ class OICFactory extends AbstractFactory
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function createEntryPoint($container, $id, $config, $defaultEntryPoint)
     {
-        $entryPointId = 'security.authentication.entrypoint.oic_rp.' . $id;
+        $entryPointId = 'security.authentication.entrypoint.oic_rp.'.$id;
 
         $container
             ->setDefinition($entryPointId, new ChildDefinition('syntelix_oic_rp.authentication.entrypoint'))
@@ -74,7 +78,7 @@ class OICFactory extends AbstractFactory
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function createListener($container, $id, $config, $userProvider)
     {
@@ -91,7 +95,7 @@ class OICFactory extends AbstractFactory
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function getListenerId()
     {
@@ -99,7 +103,7 @@ class OICFactory extends AbstractFactory
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      * Allow to add a custom configuration in a firewall's configuration
      * in the security.yml file.
      */
@@ -109,7 +113,7 @@ class OICFactory extends AbstractFactory
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getPosition()
     {

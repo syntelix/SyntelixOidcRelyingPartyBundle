@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * This file is part of the SyntelixOidcRelayingPartyBundle package.
+ */
+
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\ResourceOwner;
 
 use Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\ResourceOwnerInterface;
@@ -19,7 +23,7 @@ use Symfony\Component\Security\Core\Exception\AuthenticationServiceException;
 use Psr\Log\LoggerInterface;
 
 /**
- * GenericOICResourceOwner
+ * GenericOICResourceOwner.
  *
  * @author valérian Girard <valerian.girard@educagri.fr>
  */
@@ -49,29 +53,29 @@ abstract class AbstractGenericOICResourceOwner implements ResourceOwnerInterface
      * @var NonceHelper
      */
     private $nonceHelper;
-    
+
     /**
      * @var array
      */
     private $options = array();
-    
+
     /**
      * @var LoggerInterface
      */
     private $logger;
 
-	/**
-	 * AbstractGenericOICResourceOwner constructor.
-	 *
-	 * @param HttpUtils $httpUtils
-	 * @param AbstractCurl $httpClient
-	 * @param ValidatorInterface $idTokenValidator
-	 * @param OICResponseHandler $responseHandler
-	 * @param NonceHelper $nonceHelper
-	 * @param $options
-	 * @param LoggerInterface|null $logger
-	 */
-	public function __construct(
+    /**
+     * AbstractGenericOICResourceOwner constructor.
+     *
+     * @param HttpUtils          $httpUtils
+     * @param AbstractCurl       $httpClient
+     * @param ValidatorInterface $idTokenValidator
+     * @param OICResponseHandler $responseHandler
+     * @param NonceHelper        $nonceHelper
+     * @param $options
+     * @param LoggerInterface|null $logger
+     */
+    public function __construct(
             HttpUtils $httpUtils, AbstractCurl $httpClient,
             ValidatorInterface $idTokenValidator,
             OICResponseHandler $responseHandler,
@@ -84,19 +88,18 @@ abstract class AbstractGenericOICResourceOwner implements ResourceOwnerInterface
         $this->nonceHelper = $nonceHelper;
         $this->logger = $logger;
 
-
-        if (array_key_exists("endpoints_url", $options)) {
-            $options["authorization_endpoint_url"] = $options["endpoints_url"]["authorization"];
-            $options["token_endpoint_url"] = $options["endpoints_url"]["token"];
-            $options["userinfo_endpoint_url"] = $options["endpoints_url"]["userinfo"];
-            unset($options["endpoints_url"]);
+        if (array_key_exists('endpoints_url', $options)) {
+            $options['authorization_endpoint_url'] = $options['endpoints_url']['authorization'];
+            $options['token_endpoint_url'] = $options['endpoints_url']['token'];
+            $options['userinfo_endpoint_url'] = $options['endpoints_url']['userinfo'];
+            unset($options['endpoints_url']);
         }
 
         $this->options = $options;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getAuthenticationEndpointUrl(Request $request, $redirectUri = 'login_check', array $extraParameters = array())
     {
@@ -105,17 +108,17 @@ abstract class AbstractGenericOICResourceOwner implements ResourceOwnerInterface
             'response_type' => 'code',
             'redirect_uri' => $this->httpUtils->generateUri($request, $redirectUri),
             'scope' => $this->options['scope'],
-            'max_age' => $this->options['authentication_ttl']
+            'max_age' => $this->options['authentication_ttl'],
         );
 
         if ($this->nonceHelper->isNonceEnabled()) {
             $urlParameters['nonce'] = $this->nonceHelper->buildNonceValue($request->getClientIp());
         }
-        
+
         if ($this->nonceHelper->isStateEnabled()) {
-            $urlParameters['state'] = $this->nonceHelper->buildNonceValue($request->getClientIp(), "state");
+            $urlParameters['state'] = $this->nonceHelper->buildNonceValue($request->getClientIp(), 'state');
         }
-        
+
         if ($this->options['authentication_ttl'] !== null && $this->options['authentication_ttl'] > 0) {
             $urlParameters['max_age'] = $this->options['authentication_ttl'];
         }
@@ -138,7 +141,7 @@ abstract class AbstractGenericOICResourceOwner implements ResourceOwnerInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getTokenEndpointUrl()
     {
@@ -146,7 +149,7 @@ abstract class AbstractGenericOICResourceOwner implements ResourceOwnerInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getUserinfoEndpointUrl()
     {
@@ -154,7 +157,7 @@ abstract class AbstractGenericOICResourceOwner implements ResourceOwnerInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function authenticateUser(Request $request)
     {
@@ -170,13 +173,13 @@ abstract class AbstractGenericOICResourceOwner implements ResourceOwnerInterface
     }
 
     /**
-     * Call the OpenID Connect Provider to exchange a code value against an id_token and an access_token
+     * Call the OpenID Connect Provider to exchange a code value against an id_token and an access_token.
      *
      * @see http://openid.net/specs/openid-connect-basic-1_0.html#ObtainingTokens
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param OICToken $oicToken
-     * @param type $code
+     * @param OICToken                                  $oicToken
+     * @param type                                      $code
      */
     protected function getIdTokenAndAccessToken(Request $request, OICToken $oicToken, $code)
     {
@@ -184,14 +187,14 @@ abstract class AbstractGenericOICResourceOwner implements ResourceOwnerInterface
 
         $postParameters = array(
             'grant_type' => 'authorization_code',
-            'code' => $code
+            'code' => $code,
         );
-        
+
         $this->retrieveIdTokenAndAccessToken($oicToken, $postParameters);
     }
-    
+
     /**
-     * Call the OpenID Connect Provider to exchange a refresh_token value against an id_token and an access_token
+     * Call the OpenID Connect Provider to exchange a refresh_token value against an id_token and an access_token.
      *
      * @param OICToken $oicToken
      */
@@ -199,69 +202,66 @@ abstract class AbstractGenericOICResourceOwner implements ResourceOwnerInterface
     {
         $postParameters = array(
             'grant_type' => 'refresh_token',
-            'refresh_token' => $oicToken->getRefreshToken()
+            'refresh_token' => $oicToken->getRefreshToken(),
         );
-        
+
         $this->retrieveIdTokenAndAccessToken($oicToken, $postParameters);
     }
 
-	/**
-	 * makes the request to the OpenID Connect Provider for get back an Access Token and an ID Token
-	 *
-	 * @param OICToken $oicToken
-	 * @param array $parameters
-	 *
-	 * @param string $redirectUri
-	 */
+    /**
+     * makes the request to the OpenID Connect Provider for get back an Access Token and an ID Token.
+     *
+     * @param OICToken $oicToken
+     * @param array    $parameters
+     * @param string   $redirectUri
+     */
     private function retrieveIdTokenAndAccessToken(OICToken $oicToken, $parameters, $redirectUri = 'login_check')
     {
         $parameters['redirect_uri'] = $this->httpUtils->generateUri(new Request(), $redirectUri);
-        
+
         $postParametersQuery = http_build_query($parameters);
-        
+
         $headers = array(
             'User-Agent: SyntelixOidcRelyingPartyBundle',
             'Content-Type: application/x-www-form-urlencoded',
-            'Content-Length: ' . strlen($postParametersQuery)
+            'Content-Length: '.strlen($postParametersQuery),
         );
 
         $request = new HttpClientRequest(RequestInterface::METHOD_POST, $this->getTokenEndpointUrl());
         $request->setHeaders($headers);
         $request->setContent($postParametersQuery);
 
-                
         $response = new HttpClientResponse();
-        
-        $this->httpClient->setOption(CURLOPT_USERPWD, $this->options['client_id'] . ':' . $this->options['client_secret']);
+
+        $this->httpClient->setOption(CURLOPT_USERPWD, $this->options['client_id'].':'.$this->options['client_secret']);
         $this->httpClient->send($request, $response);
-        
+
         $content = $this->responseHandler->handleTokenAndAccessTokenResponse($response);
-        
+
         // Apply validation describe here: http://openid.net/specs/openid-connect-basic-1_0.html#IDTokenValidation
         $this->idTokenValidator->setIdToken($content['id_token']);
         if (!$this->idTokenValidator->isValid()) {
-            $errors = sprintf("%s", implode(", ", $this->idTokenValidator->getErrors()));
-            
+            $errors = sprintf('%s', implode(', ', $this->idTokenValidator->getErrors()));
+
             if ($this->logger !== null) {
-                $this->logger->error("InvalidIdTokenException " . $errors, $content);
+                $this->logger->error('InvalidIdTokenException '.$errors, $content);
             }
-            
+
             throw new InvalidIdTokenException($errors);
         }
-        
+
         $oicToken->setRawTokenData($content);
     }
 
-
-	/**
-	 * Call the OpenId Connect Provider to get userinfo against an access_token
-	 *
-	 * @see http://openid.net/specs/openid-connect-basic-1_0.html#UserInfo
-	 *
-	 * @param OICToken $oicToken
-	 *
-	 * @return array|\JOSE_JWT
-	 */
+    /**
+     * Call the OpenId Connect Provider to get userinfo against an access_token.
+     *
+     * @see http://openid.net/specs/openid-connect-basic-1_0.html#UserInfo
+     *
+     * @param OICToken $oicToken
+     *
+     * @return array|\JOSE_JWT
+     */
     public function getEndUserinfo(OICToken $oicToken)
     {
         $this->idTokenValidator->setIdToken($oicToken->getIdToken());
@@ -274,11 +274,11 @@ abstract class AbstractGenericOICResourceOwner implements ResourceOwnerInterface
         }
 
         if ($oicToken->getAccessToken() === null) {
-            throw new InvalidRequestException("no such access_token");
+            throw new InvalidRequestException('no such access_token');
         }
 
         $headers = array(
-            'Authorization: Bearer ' . $oicToken->getAccessToken()
+            'Authorization: Bearer '.$oicToken->getAccessToken(),
         );
 
         $request = new HttpClientRequest(
@@ -290,7 +290,7 @@ abstract class AbstractGenericOICResourceOwner implements ResourceOwnerInterface
         $request->setHeaders($headers);
 
         $response = new HttpClientResponse();
-        
+
         $this->httpClient->send($request, $response);
 
         $content = $this->responseHandler->handleEndUserinfoResponse($response);
@@ -299,14 +299,13 @@ abstract class AbstractGenericOICResourceOwner implements ResourceOwnerInterface
         // same as previous. If Not, that isn't good...
         if ($content['sub'] !== $oicToken->getIdToken()->claims['sub']) {
             if ($this->logger !== null) {
-                $this->logger->error("InvalidIdTokenException", $oicToken);
+                $this->logger->error('InvalidIdTokenException', $oicToken);
             }
-            
-            throw new InvalidIdTokenException("The sub value is not equal");
+
+            throw new InvalidIdTokenException('The sub value is not equal');
         }
-        
+
         $oicToken->setRawUserinfo($content);
-        
 
         return $content;
     }

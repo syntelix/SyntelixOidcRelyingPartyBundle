@@ -1,15 +1,18 @@
 <?php
 
+/*
+ * This file is part of the SyntelixOidcRelayingPartyBundle package.
+ */
+
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\Tests\Mocks;
 
 use Buzz\Client\AbstractCurl;
-use Buzz\Message\Request;
 use Buzz\Message\Response;
 use Buzz\Message\RequestInterface;
 use Buzz\Message\MessageInterface;
 
 /**
- * HttpClientMock
+ * HttpClientMock.
  *
  * @author valérian Girard <valerian.girard@educagri.fr>
  */
@@ -17,21 +20,20 @@ class HttpClientMock extends AbstractCurl
 {
     public $response = null;
     public $request;
-    
 
     public function send(RequestInterface $request, MessageInterface $response)
     {
         $this->request = $request;
-        
+
         $response->setHeaders($this->response->getHeaders());
         $response->setContent($this->response->getContent());
     }
-    
+
     public function getRequest()
     {
         return $this->request;
     }
-    
+
     public function setResponseContent($isOk, $headers, $content)
     {
         $this->response = new Response();

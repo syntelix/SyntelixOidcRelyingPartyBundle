@@ -1,12 +1,16 @@
 <?php
 
+/*
+ * This file is part of the SyntelixOidcRelayingPartyBundle package.
+ */
+
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token;
 
 use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\User\OICUser;
 use Symfony\Component\Security\Core\Authentication\Token\AbstractToken;
 
 /**
- * OpenId Connect Token
+ * OpenId Connect Token.
  *
  * @author valérian Girard <valerian.girard@educagri.fr>
  */
@@ -16,25 +20,28 @@ class OICToken extends AbstractToken
      * @var array
      */
     protected $rawTokenData;
-    
+
     /**
      * @see http://tools.ietf.org/html/rfc6749#section-1.4
+     *
      * @var string
      */
     protected $accessToken;
 
     /**
      * @see http://tools.ietf.org/html/rfc6749#section-1.5
+     *
      * @var string
      */
     protected $refreshToken;
 
     /**
      * @see http://openid.net/specs/openid-connect-core-1_0.html#IDToken
+     *
      * @var array
      */
     protected $idToken;
-    
+
     /**
      * @var array
      */
@@ -43,12 +50,13 @@ class OICToken extends AbstractToken
     /**
      * @see http://tools.ietf.org/html/rfc6749#section-4.2.2
      * @see http://tools.ietf.org/html/rfc6749#appendix-A.14
-     * @var integer
+     *
+     * @var int
      */
     private $expiresIn;
 
     /**
-     * @var integer
+     * @var int
      */
     private $createdAt;
 
@@ -59,10 +67,9 @@ class OICToken extends AbstractToken
     {
         parent::__construct($roles);
     }
-    
-    
+
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getCredentials()
     {
@@ -93,7 +100,7 @@ class OICToken extends AbstractToken
         if ($this->getUser() === null) {
             $this->setUser(new OICUser($idToken->claims['sub']));
         }
-        
+
         $this->idToken = $idToken;
     }
 
@@ -120,7 +127,7 @@ class OICToken extends AbstractToken
     {
         if (is_array($token)) {
             $this->rawTokenData = $token;
-            
+
             if (array_key_exists('access_token', $token)) {
                 $this->accessToken = $token['access_token'];
             }
@@ -136,27 +143,28 @@ class OICToken extends AbstractToken
             if (array_key_exists('id_token', $token)) {
                 $this->setIdToken($token['id_token']);
             }
-            
+
             return;
         }
     }
-    
+
     public function setRawUserinfo($rowData)
     {
         $user = new OICUser($rowData['sub'], $rowData);
         $this->userinfo = $rowData;
         $this->setUser($user);
     }
-    
+
     public function getUserinfo($key = null)
     {
         if ($key !== null) {
             if (array_key_exists($key, $this->userinfo)) {
                 return $this->userinfo[$key];
             } else {
-                throw new \Exception(sprintf("undefined %s value", $key));
+                throw new \Exception(sprintf('undefined %s value', $key));
             }
         }
+
         return $this->userinfo;
     }
 
@@ -185,7 +193,7 @@ class OICToken extends AbstractToken
     }
 
     /**
-     * @param integer $expiresIn The duration in seconds of the access token lifetime
+     * @param int $expiresIn The duration in seconds of the access token lifetime
      */
     public function setExpiresIn($expiresIn)
     {
@@ -194,7 +202,7 @@ class OICToken extends AbstractToken
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getExpiresIn()
     {
@@ -204,18 +212,19 @@ class OICToken extends AbstractToken
     /**
      * Returns if the `access_token` is expired.
      *
-     * @return boolean True if the `access_token` is expired.
+     * @return bool true if the `access_token` is expired
      */
     public function isExpired()
     {
         if (null === $this->expiresIn) {
             return false;
         }
+
         return ($this->createdAt + ($this->expiresIn - time())) < 30;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function serialize()
     {
@@ -225,26 +234,25 @@ class OICToken extends AbstractToken
             $this->refreshToken,
             $this->expiresIn,
             $this->createdAt,
-            parent::serialize()
+            parent::serialize(),
         ));
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function unserialize($serialized)
     {
         $data = unserialize($serialized);
-        
+
         list(
                 $this->idToken,
                 $this->accessToken,
                 $this->refreshToken,
                 $this->expiresIn,
                 $this->createdAt,
-                $parent,
-                ) = $data;
-        
+                $parent) = $data;
+
         parent::unserialize($parent);
     }
 }

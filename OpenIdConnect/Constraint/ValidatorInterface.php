@@ -1,9 +1,13 @@
 <?php
 
+/*
+ * This file is part of the SyntelixOidcRelayingPartyBundle package.
+ */
+
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Constraint;
 
 /**
- * ValidatorInterface
+ * ValidatorInterface.
  *
  * @author valérian Girard <valerian.girard@educagri.fr>
  */
@@ -13,12 +17,12 @@ interface ValidatorInterface
      * @param mixed $value
      */
     public function setIdToken($value);
-    
+
     /**
-     * @return boolean
+     * @return bool
      */
     public function isValid();
-    
+
     /**
      * @return array
      */
@@ -30,7 +34,7 @@ interface ValidatorInterface
      * determines too much time has elapsed since the last End-User
      * authentication.
      *
-     * @return boolean
+     * @return bool
      */
     public function isValidAuthTime();
 }

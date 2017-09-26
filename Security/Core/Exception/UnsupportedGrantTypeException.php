@@ -1,12 +1,15 @@
 <?php
 
+/*
+ * This file is part of the SyntelixOidcRelayingPartyBundle package.
+ */
+
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception;
 
 use InvalidArgumentException;
 
 /**
- * UnsupportedGrantTypeException
- *
+ * UnsupportedGrantTypeException.
  */
 class UnsupportedGrantTypeException extends InvalidArgumentException
 {

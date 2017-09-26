@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * This file is part of the SyntelixOidcRelayingPartyBundle package.
+ */
+
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Response;
 
 use JOSE_JWT;
@@ -11,7 +15,7 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * OICResponseHandler
+ * OICResponseHandler.
  *
  * @author valérian Girard <valerian.girard@educagri.fr>
  */
@@ -21,17 +25,17 @@ class OICResponseHandler
      * @var array
      */
     protected $options;
-    
+
     /**
      * @var JWKSetHandler
      */
     protected $jwkHandler;
-    
+
     /**
-     * __construct
+     * __construct.
      *
      * @param JWKSetHandler $jwkHandler
-     * @param array $options
+     * @param array         $options
      */
     public function __construct(JWKSetHandler $jwkHandler, $options)
     {
@@ -39,10 +43,10 @@ class OICResponseHandler
         $this->options = $options;
     }
 
-     /**
+    /**
      * Search error in header and in content of the response.
      * If an error is found an exception is throw.
-     * If all is clear, the content is Json decoded (if needed) and return as an array
+     * If all is clear, the content is Json decoded (if needed) and return as an array.
      *
      * @param HttpClientResponse $response
      *
@@ -51,14 +55,14 @@ class OICResponseHandler
     public function handleHttpClientResponse(HttpClientResponse $response)
     {
         $content = $this->getContent($response);
-        
+
         if ($response->getStatusCode() >= Response::HTTP_UNAUTHORIZED) {
-            if (($authError = $response->getHeader("WWW-Authenticate")) !== null) {
+            if (($authError = $response->getHeader('WWW-Authenticate')) !== null) {
                 preg_match('/^Basic realm="(.*)"$/', $authError, $matches);
-                $content = array('error' => "Authentication fail", 'error_description' => $matches[1]);
+                $content = array('error' => 'Authentication fail', 'error_description' => $matches[1]);
             }
         } elseif ($response->getStatusCode() >= Response::HTTP_BAD_REQUEST) {
-            if (($bearerError = $response->getHeader("WWW-Authenticate")) !== null) {
+            if (($bearerError = $response->getHeader('WWW-Authenticate')) !== null) {
                 preg_match('/^Bearer error="(.*)", error_description="(.*)"$/', $bearerError, $matches);
                 $content = array('error' => $matches[1], 'error_description' => $matches[1]);
             }
@@ -67,40 +71,43 @@ class OICResponseHandler
         if (!$this->hasError($content)) {
             return $content;
         }
-        
+
         return null;
     }
-    
+
     /**
-     * handleTokenAndAccessTokenResponse
+     * handleTokenAndAccessTokenResponse.
      *
      * @param HttpClientResponse $response
+     *
      * @return JOSE_JWT
      */
     public function handleTokenAndAccessTokenResponse(HttpClientResponse $response)
     {
         $content = $this->handleHttpClientResponse($response);
 
-        if ($content == "") {
+        if ($content == '') {
             return $content;
         }
 
         if ($this->isJson($content['id_token'])) {
             $jsonDecoded = $this->getJsonEncodedContent($content['id_token']);
-            
+
             $content['id_token'] = new JOSE_JWT($jsonDecoded);
         } else {
             $content['id_token'] = $this->getJwtEncodedContent($content['id_token']);
         }
-        
+
         return $content;
     }
-    
+
     /**
-     * handleEndUserinfoResponse
+     * handleEndUserinfoResponse.
      *
      * @param HttpClientResponse $response
+     *
      * @return JOSE_JWT
+     *
      * @throws OICException\InvalidIdSignatureException
      */
     public function handleEndUserinfoResponse(HttpClientResponse $response)
@@ -110,77 +117,82 @@ class OICResponseHandler
         if (!$content instanceof JOSE_JWT) {
             return $content;
         }
-  
+
         $this->verifySignedJwt($content);
-      
+
         return $content->claims;
     }
-    
-    
+
     /**
-     * getContent
+     * getContent.
      *
      * @param HttpClientResponse $response
+     *
      * @return array
      */
     protected function getContent(HttpClientResponse $response)
     {
-        $contentType = explode(';', $response->getHeader("Content-Type"));
+        $contentType = explode(';', $response->getHeader('Content-Type'));
         if (in_array('application/json', $contentType)) {
             return $this->getJsonEncodedContent($response->getContent());
         } elseif (in_array('application/jwt', $contentType)) {
             return $this->getJwtEncodedContent($response->getContent());
         }
     }
-    
+
     /**
      * @param string $content
+     *
      * @return array
      */
     protected function getJsonEncodedContent($content)
     {
-    	if (empty($content)) {
-    		return null;
-	    }
+        if (empty($content)) {
+            return null;
+        }
 
         $jsonDecode = new JsonDecode(true);
 
         return $jsonDecode->decode($content, JsonEncoder::FORMAT);
     }
-    
+
     /**
      * @param string $content
+     *
      * @return array
      */
     protected function getJwtEncodedContent($content)
     {
         $jwt = JOSE_JWT::decode($content);
-        
+
         $this->verifySignedJwt($jwt);
-        
+
         return $jwt;
     }
-    
+
     /**
-     * Check the signature of an JSON Web Token if there is a signature
+     * Check the signature of an JSON Web Token if there is a signature.
+     *
      * @param JOSE_JWT $jwt
+     *
      * @return JOSE_JWT
+     *
      * @throws OICException\InvalidIdSignatureException
      */
     protected function verifySignedJwt(JOSE_JWT $jwt)
     {
         if (array_key_exists('alg', $jwt->header)) {
             $key = null;
-            
+
             // get the right key base on the algorithm
             if (substr($jwt->header['alg'], 0, 2) == 'HS') {
                 $key = $this->options['client_secret'];
             } elseif (substr($jwt->header['alg'], 0, 2) == 'RS') {
-				$jwkSetJsonObject = $this->jwkHandler->getJwk();
+                $jwkSetJsonObject = $this->jwkHandler->getJwk();
                 $jwkSet = new \JOSE_JWKSet();
                 $jwkSet->setJwksFromJsonObject($jwkSetJsonObject);
-                $key = $jwkSet->filterJwk("use", \JOSE_JWK::JWK_USE_SIG);
-                
+                $key = $jwkSet->filterJwk('use', \JOSE_JWK::JWK_USE_SIG);
+
                 if ($key === null && array_key_exists(0, $jwkSet->keys)) {
                     $key = $jwkSet->keys[0];
                 }
@@ -188,7 +200,7 @@ class OICResponseHandler
 
             if ($key !== null) {
                 $jws = new \JOSE_JWS($jwt);
-                
+
                 try {
                     $jws->verify($key);
                 } catch (\Exception $e) {
@@ -196,14 +208,15 @@ class OICResponseHandler
                 }
             }
         }
-        
+
         return $jwt;
     }
 
     /**
      * @param array|object $content
      *
-     * @return boolean
+     * @return bool
+     *
      * @throws OICException\InvalidRequestException
      * @throws OICException\InvalidResponseTypeException
      * @throws OICException\InvalidAuthorizationCodeException
@@ -220,7 +233,7 @@ class OICResponseHandler
             if (!array_key_exists('error_description', $content)) {
                 $content['error_description'] = $content['error'];
             }
-            
+
             switch ($content['error']) {
                 case 'invalid request':
                 case 'invalid_request':
@@ -246,7 +259,7 @@ class OICResponseHandler
                     break;
             }
         }
-        
+
         return false;
     }
 
@@ -258,6 +271,7 @@ class OICResponseHandler
     private function isJson($string)
     {
         json_decode($string);
-        return (json_last_error() == JSON_ERROR_NONE);
+
+        return json_last_error() == JSON_ERROR_NONE;
     }
 }

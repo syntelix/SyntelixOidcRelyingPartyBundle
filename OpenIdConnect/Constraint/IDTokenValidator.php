@@ -1,8 +1,12 @@
 <?php
 
+/*
+ * This file is part of the SyntelixOidcRelayingPartyBundle package.
+ */
+
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Constraint;
 
-/**
+/*
  * IDTokenValidator
  *
  * Valid an id token like describe here
@@ -13,8 +17,7 @@ namespace Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Constraint;
 use DateTime;
 
 /**
- * Class IDTokenValidator
- * @package Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Constraint
+ * Class IDTokenValidator.
  */
 class IDTokenValidator implements ValidatorInterface
 {
@@ -27,59 +30,58 @@ class IDTokenValidator implements ValidatorInterface
      * @var array
      */
     private $options;
-        
+
     /**
      * @var array
      */
     private $idToken;
-        
+
     /**
      * @var array
      */
     private $claims;
 
-	/**
-	 * IDTokenValidator constructor.
-	 *
-	 * @param $options
-	 */
-	public function __construct($options)
+    /**
+     * IDTokenValidator constructor.
+     *
+     * @param $options
+     */
+    public function __construct($options)
     {
         $this->options = $options;
     }
 
-	/**
-	 * @param mixed $idToken
-	 */
+    /**
+     * @param mixed $idToken
+     */
     public function setIdToken($idToken)
     {
         $this->idToken = $idToken;
         $this->claims = is_object($idToken) ? $this->idToken->claims : $this->idToken['claims'];
     }
 
-	/**
-	 * @return array
-	 */
+    /**
+     * @return array
+     */
     public function getErrors()
     {
         return $this->errors;
     }
 
-	/**
-     * @return boolean
+    /**
+     * @return bool
      */
     public function isValid()
     {
         $this->errors = array();
-        
+
         /* 1. The Issuer Identifier for the OpenID Provider
          * (which is typically obtained during Discovery) MUST exactly match
          * the value of the iss (issuer) Claim.
          */
         if ($this->options['issuer'] !== $this->claims['iss']) {
-            $this->errors[] = "Issuer are not the same";
+            $this->errors[] = 'Issuer are not the same';
         }
-        
 
         /* 2. The Client MUST validate that the aud (audience) Claim contains
          * its client_id value registered at the Issuer identified by the iss (issuer)
@@ -88,9 +90,9 @@ class IDTokenValidator implements ValidatorInterface
          * additional audiences not trusted by the Client.
          */
         if (!$this->isClientIdInAudience($this->claims['aud'])) {
-            $this->errors[] = "The client does not validate the aud value";
+            $this->errors[] = 'The client does not validate the aud value';
         }
-        
+
         /* 3. If the ID Token contains multiple audiences,
          * the Client SHOULD verify that an azp Claim is present.
          */
@@ -102,7 +104,7 @@ class IDTokenValidator implements ValidatorInterface
          * the Client SHOULD verify that its client_id is the Claim Value.
          */
         if (array_key_exists('azp', $this->claims)) {
-            if (! $this->isClientIdInAudience($this->claims['azp'])) {
+            if (!$this->isClientIdInAudience($this->claims['azp'])) {
                 $this->errors[] = "The client's azp claim is not valid";
             }
         }
@@ -114,22 +116,22 @@ class IDTokenValidator implements ValidatorInterface
         if (!$this->isExpirationTimeValid()) {
             $this->errors[] = "The client's expiration time is out of bound";
         }
-        
+
         /* 6. The iat Claim can be used to reject tokens that were issued
          * too far away from the current time, limiting the amount of time that
          * nonces need to be stored to prevent attacks.
          * The acceptable range is Client specific.
          */
-        if (! $this->isIanValid()) {
+        if (!$this->isIanValid()) {
             $this->errors[] = "The client's iat value is not valid";
         }
-        
+
         /* 7. If the acr Claim was requested, the Client SHOULD check that
          * the asserted Claim Value is appropriate. The meaning and processing
          * of acr Claim Values is out of scope for this document.
          */
         // Not implemented yet
-        
+
         /* 8. When a max_age request is made, the Client SHOULD check
          * the auth_time Claim value and request re-authentication if it
          * determines too much time has elapsed since the last End-User
@@ -142,11 +144,11 @@ class IDTokenValidator implements ValidatorInterface
         return (bool) count($this->errors) == 0;
     }
 
-	/**
-	 * @param $aud
-	 *
-	 * @return bool
-	 */
+    /**
+     * @param $aud
+     *
+     * @return bool
+     */
     public function isClientIdInAudience($aud)
     {
         if (is_string($aud)) {
@@ -154,14 +156,15 @@ class IDTokenValidator implements ValidatorInterface
         } elseif (is_array($aud)) {
             return in_array($this->options['client_id'], $aud);
         }
+
         return false;
     }
 
-	/**
-	 * @param $aud
-	 *
-	 * @return bool
-	 */
+    /**
+     * @param $aud
+     *
+     * @return bool
+     */
     public function isMultipleAudienceValide($aud)
     {
         if (is_string($aud)) {
@@ -177,49 +180,50 @@ class IDTokenValidator implements ValidatorInterface
                 }
             }
         }
+
         return false;
     }
 
-	/**
-	 * @return bool
-	 */
-	public function isExpirationTimeValid()
+    /**
+     * @return bool
+     */
+    public function isExpirationTimeValid()
     {
         $expirationTime = new DateTime();
         $expirationTime->setTimestamp($this->claims['exp']);
-        
-        return new DateTime("Now") < $expirationTime;
+
+        return new DateTime('Now') < $expirationTime;
     }
 
-	/**
-	 * @return bool
-	 */
+    /**
+     * @return bool
+     */
     public function isIanValid()
     {
         $expirationTime = new DateTime();
         $expirationTime->setTimestamp($this->claims['iat']);
-        $expirationTime->add(new \DateInterval(sprintf("PT%dS", $this->options['token_ttl'])));
-        
-        return new DateTime("Now") < $expirationTime;
+        $expirationTime->add(new \DateInterval(sprintf('PT%dS', $this->options['token_ttl'])));
+
+        return new DateTime('Now') < $expirationTime;
     }
 
-	/**
-	 * @return bool|null
-	 */
+    /**
+     * @return bool|null
+     */
     public function isValidAuthTime()
     {
         if ($this->options['authentication_ttl'] !== null && $this->options['authentication_ttl'] > 0) {
             if (array_key_exists('auth_time', $this->claims)) {
                 $expirationAuthTime = new DateTime();
                 $expirationAuthTime->setTimestamp($this->claims['auth_time']);
-                $expirationAuthTime->add(new \DateInterval(sprintf("PT%dS", $this->options['authentication_ttl'])));
+                $expirationAuthTime->add(new \DateInterval(sprintf('PT%dS', $this->options['authentication_ttl'])));
 
-                return new DateTime("Now") < $expirationAuthTime;
+                return new DateTime('Now') < $expirationAuthTime;
             } else {
                 return null;
             }
         }
-        
+
         return true;
     }
 }

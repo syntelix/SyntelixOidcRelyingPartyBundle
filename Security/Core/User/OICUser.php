@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * This file is part of the SyntelixOidcRelayingPartyBundle package.
+ */
+
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\User;
 
 use Serializable;
@@ -8,7 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 
 /**
- * OICUser
+ * OICUser.
  *
  * @author
  */
@@ -29,11 +33,11 @@ class OICUser implements AdvancedUserInterface, Serializable, EquatableInterface
      */
     protected $roles = array();
 
-	/**
-	 * @param string $username
-	 * @param null $roles
-	 * @param null $attributes
-	 */
+    /**
+     * @param string $username
+     * @param null   $roles
+     * @param null   $attributes
+     */
     public function __construct($username, $roles = null, $attributes = null)
     {
         $this->username = $username;
@@ -42,50 +46,52 @@ class OICUser implements AdvancedUserInterface, Serializable, EquatableInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getRoles()
     {
         if (count($this->roles) == 0) {
             return array('ROLE_USER', 'ROLE_OIC_USER');
         }
+
         return $this->roles;
     }
 
-	/**
-	 * @param $name
-	 *
-	 * @return mixed|null
-	 */
-	public function __get($name)
+    /**
+     * @param $name
+     *
+     * @return mixed|null
+     */
+    public function __get($name)
     {
         if (array_key_exists($name, $this->attributes)) {
             return $this->attributes[$name];
         }
+
         return null;
     }
 
-	/**
-	 * @param $name
-	 * @param $value
-	 */
-	public function __set($name, $value)
+    /**
+     * @param $name
+     * @param $value
+     */
+    public function __set($name, $value)
     {
         $this->attributes[$name] = $value;
     }
 
-	/**
-	 * @param $name
-	 *
-	 * @return bool
-	 */
-	public function __isset($name)
+    /**
+     * @param $name
+     *
+     * @return bool
+     */
+    public function __isset($name)
     {
         return array_key_exists($name, $this->attributes);
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getPassword()
     {
@@ -93,7 +99,7 @@ class OICUser implements AdvancedUserInterface, Serializable, EquatableInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getSalt()
     {
@@ -101,7 +107,7 @@ class OICUser implements AdvancedUserInterface, Serializable, EquatableInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getUsername()
     {
@@ -109,7 +115,7 @@ class OICUser implements AdvancedUserInterface, Serializable, EquatableInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function eraseCredentials()
     {
@@ -117,7 +123,7 @@ class OICUser implements AdvancedUserInterface, Serializable, EquatableInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function equals(UserInterface $user)
     {
@@ -125,7 +131,7 @@ class OICUser implements AdvancedUserInterface, Serializable, EquatableInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function isAccountNonExpired()
     {
@@ -133,7 +139,7 @@ class OICUser implements AdvancedUserInterface, Serializable, EquatableInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function isAccountNonLocked()
     {
@@ -141,7 +147,7 @@ class OICUser implements AdvancedUserInterface, Serializable, EquatableInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function isCredentialsNonExpired()
     {
@@ -149,7 +155,7 @@ class OICUser implements AdvancedUserInterface, Serializable, EquatableInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function isEnabled()
     {
@@ -157,25 +163,25 @@ class OICUser implements AdvancedUserInterface, Serializable, EquatableInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function isEqualTo(UserInterface $user)
     {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function serialize()
     {
         return serialize(array(
             $this->username,
-            $this->attributes
+            $this->attributes,
         ));
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function unserialize($serialized)
     {
@@ -184,10 +190,10 @@ class OICUser implements AdvancedUserInterface, Serializable, EquatableInterface
         list($this->username, $this->attributes) = $data;
     }
 
-	/**
-	 * @return string
-	 */
-	public function __toString()
+    /**
+     * @return string
+     */
+    public function __toString()
     {
         return $this->getUsername();
     }

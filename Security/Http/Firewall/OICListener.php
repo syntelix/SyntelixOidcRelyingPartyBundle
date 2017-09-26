@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * This file is part of the SyntelixOidcRelayingPartyBundle package.
+ */
+
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\Security\Http\Firewall;
 
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -10,20 +14,20 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
- * OpenId Connect Listener
+ * OpenId Connect Listener.
  *
  * @author valérian Girard <valerian.girard@educagri.fr>
  */
 class OICListener extends AbstractAuthenticationListener
 {
-	/**
-	 * @var TokenStorageInterface
-	 */
+    /**
+     * @var TokenStorageInterface
+     */
     private $tokenStorage;
 
-	/**
-	 * @var AuthorizationCheckerInterface
-	 */
+    /**
+     * @var AuthorizationCheckerInterface
+     */
     private $authorizationChecker;
 
     /**
@@ -39,22 +43,24 @@ class OICListener extends AbstractAuthenticationListener
         $this->resourceOwner = $resourceOwner;
     }
 
-	/**
-	 * @param TokenStorageInterface $tokenStorage
-	 */
-	public function setTokenStorage( TokenStorageInterface $tokenStorage ) {
-		$this->tokenStorage = $tokenStorage;
+    /**
+     * @param TokenStorageInterface $tokenStorage
+     */
+    public function setTokenStorage(TokenStorageInterface $tokenStorage)
+    {
+        $this->tokenStorage = $tokenStorage;
     }
 
-	/**
-	 * @param AuthorizationCheckerInterface $authorizationChecker
-	 */
-	public function setAuthorizationChecker( AuthorizationCheckerInterface $authorizationChecker ) {
-		$this->authorizationChecker = $authorizationChecker;
-	}
+    /**
+     * @param AuthorizationCheckerInterface $authorizationChecker
+     */
+    public function setAuthorizationChecker(AuthorizationCheckerInterface $authorizationChecker)
+    {
+        $this->authorizationChecker = $authorizationChecker;
+    }
 
-	/**
-     * {@inheritDoc}
+    /**
+     * {@inheritdoc}
      */
     protected function attemptAuthentication(Request $request)
     {
@@ -64,11 +70,12 @@ class OICListener extends AbstractAuthenticationListener
 
         if ($request->query->count() == 0) {
             $uri = $this->resourceOwner->getAuthenticationEndpointUrl($request);
+
             return new RedirectResponse($uri);
         }
-        
+
         $oicToken = $this->resourceOwner->authenticateUser($request);
-        
+
         return $this->authenticationManager->authenticate($oicToken);
     }
 }

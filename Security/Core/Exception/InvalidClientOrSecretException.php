@@ -1,10 +1,13 @@
 <?php
 
+/*
+ * This file is part of the SyntelixOidcRelayingPartyBundle package.
+ */
+
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception;
 
 /**
- * InvalidClientOrSecretException
- *
+ * InvalidClientOrSecretException.
  */
 class InvalidClientOrSecretException extends \InvalidArgumentException
 {

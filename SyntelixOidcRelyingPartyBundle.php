@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * This file is part of the SyntelixOidcRelayingPartyBundle package.
+ */
+
 namespace Syntelix\Bundle\OidcRelyingPartyBundle;
 
 use Symfony\Bundle\SecurityBundle\DependencyInjection\SecurityExtension;
@@ -10,9 +14,8 @@ use Syntelix\Bundle\OidcRelyingPartyBundle\DependencyInjection\SyntelixOidcRelyi
 
 class SyntelixOidcRelyingPartyBundle extends Bundle
 {
-
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function build(ContainerBuilder $container)
     {
@@ -33,6 +36,7 @@ class SyntelixOidcRelyingPartyBundle extends Bundle
         if (null === $this->extension) {
             return new SyntelixOidcRelyingPartyExtension();
         }
+
         return $this->extension;
     }
 }

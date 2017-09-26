@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * This file is part of the SyntelixOidcRelayingPartyBundle package.
+ */
+
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\Security\Http\EntryPoint;
 
 use Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\ResourceOwnerInterface;
@@ -9,7 +13,7 @@ use Symfony\Component\Security\Http\HttpUtils;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * OICEntryPoint
+ * OICEntryPoint.
  *
  * @author valérian Girard <valerian.girard@educagri.fr>
  */
@@ -26,7 +30,7 @@ class OICEntryPoint implements AuthenticationEntryPointInterface
     protected $resourceOwner;
 
     /**
-     * @param HttpUtils $httpUtils
+     * @param HttpUtils              $httpUtils
      * @param ResourceOwnerInterface $resourceOwner
      */
     public function __construct(HttpUtils $httpUtils, ResourceOwnerInterface $resourceOwner)
@@ -36,7 +40,7 @@ class OICEntryPoint implements AuthenticationEntryPointInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function start(Request $request, AuthenticationException $authException = null)
     {

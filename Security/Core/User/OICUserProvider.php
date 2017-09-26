@@ -1,9 +1,11 @@
 <?php
 
+/*
+ * This file is part of the SyntelixOidcRelayingPartyBundle package.
+ */
+
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\User;
 
-use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\User\OICUser;
-use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\User\UserFactoryInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -11,8 +13,7 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
- * OICUserProvider
- *
+ * OICUserProvider.
  */
 class OICUserProvider implements UserProviderInterface, UserFactoryInterface
 {
@@ -21,54 +22,53 @@ class OICUserProvider implements UserProviderInterface, UserFactoryInterface
      */
     private $session;
 
-	/**
-	 * @var string
-	 */
-	private $sessionKeyName = "syntelix.oic.user.stored";
+    /**
+     * @var string
+     */
+    private $sessionKeyName = 'syntelix.oic.user.stored';
 
-	/**
-	 * OICUserProvider constructor.
-	 *
-	 * @param Session $session
-	 */
-	public function __construct(Session $session)
+    /**
+     * OICUserProvider constructor.
+     *
+     * @param Session $session
+     */
+    public function __construct(Session $session)
     {
         $this->session = $session;
     }
 
-    
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function loadUserByUsername($username)
     {
-        if ($this->session->has($this->sessionKeyName . $username)) {
-            $user = $this->session->get($this->sessionKeyName . $username);
-            
+        if ($this->session->has($this->sessionKeyName.$username)) {
+            $user = $this->session->get($this->sessionKeyName.$username);
+
             if ($user->getUsername() === $username) {
                 return $user;
             }
         }
-        
+
         throw new UsernameNotFoundException(sprintf('Unable to find an active User object identified by "%s".', $username));
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function refreshUser(UserInterface $user)
     {
         if (!$this->supportsClass(get_class($user))) {
             throw new UnsupportedUserException(sprintf('Unsupported user class "%s"', get_class($user)));
         }
-       
+
         $user = $this->loadUserByUsername($user->getUsername());
-        
+
         return $user;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function supportsClass($class)
     {
@@ -76,15 +76,14 @@ class OICUserProvider implements UserProviderInterface, UserFactoryInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function createUser($username, array $roles, array $attributes)
     {
         $user = new OICUser($username, $roles, $attributes);
-       
-        $this->session->set($this->sessionKeyName . $username, $user);
-        
-        
+
+        $this->session->set($this->sessionKeyName.$username, $user);
+
         return $user;
     }
 }

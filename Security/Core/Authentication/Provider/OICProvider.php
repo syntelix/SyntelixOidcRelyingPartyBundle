@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * This file is part of the SyntelixOidcRelayingPartyBundle package.
+ */
+
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Provider;
 
 use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token\OICToken;
@@ -17,7 +21,7 @@ use Symfony\Component\Security\Core\User\ChainUserProvider;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 /**
- * OICProvider
+ * OICProvider.
  *
  * @author valérian Girard <valerian.girard@educagri.fr>
  */
@@ -32,7 +36,7 @@ class OICProvider implements AuthenticationProviderInterface
      * @var ResourceOwnerInterface
      */
     private $resourceOwner;
-    
+
     /**
      * @var OICToken
      */
@@ -53,15 +57,15 @@ class OICProvider implements AuthenticationProviderInterface
      */
     private $createUsers = true;
 
-	/**
-	 * OICProvider constructor.
-	 *
-	 * @param UserProviderInterface $userProvider
-	 * @param ResourceOwnerInterface $resourceOwner
-	 * @param bool $createUsers
-	 * @param array|null $createdUsersRoles
-	 */
-	public function __construct(UserProviderInterface $userProvider,
+    /**
+     * OICProvider constructor.
+     *
+     * @param UserProviderInterface  $userProvider
+     * @param ResourceOwnerInterface $resourceOwner
+     * @param bool                   $createUsers
+     * @param array|null             $createdUsersRoles
+     */
+    public function __construct(UserProviderInterface $userProvider,
             ResourceOwnerInterface $resourceOwner,
             $createUsers = false, array $createdUsersRoles = null)
     {
@@ -70,9 +74,9 @@ class OICProvider implements AuthenticationProviderInterface
         $this->createUsers = $createUsers;
         $this->createdUsersRoles = $createdUsersRoles;
     }
-    
+
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function authenticate(TokenInterface $token)
     {
@@ -91,7 +95,7 @@ class OICProvider implements AuthenticationProviderInterface
             $reloadedToken->setRefreshToken($this->token->getRefreshToken());
             $reloadedToken->setUser($user);
             $reloadedToken->setAuthenticated(true);
-            
+
             return $reloadedToken;
         }
 
@@ -99,7 +103,7 @@ class OICProvider implements AuthenticationProviderInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function supports(TokenInterface $token)
     {
@@ -129,7 +133,7 @@ class OICProvider implements AuthenticationProviderInterface
                 throw $notFound;
             }
         }
-        
+
         return $user;
     }
 
@@ -144,7 +148,7 @@ class OICProvider implements AuthenticationProviderInterface
     {
         try {
             $user = $this->userProvider->loadUserByUsername($username);
-            
+
             if (!$user instanceof UserInterface) {
                 throw new AuthenticationServiceException('The user provider must return an UserInterface object.');
             }
@@ -153,7 +157,7 @@ class OICProvider implements AuthenticationProviderInterface
         } catch (\Exception $repositoryProblem) {
             throw new AuthenticationServiceException($repositoryProblem->getMessage(), 0, $repositoryProblem);
         }
-        
+
         return $user;
     }
 
@@ -167,7 +171,7 @@ class OICProvider implements AuthenticationProviderInterface
     protected function createUser($username)
     {
         $userProvider = $this->userProvider;
-        
+
         if ($this->userProvider instanceof ChainUserProvider) {
             foreach ($this->userProvider->getProviders() as $userProviderTmp) {
                 if ($userProviderTmp instanceof UserFactoryInterface) {
@@ -179,10 +183,10 @@ class OICProvider implements AuthenticationProviderInterface
         if (!$userProvider instanceof UserFactoryInterface) {
             throw new AuthenticationServiceException('UserProvider must implement UserFactoryInterface to create unknown users.');
         }
-       
+
         try {
             $attributes = $this->resourceOwner->getEndUserinfo($this->token);
-            
+
             $user = $userProvider->createUser($username, $this->createdUsersRoles, $attributes);
 
             if (!$user instanceof UserInterface) {
@@ -193,7 +197,7 @@ class OICProvider implements AuthenticationProviderInterface
         } catch (\Exception $repositoryProblem) {
             throw new AuthenticationServiceException($repositoryProblem->getMessage(), 0, $repositoryProblem);
         }
-        
+
         return $user;
     }
 }

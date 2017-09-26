@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * This file is part of the SyntelixOidcRelayingPartyBundle package.
+ */
+
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\Routing;
 
 use Symfony\Component\Config\Loader\LoaderInterface;
@@ -8,25 +12,26 @@ use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 
 /**
- * AdvancedLoader
+ * AdvancedLoader.
+ *
  * @see http://symfony.com/doc/current/cookbook/routing/custom_route_loader.html
  *
  * @author valérian Girard <valerian.girard@educagri.fr>
  */
 class AdvancedLoader implements LoaderInterface
 {
-	/**
-	 * @var bool
-	 */
-	private $loaded = false;
+    /**
+     * @var bool
+     */
+    private $loaded = false;
 
-	/**
-	 * @param mixed $resource
-	 * @param null $type
-	 *
-	 * @return RouteCollection
-	 */
-	public function load($resource, $type = null)
+    /**
+     * @param mixed $resource
+     * @param null  $type
+     *
+     * @return RouteCollection
+     */
+    public function load($resource, $type = null)
     {
         if (true === $this->loaded) {
             throw new \RuntimeException('Do not add the "oic_routing" loader twice');
@@ -40,7 +45,7 @@ class AdvancedLoader implements LoaderInterface
             '_controller' => 'SyntelixOidcRelyingPartyBundle:Logout:logout',
         );
         $requirements = array();
-        
+
         $route = new Route($path, $defaults, $requirements);
 
         // add the new route to the route collection:
@@ -52,30 +57,27 @@ class AdvancedLoader implements LoaderInterface
         return $routes;
     }
 
-	/**
-	 * @param mixed $resource
-	 * @param null $type
-	 *
-	 * @return bool
-	 */
-	public function supports($resource, $type = null)
+    /**
+     * @param mixed $resource
+     * @param null  $type
+     *
+     * @return bool
+     */
+    public function supports($resource, $type = null)
     {
         return 'oic_routing' === $type;
     }
 
-	/**
-	 *
-	 */
-	public function getResolver()
+    public function getResolver()
     {
         // needed, but can be blank, unless you want to load other resources
         // and if you do, using the Loader base class is easier (see below)
     }
 
-	/**
-	 * @param LoaderResolverInterface $resolver
-	 */
-	public function setResolver(LoaderResolverInterface $resolver)
+    /**
+     * @param LoaderResolverInterface $resolver
+     */
+    public function setResolver(LoaderResolverInterface $resolver)
     {
         // same as above
     }

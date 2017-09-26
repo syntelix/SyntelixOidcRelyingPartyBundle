@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * This file is part of the SyntelixOidcRelayingPartyBundle package.
+ */
+
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\Tests\DependencyInjection;
 
 use PHPUnit\Framework\TestCase;
@@ -8,7 +12,7 @@ use Symfony\Component\Yaml\Parser;
 use Syntelix\Bundle\OidcRelyingPartyBundle\DependencyInjection\SyntelixOidcRelyingPartyExtension;
 
 /**
- * This is the class that loads and manages your bundle configuration
+ * This is the class that loads and manages your bundle configuration.
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
@@ -20,30 +24,29 @@ class SyntelixOidcRelyingPartyExtensionTest extends TestCase
         $loader = new SyntelixOidcRelyingPartyExtension();
         $config = array($this->getFullConfig());
         $loader->load(array($this->getFullConfig()), $container);
-        
+
         $definitionArray = array(
-            "syntelix_oic_rp.authentication.listener",
-            "syntelix_oic_rp.authentication.provider",
-            "syntelix_oic_rp.authentication.entrypoint",
-            "syntelix_oic_rp.validator.id_token",
-            "syntelix_oic_rp.http_client_response_handler",
-            "syntelix_oic_rp.jwk_handler",
-            "syntelix_oic_rp.helper.nonce",
-            "syntelix_oic_rp.user.provider",
-            "syntelix_oic_rp.abstract_resource_owner.generic",
-            "buzz.client",
-            "syntelix_oic_rp.http_client",
-            "syntelix_oic_rp.resource_owner.generic"
+            'syntelix_oic_rp.authentication.listener',
+            'syntelix_oic_rp.authentication.provider',
+            'syntelix_oic_rp.authentication.entrypoint',
+            'syntelix_oic_rp.validator.id_token',
+            'syntelix_oic_rp.http_client_response_handler',
+            'syntelix_oic_rp.jwk_handler',
+            'syntelix_oic_rp.helper.nonce',
+            'syntelix_oic_rp.user.provider',
+            'syntelix_oic_rp.abstract_resource_owner.generic',
+            'buzz.client',
+            'syntelix_oic_rp.http_client',
+            'syntelix_oic_rp.resource_owner.generic',
         );
 
         foreach ($definitionArray as $definition) {
             $this->assertTrue($container->hasDefinition($definition));
         }
-        
+
         $this->assertEquals('syntelix_oic_rp', $loader->getAlias());
     }
 
-    
     protected function getFullConfig()
     {
         $yaml = <<<EOF
@@ -76,7 +79,7 @@ EOF;
     }
 
     /**
-     * @param mixed $value
+     * @param mixed  $value
      * @param string $key
      */
     private function assertParameter($value, $key)
