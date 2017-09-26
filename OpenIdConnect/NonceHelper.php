@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
  */
 class NonceHelper
 {
-
     /**
      * @var SessionInterface
      */
@@ -24,7 +23,13 @@ class NonceHelper
      */
     private $config;
 
-    public function __construct(SessionInterface $session, $config)
+	/**
+	 * NonceHelper constructor.
+	 *
+	 * @param SessionInterface $session
+	 * @param $config
+	 */
+	public function __construct(SessionInterface $session, $config)
     {
         $this->session = $session;
         $this->config = $config;
@@ -34,8 +39,8 @@ class NonceHelper
      * this method generate a nonce/state value, store it in a session and return
      * the string to put in http request.
      *
-     * @param type $uniqueValue
-     * @param type $type
+     * @param $uniqueValue
+     * @param string $type
      * @return string
      */
     public function buildNonceValue($uniqueValue, $type = "nonce")
@@ -49,7 +54,7 @@ class NonceHelper
     /**
      * Check validity for nonce and state value
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param Request $request
      * @throws InvalidNonceException
      */
     public function checkStateAndNonce(Request $request)
@@ -98,8 +103,8 @@ class NonceHelper
      * Check if the nonce/state value is the right one
      *
      * @param string $type nonce ou state
-     * @param type $uniqueValue the same as this passed to the generateNonce mehode
-     * @param type $responseNonce the nonce reply by the OpenID Connect Provider
+     * @param mixed $uniqueValue the same as this passed to the generateNonce mehode
+     * @param mixed $responseNonce the nonce reply by the OpenID Connect Provider
      * @return boolean
      */
     public function isNonceValid($type, $responseNonce)

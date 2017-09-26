@@ -10,7 +10,7 @@ namespace Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Constraint;
 interface ValidatorInterface
 {
     /**
-     * @param mix $value
+     * @param mixed $value
      */
     public function setIdToken($value);
     

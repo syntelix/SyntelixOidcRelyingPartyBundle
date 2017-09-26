@@ -13,7 +13,12 @@ use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
  */
 class Configuration implements ConfigurationInterface
 {
-    public static function isHttpMethodSupported($display)
+	/**
+	 * @param $display
+	 *
+	 * @return bool
+	 */
+	public static function isHttpMethodSupported($display)
     {
         $displays = array(
             'POST',
@@ -22,7 +27,13 @@ class Configuration implements ConfigurationInterface
         
         return in_array($display, $displays);
     }
-    public static function isDisplaySupported($display)
+
+	/**
+	 * @param $display
+	 *
+	 * @return bool
+	 */
+	public static function isDisplaySupported($display)
     {
         $displays = array(
             'page',
@@ -33,8 +44,13 @@ class Configuration implements ConfigurationInterface
         
         return in_array($display, $displays);
     }
-    
-    public static function isPromptSupported($prompt)
+
+	/**
+	 * @param $prompt
+	 *
+	 * @return bool
+	 */
+	public static function isPromptSupported($prompt)
     {
         $displays = array(
             'none',
@@ -45,7 +61,6 @@ class Configuration implements ConfigurationInterface
         
         return in_array($prompt, $displays);
     }
-
 
     /**
      * {@inheritDoc}
@@ -178,7 +193,10 @@ class Configuration implements ConfigurationInterface
         return $treeBuilder;
     }
 
-    private function addHttpClientConfiguration(ArrayNodeDefinition $node)
+	/**
+	 * @param ArrayNodeDefinition $node
+	 */
+	private function addHttpClientConfiguration(ArrayNodeDefinition $node)
     {
         $node
             ->children()
@@ -196,7 +214,10 @@ class Configuration implements ConfigurationInterface
         ;
     }
 
-    private function addSignatureConfiguration(ArrayNodeDefinition $node)
+	/**
+	 * @param ArrayNodeDefinition $node
+	 */
+	private function addSignatureConfiguration(ArrayNodeDefinition $node)
     {
         $node
             ->children()
@@ -211,7 +232,10 @@ class Configuration implements ConfigurationInterface
         ;
     }
 
-    private function addReplayAttackParadeConfiguration(ArrayNodeDefinition $node)
+	/**
+	 * @param ArrayNodeDefinition $node
+	 */
+	private function addReplayAttackParadeConfiguration(ArrayNodeDefinition $node)
     {
         $node
             ->children()

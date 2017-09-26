@@ -31,7 +31,7 @@ class OICResponseHandler
      * __construct
      *
      * @param JWKSetHandler $jwkHandler
-     * @param type $options
+     * @param array $options
      */
     public function __construct(JWKSetHandler $jwkHandler, $options)
     {

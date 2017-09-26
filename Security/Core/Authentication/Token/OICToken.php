@@ -106,7 +106,7 @@ class OICToken extends AbstractToken
     }
 
     /**
-     * @return string the raw token data
+     * @return array the raw token data
      */
     public function getRawTokenData()
     {

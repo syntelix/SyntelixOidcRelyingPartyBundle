@@ -25,7 +25,6 @@ use Psr\Log\LoggerInterface;
  */
 abstract class AbstractGenericOICResourceOwner implements ResourceOwnerInterface
 {
-
     /**
      * @var HttpUtils
      */
@@ -61,7 +60,18 @@ abstract class AbstractGenericOICResourceOwner implements ResourceOwnerInterface
      */
     private $logger;
 
-    public function __construct(
+	/**
+	 * AbstractGenericOICResourceOwner constructor.
+	 *
+	 * @param HttpUtils $httpUtils
+	 * @param AbstractCurl $httpClient
+	 * @param ValidatorInterface $idTokenValidator
+	 * @param OICResponseHandler $responseHandler
+	 * @param NonceHelper $nonceHelper
+	 * @param $options
+	 * @param LoggerInterface|null $logger
+	 */
+	public function __construct(
             HttpUtils $httpUtils, AbstractCurl $httpClient,
             ValidatorInterface $idTokenValidator,
             OICResponseHandler $responseHandler,
@@ -165,7 +175,7 @@ abstract class AbstractGenericOICResourceOwner implements ResourceOwnerInterface
      * @see http://openid.net/specs/openid-connect-basic-1_0.html#ObtainingTokens
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token\OICToken $oicToken
+     * @param OICToken $oicToken
      * @param type $code
      */
     protected function getIdTokenAndAccessToken(Request $request, OICToken $oicToken, $code)
@@ -183,7 +193,7 @@ abstract class AbstractGenericOICResourceOwner implements ResourceOwnerInterface
     /**
      * Call the OpenID Connect Provider to exchange a refresh_token value against an id_token and an access_token
      *
-     * @param \Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token\OICToken $oicToken
+     * @param OICToken $oicToken
      */
     protected function refreshToken(OICToken $oicToken)
     {
@@ -194,14 +204,15 @@ abstract class AbstractGenericOICResourceOwner implements ResourceOwnerInterface
         
         $this->retrieveIdTokenAndAccessToken($oicToken, $postParameters);
     }
-    
-    /**
-     * makes the request to the OpenID Connect Provider for get back an Access Token and an ID Token
-     *
-     * @param \Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token\OICToken $oicToken
-     * @param type $parameters
-     * @throws InvalidIdTokenException
-     */
+
+	/**
+	 * makes the request to the OpenID Connect Provider for get back an Access Token and an ID Token
+	 *
+	 * @param OICToken $oicToken
+	 * @param array $parameters
+	 *
+	 * @param string $redirectUri
+	 */
     private function retrieveIdTokenAndAccessToken(OICToken $oicToken, $parameters, $redirectUri = 'login_check')
     {
         $parameters['redirect_uri'] = $this->httpUtils->generateUri(new Request(), $redirectUri);
@@ -241,14 +252,16 @@ abstract class AbstractGenericOICResourceOwner implements ResourceOwnerInterface
         $oicToken->setRawTokenData($content);
     }
 
-    
-    /**
-     * Call the OpenId Connect Provider to get userinfo against an access_token
-     *
-     * @see http://openid.net/specs/openid-connect-basic-1_0.html#UserInfo
-     *
-     * @param \Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token\OICToken $oicToken
-     */
+
+	/**
+	 * Call the OpenId Connect Provider to get userinfo against an access_token
+	 *
+	 * @see http://openid.net/specs/openid-connect-basic-1_0.html#UserInfo
+	 *
+	 * @param OICToken $oicToken
+	 *
+	 * @return array|\JOSE_JWT
+	 */
     public function getEndUserinfo(OICToken $oicToken)
     {
         $this->idTokenValidator->setIdToken($oicToken->getIdToken());

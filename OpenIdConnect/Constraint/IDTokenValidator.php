@@ -10,6 +10,12 @@ namespace Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Constraint;
  *
  * @author valérian Girard <valerian.girard@educagri.fr>
  */
+use DateTime;
+
+/**
+ * Class IDTokenValidator
+ * @package Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Constraint
+ */
 class IDTokenValidator implements ValidatorInterface
 {
     /**
@@ -32,25 +38,34 @@ class IDTokenValidator implements ValidatorInterface
      */
     private $claims;
 
-    public function __construct($options)
+	/**
+	 * IDTokenValidator constructor.
+	 *
+	 * @param $options
+	 */
+	public function __construct($options)
     {
         $this->options = $options;
     }
 
+	/**
+	 * @param mixed $idToken
+	 */
     public function setIdToken($idToken)
     {
         $this->idToken = $idToken;
         $this->claims = is_object($idToken) ? $this->idToken->claims : $this->idToken['claims'];
     }
-    
+
+	/**
+	 * @return array
+	 */
     public function getErrors()
     {
         return $this->errors;
     }
 
-        /**
-     *
-     * @param type $idToken
+	/**
      * @return boolean
      */
     public function isValid()
@@ -96,7 +111,7 @@ class IDTokenValidator implements ValidatorInterface
          * the exp Claim (possibly allowing for some small
          * leeway to account for clock skew).
          */
-        if (!$this->isExpirationTimeValide()) {
+        if (!$this->isExpirationTimeValid()) {
             $this->errors[] = "The client's expiration time is out of bound";
         }
         
@@ -105,7 +120,7 @@ class IDTokenValidator implements ValidatorInterface
          * nonces need to be stored to prevent attacks.
          * The acceptable range is Client specific.
          */
-        if (! $this->isIatValide()) {
+        if (! $this->isIanValid()) {
             $this->errors[] = "The client's iat value is not valid";
         }
         
@@ -127,6 +142,11 @@ class IDTokenValidator implements ValidatorInterface
         return (bool) count($this->errors) == 0;
     }
 
+	/**
+	 * @param $aud
+	 *
+	 * @return bool
+	 */
     public function isClientIdInAudience($aud)
     {
         if (is_string($aud)) {
@@ -137,6 +157,11 @@ class IDTokenValidator implements ValidatorInterface
         return false;
     }
 
+	/**
+	 * @param $aud
+	 *
+	 * @return bool
+	 */
     public function isMultipleAudienceValide($aud)
     {
         if (is_string($aud)) {
@@ -154,33 +179,42 @@ class IDTokenValidator implements ValidatorInterface
         }
         return false;
     }
-    
-    public function isExpirationTimeValide()
+
+	/**
+	 * @return bool
+	 */
+	public function isExpirationTimeValid()
     {
-        $expirationTime = new \DateTime();
+        $expirationTime = new DateTime();
         $expirationTime->setTimestamp($this->claims['exp']);
         
-        return new \DateTime("Now") < $expirationTime;
+        return new DateTime("Now") < $expirationTime;
     }
-    
-    public function isIatValide()
+
+	/**
+	 * @return bool
+	 */
+    public function isIanValid()
     {
-        $expirationTime = new \DateTime();
+        $expirationTime = new DateTime();
         $expirationTime->setTimestamp($this->claims['iat']);
         $expirationTime->add(new \DateInterval(sprintf("PT%dS", $this->options['token_ttl'])));
         
-        return new \DateTime("Now") < $expirationTime;
+        return new DateTime("Now") < $expirationTime;
     }
-    
+
+	/**
+	 * @return bool|null
+	 */
     public function isValidAuthTime()
     {
         if ($this->options['authentication_ttl'] !== null && $this->options['authentication_ttl'] > 0) {
             if (array_key_exists('auth_time', $this->claims)) {
-                $expirationAuthTime = new \DateTime();
+                $expirationAuthTime = new DateTime();
                 $expirationAuthTime->setTimestamp($this->claims['auth_time']);
                 $expirationAuthTime->add(new \DateInterval(sprintf("PT%dS", $this->options['authentication_ttl'])));
 
-                return new \DateTime("Now") < $expirationAuthTime;
+                return new DateTime("Now") < $expirationAuthTime;
             } else {
                 return null;
             }

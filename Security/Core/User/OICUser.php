@@ -2,6 +2,7 @@
 
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\User;
 
+use Serializable;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\EquatableInterface;
@@ -11,9 +12,8 @@ use Symfony\Component\Security\Core\User\EquatableInterface;
  *
  * @author
  */
-class OICUser implements AdvancedUserInterface, \Serializable, EquatableInterface
+class OICUser implements AdvancedUserInterface, Serializable, EquatableInterface
 {
-
     /**
      * @var string
      */
@@ -29,9 +29,11 @@ class OICUser implements AdvancedUserInterface, \Serializable, EquatableInterfac
      */
     protected $roles = array();
 
-    /**
-     * @param string $username
-     */
+	/**
+	 * @param string $username
+	 * @param null $roles
+	 * @param null $attributes
+	 */
     public function __construct($username, $roles = null, $attributes = null)
     {
         $this->username = $username;
@@ -50,7 +52,12 @@ class OICUser implements AdvancedUserInterface, \Serializable, EquatableInterfac
         return $this->roles;
     }
 
-    public function __get($name)
+	/**
+	 * @param $name
+	 *
+	 * @return mixed|null
+	 */
+	public function __get($name)
     {
         if (array_key_exists($name, $this->attributes)) {
             return $this->attributes[$name];
@@ -58,12 +65,21 @@ class OICUser implements AdvancedUserInterface, \Serializable, EquatableInterfac
         return null;
     }
 
-    public function __set($name, $value)
+	/**
+	 * @param $name
+	 * @param $value
+	 */
+	public function __set($name, $value)
     {
         $this->attributes[$name] = $value;
     }
-    
-    public function __isset($name)
+
+	/**
+	 * @param $name
+	 *
+	 * @return bool
+	 */
+	public function __isset($name)
     {
         return array_key_exists($name, $this->attributes);
     }
@@ -168,7 +184,10 @@ class OICUser implements AdvancedUserInterface, \Serializable, EquatableInterfac
         list($this->username, $this->attributes) = $data;
     }
 
-    public function __toString()
+	/**
+	 * @return string
+	 */
+	public function __toString()
     {
         return $this->getUsername();
     }

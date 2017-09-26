@@ -26,8 +26,8 @@ class OICEntryPoint implements AuthenticationEntryPointInterface
     protected $resourceOwner;
 
     /**
-     * @param \Symfony\Component\Security\Http\HttpUtils $httpUtils
-     * @param \Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\ResourceOwnerInterface $resourceOwner
+     * @param HttpUtils $httpUtils
+     * @param ResourceOwnerInterface $resourceOwner
      */
     public function __construct(HttpUtils $httpUtils, ResourceOwnerInterface $resourceOwner)
     {

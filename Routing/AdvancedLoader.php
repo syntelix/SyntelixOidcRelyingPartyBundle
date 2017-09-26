@@ -15,9 +15,18 @@ use Symfony\Component\Routing\RouteCollection;
  */
 class AdvancedLoader implements LoaderInterface
 {
-    private $loaded = false;
+	/**
+	 * @var bool
+	 */
+	private $loaded = false;
 
-    public function load($resource, $type = null)
+	/**
+	 * @param mixed $resource
+	 * @param null $type
+	 *
+	 * @return RouteCollection
+	 */
+	public function load($resource, $type = null)
     {
         if (true === $this->loaded) {
             throw new \RuntimeException('Do not add the "oic_routing" loader twice');
@@ -43,18 +52,30 @@ class AdvancedLoader implements LoaderInterface
         return $routes;
     }
 
-    public function supports($resource, $type = null)
+	/**
+	 * @param mixed $resource
+	 * @param null $type
+	 *
+	 * @return bool
+	 */
+	public function supports($resource, $type = null)
     {
         return 'oic_routing' === $type;
     }
 
-    public function getResolver()
+	/**
+	 *
+	 */
+	public function getResolver()
     {
         // needed, but can be blank, unless you want to load other resources
         // and if you do, using the Loader base class is easier (see below)
     }
 
-    public function setResolver(LoaderResolverInterface $resolver)
+	/**
+	 * @param LoaderResolverInterface $resolver
+	 */
+	public function setResolver(LoaderResolverInterface $resolver)
     {
         // same as above
     }

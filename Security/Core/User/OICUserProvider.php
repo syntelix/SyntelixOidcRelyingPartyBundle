@@ -20,10 +20,18 @@ class OICUserProvider implements UserProviderInterface, UserFactoryInterface
      * @var Session
      */
     private $session;
-    
-    private $sessionKeyName = "syntelix.oic.user.stored";
-    
-    public function __construct(Session $session)
+
+	/**
+	 * @var string
+	 */
+	private $sessionKeyName = "syntelix.oic.user.stored";
+
+	/**
+	 * OICUserProvider constructor.
+	 *
+	 * @param Session $session
+	 */
+	public function __construct(Session $session)
     {
         $this->session = $session;
     }

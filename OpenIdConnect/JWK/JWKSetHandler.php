@@ -38,11 +38,26 @@ class JWKSetHandler
      * @var AbstractCurl
      */
     private $httpClient;
-    
+
+	/**
+	 * @var string
+	 */
     private $jwkFileName = "op.jwk";
+
+	/**
+	 * @var string
+	 */
     private $jwkFileFolder = "/syntelix/OIC/jwk-cache/";
 
-    public function __construct($jwkUrl, $jwkCacheTtl, $cacheDir, AbstractCurl $httpClient)
+	/**
+	 * JWKSetHandler constructor.
+	 *
+	 * @param $jwkUrl
+	 * @param $jwkCacheTtl
+	 * @param $cacheDir
+	 * @param AbstractCurl $httpClient
+	 */
+	public function __construct($jwkUrl, $jwkCacheTtl, $cacheDir, AbstractCurl $httpClient)
     {
         $this->jwkUrl = $jwkUrl;
         $this->jwkCacheTtl = $jwkCacheTtl;
@@ -50,6 +65,11 @@ class JWKSetHandler
         $this->httpClient = $httpClient;
     }
 
+	/**
+	 * @param null $jku
+	 *
+	 * @return bool|mixed|string
+	 */
     public function getJwk($jku = null)
     {
         if ($jku === null && $this->jwkUrl === null) {
@@ -68,6 +88,9 @@ class JWKSetHandler
         return $content;
     }
 
+	/**
+	 * @param $url
+	 */
     private function refreshCache($url)
     {
         $fs = new Filesystem();
@@ -103,7 +126,10 @@ class JWKSetHandler
         }
         return;
     }
-    
+
+	/**
+	 *
+	 */
     private function makeCache()
     {
         $request = new HttpClientRequest(RequestInterface::METHOD_GET, $this->jwkUrl);

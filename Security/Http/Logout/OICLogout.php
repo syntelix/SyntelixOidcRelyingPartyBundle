@@ -35,10 +35,12 @@ class OICLogout
      */
     private $options;
 
-    /**
-     * @param TokenStorageInterface $tokenStorage
-     * @param HttpUtils $httpUtils
-     */
+	/**
+	 * @param array $options
+	 * @param TokenStorageInterface $tokenStorage
+	 * @param HttpUtils $httpUtils
+	 * @param RouterInterface $router
+	 */
     public function __construct(array $options, TokenStorageInterface $tokenStorage, HttpUtils $httpUtils, RouterInterface $router)
     {
         $this->tokenStorage = $tokenStorage;
@@ -47,8 +49,12 @@ class OICLogout
         $this->options = $options;
     }
 
-    
-    public function logout(Request $request)
+	/**
+	 * @param Request $request
+	 *
+	 * @return RedirectResponse
+	 */
+	public function logout(Request $request)
     {
         $request->getSession()->clear();
         $request->getSession()->invalidate();
@@ -66,8 +72,13 @@ class OICLogout
         
         return $redirectResponse;
     }
-    
-    private function getRedirectAfterLogoutURI(Request $request)
+
+	/**
+	 * @param Request $request
+	 *
+	 * @return mixed|string
+	 */
+	private function getRedirectAfterLogoutURI(Request $request)
     {
         if ($this->router->getRouteCollection()->get($this->options['redirect_after_logout'])) {
             return $this->httpUtils->generateUri($request, $this->options['redirect_after_logout']);
@@ -75,9 +86,13 @@ class OICLogout
         
         return $this->options['redirect_after_logout'];
     }
-    
-    
-    private function getOIDCLogoutEndPointURI(Request $request)
+
+	/**
+	 * @param Request $request
+	 *
+	 * @return string
+	 */
+	private function getOIDCLogoutEndPointURI(Request $request)
     {
         return $this->options['endpoints_url']['logout']
                     . "?post_logout_redirect_uri="

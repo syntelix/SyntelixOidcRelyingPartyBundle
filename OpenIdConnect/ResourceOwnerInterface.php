@@ -13,14 +13,15 @@ use Symfony\Component\HttpFoundation\Request;
 interface ResourceOwnerInterface
 {
 
-    /**
-     * Returns the provider's authorization url
-     *
-     * @param string $redirectUri The uri to redirect the client back to
-     * @param array $extraParameters An array of parameters to add to the url
-     *
-     * @return string The authorization url
-     */
+	/**
+	 * Returns the provider's authorization url
+	 *
+	 * @param Request $request
+	 * @param string $redirectUri The uri to redirect the client back to
+	 * @param array $extraParameters An array of parameters to add to the url
+	 *
+	 * @return string The authorization url
+	 */
     public function getAuthenticationEndpointUrl(Request $request, $redirectUri = null, array $extraParameters = array());
 
     /**
@@ -37,8 +38,9 @@ interface ResourceOwnerInterface
     /**
      * Use the code parameter set in request query for retrieve the enduser informations
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token\OICToken
+     * @param Request $request
+     *
+     * @return OICToken
      */
     public function authenticateUser(Request $request);
     
@@ -47,7 +49,8 @@ interface ResourceOwnerInterface
      *
      * @see http://openid.net/specs/openid-connect-basic-1_0.html#UserInfo
      *
-     * @param \Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token\OICToken $oicToken
+     * @param OICToken $oicToken
+     *
      * @return array
      */
     public function getEndUserinfo(OICToken $oicToken);

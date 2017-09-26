@@ -3,6 +3,7 @@
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\DependencyInjection\Security\Factory;
 
 use Symfony\Bundle\SecurityBundle\DependencyInjection\Security\Factory\AbstractFactory;
+use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -14,30 +15,30 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 class OICFactory extends AbstractFactory
 {
-    public function addConfiguration(\Symfony\Component\Config\Definition\Builder\NodeDefinition $node)
+	/**
+	 * @param NodeDefinition $node
+	 */
+	public function addConfiguration( NodeDefinition $node)
     {
         parent::addConfiguration($node);
         
         $node->children()
-                ->scalarNode('create_users')->defaultFalse()->end()
-                ->arrayNode('created_users_roles')
-                    ->treatNullLike(array())
-                    ->beforeNormalization()
-                        ->ifTrue(function ($v) {
-                            return !is_array($v);
-                        })
-                        ->then(function ($v) {
-                            return array($v);
-                        })
-                    ->end()
-                    ->prototype('scalar')->end()
-                    ->defaultValue(array("ROLE_OIC_USER"))
+            ->scalarNode('create_users')->defaultFalse()->end()
+            ->arrayNode('created_users_roles')
+                ->treatNullLike(array())
+                ->beforeNormalization()
+                    ->ifTrue(function ($v) {
+                        return !is_array($v);
+                    })
+                    ->then(function ($v) {
+                        return array($v);
+                    })
                 ->end()
-                
+                ->prototype('scalar')->end()
+                ->defaultValue(array("ROLE_OIC_USER"))->end()
             ->end()
         ;
     }
-
     
     /**
      * {@inheritDoc}

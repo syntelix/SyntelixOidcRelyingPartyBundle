@@ -15,7 +15,6 @@ use Symfony\Component\DependencyInjection\Loader;
  */
 class SyntelixOidcRelyingPartyExtension extends Extension
 {
-
     /**
      * {@inheritDoc}
      */
@@ -53,7 +52,7 @@ class SyntelixOidcRelyingPartyExtension extends Extension
                 ));
 
         $name = 'generic';
-        $this->createResoucerOwnerService($container, $name, $config);
+        $this->createResourceOwnerService($container, $name, $config);
         
         //Logout
         if ($config['redirect_after_logout'] === null) {
@@ -71,7 +70,11 @@ class SyntelixOidcRelyingPartyExtension extends Extension
         return 'syntelix_oic_rp';
     }
 
-    private function configureBuzz(ContainerBuilder $container, $config)
+	/**
+	 * @param ContainerBuilder $container
+	 * @param $config
+	 */
+	private function configureBuzz(ContainerBuilder $container, $config)
     {
         // setup buzz client settings
         $httpClient = $container->getDefinition('buzz.client');
@@ -99,7 +102,12 @@ class SyntelixOidcRelyingPartyExtension extends Extension
         }
     }
 
-    private function createResoucerOwnerService(ContainerBuilder $container, $name, $config)
+	/**
+	 * @param ContainerBuilder $container
+	 * @param $name
+	 * @param $config
+	 */
+	private function createResourceOwnerService(ContainerBuilder $container, $name, $config)
     {
         $definition = new ChildDefinition("syntelix_oic_rp.abstract_resource_owner." . $name);
         $definition->setClass("%syntelix_oic_rp.resource_owner.$name.class%");

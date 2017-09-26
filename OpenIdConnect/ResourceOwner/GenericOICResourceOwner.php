@@ -2,8 +2,6 @@
 
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\ResourceOwner;
 
-use Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\ResourceOwner\AbstractGenericOICResourceOwner;
-
 /**
  * GenericOICResourceOwner
  *
@@ -11,7 +9,6 @@ use Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\ResourceOwner\AbstractG
  */
 class GenericOICResourceOwner extends AbstractGenericOICResourceOwner
 {
-
     /**
      * {@inheritDoc}
      */

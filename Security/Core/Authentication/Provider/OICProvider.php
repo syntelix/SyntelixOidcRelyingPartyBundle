@@ -23,7 +23,6 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
  */
 class OICProvider implements AuthenticationProviderInterface
 {
-
     /**
      * @var UserProviderInterface
      */
@@ -54,7 +53,15 @@ class OICProvider implements AuthenticationProviderInterface
      */
     private $createUsers = true;
 
-    public function __construct(UserProviderInterface $userProvider,
+	/**
+	 * OICProvider constructor.
+	 *
+	 * @param UserProviderInterface $userProvider
+	 * @param ResourceOwnerInterface $resourceOwner
+	 * @param bool $createUsers
+	 * @param array|null $createdUsersRoles
+	 */
+	public function __construct(UserProviderInterface $userProvider,
             ResourceOwnerInterface $resourceOwner,
             $createUsers = false, array $createdUsersRoles = null)
     {
@@ -78,14 +85,14 @@ class OICProvider implements AuthenticationProviderInterface
         $user = $this->provideUser($this->token->getUsername());
 
         if ($user->getUsername() === $this->token->getUsername()) {
-            $relodedToken = new OICToken($user->getRoles());
-            $relodedToken->setAccessToken($this->token->getAccessToken());
-            $relodedToken->setIdToken($this->token->getIdToken());
-            $relodedToken->setRefreshToken($this->token->getRefreshToken());
-            $relodedToken->setUser($user);
-            $relodedToken->setAuthenticated(true);
+            $reloadedToken = new OICToken($user->getRoles());
+            $reloadedToken->setAccessToken($this->token->getAccessToken());
+            $reloadedToken->setIdToken($this->token->getIdToken());
+            $reloadedToken->setRefreshToken($this->token->getRefreshToken());
+            $reloadedToken->setUser($user);
+            $reloadedToken->setAuthenticated(true);
             
-            return $relodedToken;
+            return $reloadedToken;
         }
 
         throw new AuthenticationException('The OpenID Connect authentication failed.');
@@ -100,8 +107,8 @@ class OICProvider implements AuthenticationProviderInterface
     }
 
     /**
-     * @throws \Symfony\Component\Security\Core\Exception\UsernameNotFoundException
-     * @throws \Symfony\Component\Security\Core\Exception\BadCredentialsException
+     * @throws UsernameNotFoundException
+     * @throws BadCredentialsException
      *
      * @param string $username
      *
@@ -127,7 +134,7 @@ class OICProvider implements AuthenticationProviderInterface
     }
 
     /**
-     * @throws \Symfony\Component\Security\Core\Exception\AuthenticationServiceException
+     * @throws AuthenticationServiceException
      *
      * @param string $username
      *
@@ -168,8 +175,7 @@ class OICProvider implements AuthenticationProviderInterface
                 }
             }
         }
-        
-        
+
         if (!$userProvider instanceof UserFactoryInterface) {
             throw new AuthenticationServiceException('UserProvider must implement UserFactoryInterface to create unknown users.');
         }
@@ -178,7 +184,6 @@ class OICProvider implements AuthenticationProviderInterface
             $attributes = $this->resourceOwner->getEndUserinfo($this->token);
             
             $user = $userProvider->createUser($username, $this->createdUsersRoles, $attributes);
-            
 
             if (!$user instanceof UserInterface) {
                 throw new AuthenticationServiceException('The user provider must create an UserInterface object.');
