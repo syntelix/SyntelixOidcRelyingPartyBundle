@@ -6,7 +6,7 @@
 
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Constraint;
 
-/*
+/**
  * IDTokenValidator
  *
  * Valid an id token like describe here
