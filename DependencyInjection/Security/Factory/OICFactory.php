@@ -82,7 +82,8 @@ class OICFactory extends AbstractFactory
         $container
                 ->getDefinition($listenerId)
                 ->addMethodCall('setResourceOwner', array(new Reference('syntelix_oic_rp.resource_owner.generic')))
-                ->addMethodCall('setSecurityContext', array(new Reference('security.context')))
+                ->addMethodCall('setTokenStorage', array(new Reference('security.token_storage')))
+                ->addMethodCall('setAuthorizationChecker', array(new Reference('security.authorization_checker')))
         ;
 
         return $listenerId;
