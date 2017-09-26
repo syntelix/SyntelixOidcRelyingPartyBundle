@@ -10,6 +10,7 @@ This bundle is a fork of https://github.com/waldo2188/OpenIdConnectRelyingPartyB
 SyntelixOidcRelyingPartyBundle is an implementation of [OpenID Connect Specification](http://openid.net/specs/openid-connect-basic-1_0.html).
 
 ## Requirements
+- PHP 7.0+
 - Symfony 3.2+
 
 ## Installation
