@@ -14,7 +14,7 @@ class NonceHelperTest extends TestCase
 {
     public function testBuildNonceValue()
     {
-        $ession = $this->getMock('Symfony\Component\HttpFoundation\Session\Session');
+        $ession = $this->createMock('Symfony\Component\HttpFoundation\Session\Session');
         $ession->expects($this->once())
                 ->method('set')
                 ->with($this->equalTo("auth.oic.test"), $this->anything());
@@ -29,7 +29,7 @@ class NonceHelperTest extends TestCase
     
     public function testBuildNonceValueGreaterThan255()
     {
-        $ession = $this->getMock('Symfony\Component\HttpFoundation\Session\Session');
+        $ession = $this->createMock('Symfony\Component\HttpFoundation\Session\Session');
         $ession->expects($this->once())
                 ->method('set')
                 ->with($this->equalTo("auth.oic.test"), $this->anything());
@@ -48,7 +48,7 @@ class NonceHelperTest extends TestCase
         $request->query->set('state', 'unevaleur');
         $request->query->set('nonce', 'unevaleur');
         
-        $ession = $this->getMock('Symfony\Component\HttpFoundation\Session\Session');
+        $ession = $this->createMock('Symfony\Component\HttpFoundation\Session\Session');
         $ession->expects($this->exactly(2))
                 ->method('get')
                 ->willReturn(serialize('unevaleur'));
@@ -66,7 +66,7 @@ class NonceHelperTest extends TestCase
         $request->query->set('state', 'unevaleur');
         $request->query->set('nonce', 'unevaleur');
         
-        $ession = $this->getMock('Symfony\Component\HttpFoundation\Session\Session');
+        $ession = $this->createMock('Symfony\Component\HttpFoundation\Session\Session');
         $ession->expects($this->once())
                 ->method('get')
                 ->willReturn(serialize('error'));

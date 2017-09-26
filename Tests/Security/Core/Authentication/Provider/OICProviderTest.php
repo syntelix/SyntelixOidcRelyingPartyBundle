@@ -14,9 +14,9 @@ class OICProviderTest extends TestCase
 {
     public function testAuthenticateShoulReturnToken()
     {
-        $resouceOwner = $this->getMock("Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\ResourceOwnerInterface");
+        $resouceOwner = $this->createMock("Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\ResourceOwnerInterface");
         
-        $user = $this->getMock('Symfony\Component\Security\Core\User\UserInterface');
+        $user = $this->createMock('Symfony\Component\Security\Core\User\UserInterface');
         $user->expects($this->once())
                 ->method('getUsername')
                 ->willReturn('amy.pond');
@@ -24,13 +24,13 @@ class OICProviderTest extends TestCase
                 ->method('getRoles')
                 ->willReturn(array('ROLE_FAKE'));
         
-        $userProvider = $this->getMock('Symfony\Component\Security\Core\User\UserProviderInterface');
+        $userProvider = $this->createMock('Symfony\Component\Security\Core\User\UserProviderInterface');
         $userProvider->expects($this->once())
                 ->method('loadUserByUsername')
                 ->with($this->equalTo('amy.pond'))
                 ->willReturn($user);
         
-        $token = $this->getMock('Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token\OICToken');
+        $token = $this->createMock('Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token\OICToken');
         $token->expects($this->exactly(2))
                 ->method('getUsername')
                 ->willReturn('amy.pond');
@@ -67,19 +67,19 @@ class OICProviderTest extends TestCase
      */
     public function testAuthenticationShouldFailed()
     {
-        $resouceOwner = $this->getMock("Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\ResourceOwnerInterface");
+        $resouceOwner = $this->createMock("Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\ResourceOwnerInterface");
         
-        $user = $this->getMock('Symfony\Component\Security\Core\User\UserInterface');
+        $user = $this->createMock('Symfony\Component\Security\Core\User\UserInterface');
         $user->expects($this->once())
                 ->method('getUsername')
                 ->willReturn('amy.pond');
         
-        $userProvider = $this->getMock('Symfony\Component\Security\Core\User\UserProviderInterface');
+        $userProvider = $this->createMock('Symfony\Component\Security\Core\User\UserProviderInterface');
         $userProvider->expects($this->once())
                 ->method('loadUserByUsername')
                 ->willReturn($user);
         
-        $token = $this->getMock('Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token\OICToken');
+        $token = $this->createMock('Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token\OICToken');
         $token->expects($this->exactly(2))
                 ->method('getUsername')
                 ->willReturn('rory.willialms');

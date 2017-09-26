@@ -23,7 +23,7 @@ class OICUserProviderTest extends TestCase
                 ->method("getUsername")
                 ->willReturn($username);
                 
-        $session = $this->getMock("Symfony\Component\HttpFoundation\Session\Session");
+        $session = $this->createMock("Symfony\Component\HttpFoundation\Session\Session");
         $session->expects($this->once())
                 ->method("has")
                 ->willReturn(true);
@@ -35,7 +35,7 @@ class OICUserProviderTest extends TestCase
         
         $oicUser = $oicUserProvider->loadUserByUsername($username);
 
-        $this->assertInstanceOf('Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\User\OICUser', $oicUser);
+        $this->assertInstanceOf(OICUser::class, $oicUser);
         $this->assertEquals($username, $oicUser->getUsername());
     }
 
@@ -43,7 +43,7 @@ class OICUserProviderTest extends TestCase
     {
         $oicUser = new OICUser('amy.pond');
 
-        $session = $this->getMock("Symfony\Component\HttpFoundation\Session\Session");
+        $session = $this->createMock("Symfony\Component\HttpFoundation\Session\Session");
         $session->expects($this->once())
                 ->method("has")
                 ->willReturn(true);
@@ -63,9 +63,9 @@ class OICUserProviderTest extends TestCase
      */
     public function testRefreshUsershouldFail()
     {
-        $oicUser = $this->getMock('Symfony\Component\Security\Core\User\UserInterface');
+        $oicUser = $this->createMock('Symfony\Component\Security\Core\User\UserInterface');
         
-        $session = $this->getMock("Symfony\Component\HttpFoundation\Session\Session");
+        $session = $this->createMock("Symfony\Component\HttpFoundation\Session\Session");
         
         $oicUserProvider = new OICUserProvider($session);
 

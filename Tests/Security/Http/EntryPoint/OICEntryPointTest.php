@@ -14,16 +14,16 @@ class OICEntryPointTest extends TestCase
 {
     public function testStart()
     {
-        $request = $this->getMock('Symfony\Component\HttpFoundation\Request');
+        $request = $this->createMock('Symfony\Component\HttpFoundation\Request');
 
-        $httpUtils = $this->getMock('Symfony\Component\Security\Http\HttpUtils');
+        $httpUtils = $this->createMock('Symfony\Component\Security\Http\HttpUtils');
         $httpUtils->expects($this->once())
                 ->method("createRedirectResponse")
                 ->with($this->equalTo($request), $this->equalTo("someUri"))
                 ->willReturn("realUri")
                 ;
 
-        $ResourceOwner = $this->getMock('Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\ResourceOwnerInterface');
+        $ResourceOwner = $this->createMock('Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\ResourceOwnerInterface');
         $ResourceOwner->expects($this->once())
                 ->method("getAuthenticationEndpointUrl")
                 ->with($this->equalTo($request))
