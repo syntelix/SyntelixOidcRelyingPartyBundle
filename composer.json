@@ -1,8 +1,9 @@
 {
     "name": "syntelix/oidc-relying-party-bundle",
+    "type": "symfony-bundle",
     "license": "MIT",
-    "type": "bundle",
     "description": "OpenID Connect Relying Party Bundle",
+    "homepage": "https://github.com/syntelix/SyntelixOidcRelyingPartyBundle",
     "authors": [
         {
             "name": "Gonzalo Rodriguez",
@@ -16,12 +17,10 @@
     "autoload": {
         "psr-4": {
             "Syntelix\\Bundle\\OidcRelyingPartyBundle\\": ""
-        }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "master-dev"
-        }
+        },
+        "exclude-from-classmap": [
+            "Tests/"
+        ]
     },
     "require": {
         "php": ">=5.5.9",
@@ -37,5 +36,12 @@
             "type": "git",
             "url": "https://github.com/waldo2188/jose"
         }
-    ]
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "extra": {
+        "branch-alias": {
+            "dev-master": "master-dev"
+        }
+    }
 }
