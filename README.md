@@ -56,4 +56,4 @@ class AppKernel extends Kernel
 
 ## What is next?
 
-- [Read the documentation](Resources/doc/index.md)
+- [Read the documentation](Resources/doc/index.rst)

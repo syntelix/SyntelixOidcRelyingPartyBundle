@@ -43,10 +43,12 @@ class AppKernel extends Kernel
 
 ## Configuration
 
+Configure the bundle.
+
 ```yaml
 #/app/config/config.yml
 
-waldo_oic_rp:
+syntelix_oic_rp:
     http_client:                     # Configuration for Buzz
         timeout: 5
         verify_peer: ~
@@ -86,6 +88,8 @@ login_check:
     path: /login_check
 ```
 
+Configure security.
+
 I recommend you to set a path for `default_target_path`. Because you risk to suffer redirection loop.
 You must maybe set a path for `login_path`, the same as `default_target_path`, is a good start.
 
@@ -94,7 +98,7 @@ You must maybe set a path for `login_path`, the same as `default_target_path`, i
 security:
     providers:
         OICUserProvider: 
-            id: waldo_oic_rp.user.provider
+            id: syntelix_oic_rp.user.provider
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -126,7 +130,7 @@ he will be automatically  redirected to the OpenId Connect Provider's login page
 
 ## How to display a logout link?
 
-The name of the logout route is `_oic_rp_logout`. You can use it in your Twig template like below: 
+The name of the logout route is `_oic_rp_logout`. You can use it in your Twig template like below:
 
 ```twig
 <a href="{{ path('_oic_rp_logout') }}">Logout</a>
