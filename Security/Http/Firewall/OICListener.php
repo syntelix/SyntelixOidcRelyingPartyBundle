@@ -2,8 +2,9 @@
 
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\Security\Http\Firewall;
 
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\ResourceOwnerInterface;
-use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Http\Firewall\AbstractAuthenticationListener;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -15,10 +16,15 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  */
 class OICListener extends AbstractAuthenticationListener
 {
-    /**
-     * @var SecurityContext
-     */
-    private $securityContext;
+	/**
+	 * @var TokenStorageInterface
+	 */
+    private $tokenStorage;
+
+	/**
+	 * @var AuthorizationCheckerInterface
+	 */
+    private $authorizationChecker;
 
     /**
      * @var ResourceOwnerInterface
@@ -32,23 +38,28 @@ class OICListener extends AbstractAuthenticationListener
     {
         $this->resourceOwner = $resourceOwner;
     }
-    
-    /**
-     * @param \Symfony\Component\Security\Core\SecurityContext $securityContext
-     */
-    public function setSecurityContext(SecurityContext $securityContext)
-    {
-        $this->securityContext = $securityContext;
+
+	/**
+	 * @param TokenStorageInterface $tokenStorage
+	 */
+	public function setTokenStorage( TokenStorageInterface $tokenStorage ) {
+		$this->tokenStorage = $tokenStorage;
     }
 
-    
-    /**
+	/**
+	 * @param AuthorizationCheckerInterface $authorizationChecker
+	 */
+	public function setAuthorizationChecker( AuthorizationCheckerInterface $authorizationChecker ) {
+		$this->authorizationChecker = $authorizationChecker;
+	}
+
+	/**
      * {@inheritDoc}
      */
     protected function attemptAuthentication(Request $request)
     {
-        if ($this->securityContext->getToken() && $this->securityContext->getToken()->isAuthenticated()) {
-            return $this->securityContext->getToken();
+        if ($this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->tokenStorage->getToken();
         }
 
         if ($request->query->count() == 0) {
