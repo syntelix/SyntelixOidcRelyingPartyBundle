@@ -11,7 +11,7 @@ SyntelixOidcRelyingPartyBundle is an implementation of [OpenID Connect Specifica
 
 ## Requirements
 - PHP 7.0+
-- Symfony 3.2+
+- Symfony 3.3+
 
 ## Installation
 
