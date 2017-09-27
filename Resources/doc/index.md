@@ -1,8 +1,8 @@
 # OpenID Connect Relying Party Bundle
 
+1. [Installation](installation.md)
+1. [Configuration](configuration.md)
 1. [Troubleshooting](troubleshooting.md)
-2. [Installation](installation.md)
-3. [Configuration](configuration.md)
 
 ## What is the link for login end user?
 
