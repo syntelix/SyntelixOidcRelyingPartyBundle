@@ -76,10 +76,12 @@ abstract class AbstractGenericOICResourceOwner implements ResourceOwnerInterface
      * @param LoggerInterface|null $logger
      */
     public function __construct(
-            HttpUtils $httpUtils, AbstractCurl $httpClient,
+            HttpUtils $httpUtils,
+            AbstractCurl $httpClient,
             ValidatorInterface $idTokenValidator,
             OICResponseHandler $responseHandler,
-            NonceHelper $nonceHelper, $options, LoggerInterface $logger = null)
+            NonceHelper $nonceHelper, $options,
+            LoggerInterface $logger = null)
     {
         $this->httpUtils = $httpUtils;
         $this->httpClient = $httpClient;

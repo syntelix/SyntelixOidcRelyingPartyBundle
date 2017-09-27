@@ -68,7 +68,7 @@ class OICListener extends AbstractAuthenticationListener
             return $this->tokenStorage->getToken();
         }
 
-        if ($request->query->count() == 0) {
+        if (0 == $request->query->count()) {
             $uri = $this->resourceOwner->getAuthenticationEndpointUrl($request);
 
             return new RedirectResponse($uri);

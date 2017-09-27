@@ -27,7 +27,7 @@ class Configuration implements ConfigurationInterface
         $displays = array(
             'POST',
             'GET',
-            );
+        );
 
         return in_array($display, $displays);
     }

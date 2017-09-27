@@ -6,6 +6,7 @@
 
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\Routing;
 
+use RuntimeException;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Loader\LoaderResolverInterface;
 use Symfony\Component\Routing\Route;
@@ -34,7 +35,7 @@ class AdvancedLoader implements LoaderInterface
     public function load($resource, $type = null)
     {
         if (true === $this->loaded) {
-            throw new \RuntimeException('Do not add the "oic_routing" loader twice');
+            throw new RuntimeException('Do not add the "oic_routing" loader twice');
         }
 
         $routes = new RouteCollection();
