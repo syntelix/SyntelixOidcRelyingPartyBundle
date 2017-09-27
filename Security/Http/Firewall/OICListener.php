@@ -64,7 +64,7 @@ class OICListener extends AbstractAuthenticationListener
      */
     protected function attemptAuthentication(Request $request)
     {
-        if ($this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
+        if ($this->tokenStorage->getToken() && $this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
             return $this->tokenStorage->getToken();
         }
 
