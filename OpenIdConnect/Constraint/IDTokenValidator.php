@@ -91,7 +91,7 @@ class IDTokenValidator implements ValidatorInterface
          * the value of the iss (issuer) Claim.
          */
         if ($this->options['issuer'] !== $this->claims['iss']) {
-            $this->errors[] = 'Issuer are not the same';
+            $this->errors[] = 'Issuer does not match';
         }
 
         /* 2. The Client MUST validate that the aud (audience) Claim contains

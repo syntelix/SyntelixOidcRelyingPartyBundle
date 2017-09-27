@@ -13,6 +13,12 @@ use Buzz\Message\Response as HttpClientResponse;
 use Symfony\Component\Serializer\Encoder\JsonDecode;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\HttpFoundation\Response;
+use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception\InvalidAuthorizationCodeException;
+use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception\InvalidClientOrSecretException;
+use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception\InvalidIdSignatureException;
+use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception\InvalidRequestException;
+use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception\InvalidResponseTypeException;
+use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception\UnsupportedGrantTypeException;
 
 /**
  * OICResponseHandler.
@@ -45,8 +51,8 @@ class OICResponseHandler
 
     /**
      * Search error in header and in content of the response.
-     * If an error is found an exception is throw.
-     * If all is clear, the content is Json decoded (if needed) and return as an array.
+     * If an error is found an exception is thrown.
+     * If all is clear, the content is JSON decoded (if needed) and returned as an array.
      *
      * @param HttpClientResponse $response
      *
@@ -59,7 +65,12 @@ class OICResponseHandler
         if ($response->getStatusCode() >= Response::HTTP_UNAUTHORIZED) {
             if (($authError = $response->getHeader('WWW-Authenticate')) !== null) {
                 preg_match('/^Basic realm="(.*)"$/', $authError, $matches);
-                $content = array('error' => 'Authentication fail', 'error_description' => $matches[1]);
+
+                if (empty($matches)) {
+	                preg_match('/^Bearer realm="(.*)"$/', $authError, $matches);
+                }
+
+	            $content = array('error' => 'Authentication fail', 'error_description' => $matches[1]);
             }
         } elseif ($response->getStatusCode() >= Response::HTTP_BAD_REQUEST) {
             if (($bearerError = $response->getHeader('WWW-Authenticate')) !== null) {
@@ -108,7 +119,7 @@ class OICResponseHandler
      *
      * @return JOSE_JWT
      *
-     * @throws OICException\InvalidIdSignatureException
+     * @throws InvalidIdSignatureException
      */
     public function handleEndUserinfoResponse(HttpClientResponse $response)
     {
@@ -177,7 +188,7 @@ class OICResponseHandler
      *
      * @return JOSE_JWT
      *
-     * @throws OICException\InvalidIdSignatureException
+     * @throws InvalidIdSignatureException
      */
     protected function verifySignedJwt(JOSE_JWT $jwt)
     {
@@ -204,7 +215,7 @@ class OICResponseHandler
                 try {
                     $jws->verify($key);
                 } catch (\Exception $e) {
-                    throw new OICException\InvalidIdSignatureException($e->getMessage());
+                    throw new InvalidIdSignatureException($e->getMessage());
                 }
             }
         }
@@ -217,11 +228,11 @@ class OICResponseHandler
      *
      * @return bool
      *
-     * @throws OICException\InvalidRequestException
-     * @throws OICException\InvalidResponseTypeException
-     * @throws OICException\InvalidAuthorizationCodeException
-     * @throws OICException\InvalidClientOrSecretException
-     * @throws OICException\UnsupportedGrantTypeException
+     * @throws InvalidRequestException
+     * @throws InvalidResponseTypeException
+     * @throws InvalidAuthorizationCodeException
+     * @throws InvalidClientOrSecretException
+     * @throws UnsupportedGrantTypeException
      */
     public function hasError($content)
     {
@@ -235,27 +246,26 @@ class OICResponseHandler
             }
 
             switch ($content['error']) {
-                case 'invalid request':
                 case 'invalid_request':
-                    throw new OICException\InvalidRequestException($content['error_description']);
+                    throw new InvalidRequestException($content['error_description']);
                     break;
                 case 'invalid_response_type':
-                    throw new OICException\InvalidResponseTypeException($content['error_description']);
+                    throw new InvalidResponseTypeException($content['error_description']);
                     break;
                 case 'invalid_authorization_code':
-                    throw new OICException\InvalidAuthorizationCodeException($content['error_description']);
+                    throw new InvalidAuthorizationCodeException($content['error_description']);
                     break;
                 case 'invalid_client':
-                    throw new OICException\InvalidClientOrSecretException($content['error_description']);
+                    throw new InvalidClientOrSecretException($content['error_description']);
                     break;
                 case 'unsupported_grant_type':
-                    throw new OICException\UnsupportedGrantTypeException($content['error_description']);
+                    throw new UnsupportedGrantTypeException($content['error_description']);
                     break;
                 case 'unauthorized_client':
-                    throw new OICException\InvalidClientOrSecretException($content['error_description']);
+                    throw new InvalidClientOrSecretException($content['error_description']);
                     break;
                 default:
-                    throw new OICException\InvalidRequestException($content['error_description']);
+                    throw new InvalidRequestException($content['error_description']);
                     break;
             }
         }
@@ -268,7 +278,7 @@ class OICResponseHandler
      *
      * @return bool
      */
-    private function isJson($string)
+    private function isJson(string $string)
     {
         json_decode($string);
 
