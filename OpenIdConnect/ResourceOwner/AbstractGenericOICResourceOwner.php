@@ -240,13 +240,18 @@ abstract class AbstractGenericOICResourceOwner implements ResourceOwnerInterface
 
         $content = $this->responseHandler->handleTokenAndAccessTokenResponse($response);
 
-        // Apply validation describe here: http://openid.net/specs/openid-connect-basic-1_0.html#IDTokenValidation
+        // Apply validation as described here: http://openid.net/specs/openid-connect-basic-1_0.html#IDTokenValidation
         $this->idTokenValidator->setIdToken($content['id_token']);
+
         if (!$this->idTokenValidator->isValid()) {
             $errors = sprintf('%s', implode(', ', $this->idTokenValidator->getErrors()));
 
             if ($this->logger !== null) {
-                $this->logger->error('InvalidIdTokenException '.$errors, $content);
+            	if (!is_array($content)) {
+		            $this->logger->error('InvalidIdTokenException '.$errors);
+	            } else {
+		            $this->logger->error('InvalidIdTokenException '.$errors, $content);
+	            }
             }
 
             throw new InvalidIdTokenException($errors);

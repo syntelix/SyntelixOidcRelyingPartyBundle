@@ -156,11 +156,11 @@ class OICResponseHandler
         return $jsonDecode->decode($content, JsonEncoder::FORMAT);
     }
 
-    /**
-     * @param string $content
-     *
-     * @return array
-     */
+	/**
+	 * @param $content
+	 *
+	 * @return \JOSE_JWE|JOSE_JWT
+	 */
     protected function getJwtEncodedContent($content)
     {
         $jwt = JOSE_JWT::decode($content);
