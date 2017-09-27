@@ -179,11 +179,11 @@ abstract class AbstractGenericOICResourceOwner implements ResourceOwnerInterface
      *
      * @see http://openid.net/specs/openid-connect-basic-1_0.html#ObtainingTokens
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param OICToken                                  $oicToken
-     * @param type                                      $code
+     * @param Request  $request
+     * @param OICToken $oicToken
+     * @param string   $code
      */
-    protected function getIdTokenAndAccessToken(Request $request, OICToken $oicToken, $code)
+    protected function getIdTokenAndAccessToken(Request $request, OICToken $oicToken, string $code)
     {
         $this->nonceHelper->checkStateAndNonce($request);
 
@@ -217,7 +217,7 @@ abstract class AbstractGenericOICResourceOwner implements ResourceOwnerInterface
      * @param array    $parameters
      * @param string   $redirectUri
      */
-    private function retrieveIdTokenAndAccessToken(OICToken $oicToken, $parameters, $redirectUri = 'login_check')
+    private function retrieveIdTokenAndAccessToken(OICToken $oicToken, array $parameters, string $redirectUri = 'login_check')
     {
         $parameters['redirect_uri'] = $this->httpUtils->generateUri(new Request(), $redirectUri);
 
