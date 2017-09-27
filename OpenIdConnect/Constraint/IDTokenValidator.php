@@ -24,22 +24,22 @@ class IDTokenValidator implements ValidatorInterface
     /**
      * @var array
      */
-    private $errors;
+    private $errors = [];
 
     /**
      * @var array
      */
-    private $options;
+    private $options = [];
 
     /**
      * @var array
      */
-    private $idToken;
+    private $idToken = [];
 
     /**
      * @var array
      */
-    private $claims;
+    private $claims = [];
 
     /**
      * IDTokenValidator constructor.
