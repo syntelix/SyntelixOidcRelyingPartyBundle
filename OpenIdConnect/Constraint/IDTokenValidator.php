@@ -22,24 +22,24 @@ use DateTime;
 class IDTokenValidator implements ValidatorInterface
 {
     /**
-     * @var array
+     * @var array|null
      */
-    private $errors = [];
+    private $errors;
 
     /**
-     * @var array
+     * @var array|null
      */
-    private $options = [];
+    private $options;
 
     /**
-     * @var array
+     * @var array|null
      */
-    private $idToken = [];
+    private $idToken;
 
     /**
-     * @var array
+     * @var array|null
      */
-    private $claims = [];
+    private $claims;
 
     /**
      * IDTokenValidator constructor.
@@ -57,7 +57,18 @@ class IDTokenValidator implements ValidatorInterface
     public function setIdToken($idToken)
     {
         $this->idToken = $idToken;
-        $this->claims = is_object($idToken) ? $this->idToken->claims : $this->idToken['claims'];
+        $this->setClaims(is_object($idToken) ? $this->idToken->claims : $this->idToken['claims']);
+    }
+
+	/**
+	 * @param array|null $claims
+	 *
+	 * @return $this
+	 */
+	public function setClaims( array $claims = null) {
+		$this->claims = $claims;
+
+		return $this;
     }
 
     /**
@@ -103,7 +114,7 @@ class IDTokenValidator implements ValidatorInterface
         /* 4. If an azp (authorized party) Claim is present,
          * the Client SHOULD verify that its client_id is the Claim Value.
          */
-        if (array_key_exists('azp', $this->claims)) {
+        if ($this->claims && array_key_exists('azp', $this->claims)) {
             if (!$this->isClientIdInAudience($this->claims['azp'])) {
                 $this->errors[] = "The client's azp claim is not valid";
             }
@@ -213,7 +224,7 @@ class IDTokenValidator implements ValidatorInterface
     public function isValidAuthTime()
     {
         if ($this->options['authentication_ttl'] !== null && $this->options['authentication_ttl'] > 0) {
-            if (array_key_exists('auth_time', $this->claims)) {
+            if ($this->claims && array_key_exists('auth_time', $this->claims)) {
                 $expirationAuthTime = new DateTime();
                 $expirationAuthTime->setTimestamp($this->claims['auth_time']);
                 $expirationAuthTime->add(new \DateInterval(sprintf('PT%dS', $this->options['authentication_ttl'])));
