@@ -5,9 +5,9 @@
 
 # SyntelixOidcRelyingPartyBundle
 
-This bundle is a fork of https://github.com/waldo2188/OpenIdConnectRelyingPartyBundle.
+Integrate with an OpenID Connect Provider using the OAuth code flow.
 
-SyntelixOidcRelyingPartyBundle is an implementation of [OpenID Connect Specification](http://openid.net/specs/openid-connect-basic-1_0.html).
+This bundle follows the OIDC [Basic Client Implementer’s Guide](http://openid.net/specs/openid-connect-basic-1_0.html).
 
 ## Requirements
 - PHP 7.0+
@@ -54,6 +54,10 @@ class AppKernel extends Kernel
 }
 ```
 
-## What is next?
+## Documentation
 
 - [Read the documentation](Resources/doc/index.md)
+
+## Credits
+
+This bundle is a fork of https://github.com/waldo2188/OpenIdConnectRelyingPartyBundle.
