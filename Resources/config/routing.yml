@@ -1,3 +1,6 @@
-syntelix_oic_rp_Routing:
+syntelix_oidc_rp_routing:
     resource: .
     type: oic_routing
+
+login_check:
+    path: /login_check

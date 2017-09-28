@@ -42,23 +42,20 @@ syntelix_oic_rp:
 
 ## Configure routing
 
+Load the bundle routes.
+
 ```yaml
 #/app/config/routing.yml
 
 # Syntelix OpenID Connect Relying Party
-_oic_rp:
+oidc_rp:
     resource: "@SyntelixOidcRelyingPartyBundle/Resources/config/routing.yml"
-
-# Set a path for the route name 'login_check'
-# You don't need to provide a controller for this route
-login_check:
-    path: /login_check
 ```
 
 ## Configure security
 
 It is recommended to set a path for `default_target_path` in order to prevent redirection loops.
-You should also set a path for `login_path`, the same value as `default_target_path` is a good start.
+You should also set a path for `login_path`.
 
 ```yaml
 #/app/config/security.yml
@@ -75,8 +72,8 @@ security:
             anonymous: ~
             openidconnect:
                 always_use_default_target_path: false
-                default_target_path: /private-page
-                login_path: /private-page
+                default_target_path: /
+                login_path: /login_check
                 target_path_parameter: ~
                 use_referer: ~
                 create_users: true                 # Create user if not found

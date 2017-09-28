@@ -36,8 +36,8 @@ class AdvancedLoader implements LoaderInterface
 
         $routes = new RouteCollection();
 
-        // prepare a new route
-        $path = '/oic-rp/logout';
+        // Create logout route
+        $path = '/logout';
         $defaults = array(
             '_controller' => 'SyntelixOidcRelyingPartyBundle:Logout:logout',
         );
