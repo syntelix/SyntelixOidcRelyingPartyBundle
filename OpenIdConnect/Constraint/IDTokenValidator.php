@@ -1,12 +1,8 @@
 <?php
 
-/*
- * This file is part of the SyntelixOidcRelayingPartyBundle package.
- */
-
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Constraint;
 
-/**
+/*
  * IDTokenValidator
  *
  * Valid an id token like describe here
@@ -60,15 +56,16 @@ class IDTokenValidator implements ValidatorInterface
         $this->setClaims(is_object($idToken) ? $this->idToken->claims : $this->idToken['claims']);
     }
 
-	/**
-	 * @param array|null $claims
-	 *
-	 * @return $this
-	 */
-	public function setClaims( array $claims = null) {
-		$this->claims = $claims;
+    /**
+     * @param array|null $claims
+     *
+     * @return $this
+     */
+    public function setClaims(array $claims = null)
+    {
+        $this->claims = $claims;
 
-		return $this;
+        return $this;
     }
 
     /**

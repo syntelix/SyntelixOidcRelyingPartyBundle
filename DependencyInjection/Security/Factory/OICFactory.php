@@ -1,9 +1,5 @@
 <?php
 
-/*
- * This file is part of the SyntelixOidcRelayingPartyBundle package.
- */
-
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\DependencyInjection\Security\Factory;
 
 use Symfony\Bundle\SecurityBundle\DependencyInjection\Security\Factory\AbstractFactory;

@@ -1,9 +1,5 @@
 <?php
 
-/*
- * This file is part of the SyntelixOidcRelayingPartyBundle package.
- */
-
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\ResourceOwner;
 
 use Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\ResourceOwnerInterface;
@@ -247,11 +243,11 @@ abstract class AbstractGenericOICResourceOwner implements ResourceOwnerInterface
             $errors = sprintf('%s', implode(', ', $this->idTokenValidator->getErrors()));
 
             if ($this->logger !== null) {
-            	if (!is_array($content)) {
-		            $this->logger->error('InvalidIdTokenException '.$errors);
-	            } else {
-		            $this->logger->error('InvalidIdTokenException '.$errors, $content);
-	            }
+                if (!is_array($content)) {
+                    $this->logger->error('InvalidIdTokenException '.$errors);
+                } else {
+                    $this->logger->error('InvalidIdTokenException '.$errors, $content);
+                }
             }
 
             throw new InvalidIdTokenException($errors);

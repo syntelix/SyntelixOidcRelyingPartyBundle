@@ -1,9 +1,5 @@
 <?php
 
-/*
- * This file is part of the SyntelixOidcRelayingPartyBundle package.
- */
-
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;

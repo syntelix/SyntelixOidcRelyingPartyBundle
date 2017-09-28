@@ -1,9 +1,5 @@
 <?php
 
-/*
- * This file is part of the SyntelixOidcRelayingPartyBundle package.
- */
-
 if (file_exists($file = __DIR__.'/../vendor/autoload.php')) {
     $autoload = require_once $file;
 } else {

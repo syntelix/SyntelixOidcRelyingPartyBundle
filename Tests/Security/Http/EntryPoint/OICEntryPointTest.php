@@ -1,9 +1,5 @@
 <?php
 
-/*
- * This file is part of the SyntelixOidcRelayingPartyBundle package.
- */
-
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\Tests\Security\Http\EntryPoint;
 
 use PHPUnit\Framework\TestCase;

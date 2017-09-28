@@ -1,9 +1,5 @@
 <?php
 
-/*
- * This file is part of the SyntelixOidcRelayingPartyBundle package.
- */
-
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\Security\Http\Logout;
 
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;

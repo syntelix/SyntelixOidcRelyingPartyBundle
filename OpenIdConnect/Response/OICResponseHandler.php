@@ -1,13 +1,8 @@
 <?php
 
-/*
- * This file is part of the SyntelixOidcRelayingPartyBundle package.
- */
-
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Response;
 
 use JOSE_JWT;
-use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception as OICException;
 use Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\JWK\JWKSetHandler;
 use Buzz\Message\Response as HttpClientResponse;
 use Symfony\Component\Serializer\Encoder\JsonDecode;
@@ -67,10 +62,10 @@ class OICResponseHandler
                 preg_match('/^Basic realm="(.*)"$/', $authError, $matches);
 
                 if (empty($matches)) {
-	                preg_match('/^Bearer realm="(.*)"$/', $authError, $matches);
+                    preg_match('/^Bearer realm="(.*)"$/', $authError, $matches);
                 }
 
-	            $content = array('error' => 'Authentication fail', 'error_description' => $matches[1]);
+                $content = array('error' => 'Authentication fail', 'error_description' => $matches[1]);
             }
         } elseif ($response->getStatusCode() >= Response::HTTP_BAD_REQUEST) {
             if (($bearerError = $response->getHeader('WWW-Authenticate')) !== null) {
@@ -167,11 +162,11 @@ class OICResponseHandler
         return $jsonDecode->decode($content, JsonEncoder::FORMAT);
     }
 
-	/**
-	 * @param $content
-	 *
-	 * @return \JOSE_JWE|JOSE_JWT
-	 */
+    /**
+     * @param $content
+     *
+     * @return \JOSE_JWE|JOSE_JWT
+     */
     protected function getJwtEncodedContent($content)
     {
         $jwt = JOSE_JWT::decode($content);

@@ -1,9 +1,5 @@
 <?php
 
-/*
- * This file is part of the SyntelixOidcRelayingPartyBundle package.
- */
-
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect;
 
 use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception\InvalidNonceException;
