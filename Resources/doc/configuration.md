@@ -13,7 +13,7 @@ Authentication between the RP and OP is done through HTTP Basic authentication, 
 ```yaml
 #/app/config/config.yml
 
-syntelix_oic_rp:
+syntelix_oidc_rp:
     http_client:                     # Configuration for Buzz
         timeout: 5
         verify_peer: ~
@@ -62,7 +62,7 @@ You should also set a path for `login_path`.
 security:
     providers:
         OICUserProvider: 
-            id: syntelix_oic_rp.user.provider
+            id: syntelix_oidc_rp.user.provider
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/

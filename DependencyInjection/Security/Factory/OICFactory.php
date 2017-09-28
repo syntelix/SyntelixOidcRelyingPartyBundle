@@ -48,9 +48,9 @@ class OICFactory extends AbstractFactory
         $providerId = 'security.authentication.provider.oic_rp.'.$id;
 
         $container
-                ->setDefinition($providerId, new ChildDefinition('syntelix_oic_rp.authentication.provider'))
+                ->setDefinition($providerId, new ChildDefinition('syntelix_oidc_rp.authentication.provider'))
                 ->addArgument(new Reference($userProviderId))
-                ->addArgument(new Reference('syntelix_oic_rp.resource_owner.generic'))
+                ->addArgument(new Reference('syntelix_oidc_rp.resource_owner.generic'))
                 ->addArgument($config['create_users'])
                 ->addArgument($config['created_users_roles'])
         ;
@@ -66,8 +66,8 @@ class OICFactory extends AbstractFactory
         $entryPointId = 'security.authentication.entrypoint.oic_rp.'.$id;
 
         $container
-            ->setDefinition($entryPointId, new ChildDefinition('syntelix_oic_rp.authentication.entrypoint'))
-            ->addArgument(new Reference('syntelix_oic_rp.resource_owner.generic'))
+            ->setDefinition($entryPointId, new ChildDefinition('syntelix_oidc_rp.authentication.entrypoint'))
+            ->addArgument(new Reference('syntelix_oidc_rp.resource_owner.generic'))
         ;
 
         return $entryPointId;
@@ -82,7 +82,7 @@ class OICFactory extends AbstractFactory
 
         $container
                 ->getDefinition($listenerId)
-                ->addMethodCall('setResourceOwner', array(new Reference('syntelix_oic_rp.resource_owner.generic')))
+                ->addMethodCall('setResourceOwner', array(new Reference('syntelix_oidc_rp.resource_owner.generic')))
                 ->addMethodCall('setTokenStorage', array(new Reference('security.token_storage')))
                 ->addMethodCall('setAuthorizationChecker', array(new Reference('security.authorization_checker')))
         ;
@@ -95,7 +95,7 @@ class OICFactory extends AbstractFactory
      */
     protected function getListenerId()
     {
-        return 'syntelix_oic_rp.authentication.listener';
+        return 'syntelix_oidc_rp.authentication.listener';
     }
 
     /**

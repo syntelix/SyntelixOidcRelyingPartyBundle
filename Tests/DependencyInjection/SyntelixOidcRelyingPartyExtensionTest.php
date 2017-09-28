@@ -22,25 +22,25 @@ class SyntelixOidcRelyingPartyExtensionTest extends TestCase
         $loader->load(array($this->getFullConfig()), $container);
 
         $definitionArray = array(
-            'syntelix_oic_rp.authentication.listener',
-            'syntelix_oic_rp.authentication.provider',
-            'syntelix_oic_rp.authentication.entrypoint',
-            'syntelix_oic_rp.validator.id_token',
-            'syntelix_oic_rp.http_client_response_handler',
-            'syntelix_oic_rp.jwk_handler',
-            'syntelix_oic_rp.helper.nonce',
-            'syntelix_oic_rp.user.provider',
-            'syntelix_oic_rp.abstract_resource_owner.generic',
+            'syntelix_oidc_rp.authentication.listener',
+            'syntelix_oidc_rp.authentication.provider',
+            'syntelix_oidc_rp.authentication.entrypoint',
+            'syntelix_oidc_rp.validator.id_token',
+            'syntelix_oidc_rp.http_client_response_handler',
+            'syntelix_oidc_rp.jwk_handler',
+            'syntelix_oidc_rp.helper.nonce',
+            'syntelix_oidc_rp.user.provider',
+            'syntelix_oidc_rp.abstract_resource_owner.generic',
             'buzz.client',
-            'syntelix_oic_rp.http_client',
-            'syntelix_oic_rp.resource_owner.generic',
+            'syntelix_oidc_rp.http_client',
+            'syntelix_oidc_rp.resource_owner.generic',
         );
 
         foreach ($definitionArray as $definition) {
             $this->assertTrue($container->hasDefinition($definition));
         }
 
-        $this->assertEquals('syntelix_oic_rp', $loader->getAlias());
+        $this->assertEquals('syntelix_oidc_rp', $loader->getAlias());
     }
 
     protected function getFullConfig()

@@ -68,7 +68,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('syntelix_oic_rp');
+        $rootNode = $treeBuilder->root('syntelix_oidc_rp');
 
         $this->addHttpClientConfiguration($rootNode);
         $this->addSignatureConfiguration($rootNode);

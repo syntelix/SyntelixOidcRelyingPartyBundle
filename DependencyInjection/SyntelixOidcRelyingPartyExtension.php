@@ -32,17 +32,17 @@ class SyntelixOidcRelyingPartyExtension extends Extension
 
         $this->configureBuzz($container, $config);
 
-        $jwkHandler = $container->getDefinition('syntelix_oic_rp.jwk_handler');
+        $jwkHandler = $container->getDefinition('syntelix_oidc_rp.jwk_handler');
         $jwkHandler->replaceArgument(0, $config['jwk_url']);
         $jwkHandler->replaceArgument(1, $config['jwk_cache_ttl']);
 
-        $container->getDefinition('syntelix_oic_rp.validator.id_token')
+        $container->getDefinition('syntelix_oidc_rp.validator.id_token')
                 ->replaceArgument(0, $config);
 
-        $container->getDefinition('syntelix_oic_rp.http_client_response_handler')
+        $container->getDefinition('syntelix_oidc_rp.http_client_response_handler')
                 ->replaceArgument(1, $config);
 
-        $container->getDefinition('syntelix_oic_rp.helper.nonce')
+        $container->getDefinition('syntelix_oidc_rp.helper.nonce')
                 ->replaceArgument(1, array(
                     'state' => $config['enabled_state'],
                     'nonce' => $config['enabled_nonce'],
@@ -55,7 +55,7 @@ class SyntelixOidcRelyingPartyExtension extends Extension
         if ($config['redirect_after_logout'] === null) {
             $config['redirect_after_logout'] = $config['base_url'];
         }
-        $container->getDefinition('syntelix_oic_rp.logout')
+        $container->getDefinition('syntelix_oidc_rp.logout')
                 ->replaceArgument(0, $config);
     }
 
@@ -64,7 +64,7 @@ class SyntelixOidcRelyingPartyExtension extends Extension
      */
     public function getAlias()
     {
-        return 'syntelix_oic_rp';
+        return 'syntelix_oidc_rp';
     }
 
     /**
@@ -85,7 +85,7 @@ class SyntelixOidcRelyingPartyExtension extends Extension
             $httpClient->addMethodCall('setProxy', array($config['http_client']['proxy']));
         }
 
-        $container->setDefinition('syntelix_oic_rp.http_client', $httpClient);
+        $container->setDefinition('syntelix_oidc_rp.http_client', $httpClient);
     }
 
     /**
@@ -107,10 +107,10 @@ class SyntelixOidcRelyingPartyExtension extends Extension
      */
     private function createResourceOwnerService(ContainerBuilder $container, $name, $config)
     {
-        $definition = new ChildDefinition('syntelix_oic_rp.abstract_resource_owner.'.$name);
-        $definition->setClass("%syntelix_oic_rp.resource_owner.$name.class%");
+        $definition = new ChildDefinition('syntelix_oidc_rp.abstract_resource_owner.'.$name);
+        $definition->setClass("%syntelix_oidc_rp.resource_owner.$name.class%");
 
-        $container->setDefinition('syntelix_oic_rp.resource_owner.'.$name, $definition);
+        $container->setDefinition('syntelix_oidc_rp.resource_owner.'.$name, $definition);
         $definition->replaceArgument(5, $config);
     }
 }

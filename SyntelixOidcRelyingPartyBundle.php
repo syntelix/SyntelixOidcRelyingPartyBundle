@@ -28,7 +28,7 @@ class SyntelixOidcRelyingPartyBundle extends Bundle
     public function getContainerExtension()
     {
         // return the right extension instead of "auto-registering" it. Now the
-        // alias can be syntelix_oic_rp instead of syntelix_open_id_connect_relying_party..
+        // alias can be syntelix_oidc_rp instead of syntelix_openid_connect_relying_party.
         if (null === $this->extension) {
             return new SyntelixOidcRelyingPartyExtension();
         }
