@@ -33,7 +33,7 @@
     },
     "repositories": [
         {
-            "type": "git",
+            "type": "vcs",
             "url": "https://github.com/waldo2188/jose"
         }
     ],
