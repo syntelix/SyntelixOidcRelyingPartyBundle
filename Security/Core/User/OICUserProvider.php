@@ -68,7 +68,7 @@ class OICUserProvider implements UserProviderInterface, UserFactoryInterface
      */
     public function supportsClass($class)
     {
-        return $class === 'Syntelix\\Bundle\\OidcRelyingPartyBundle\\Security\\Core\\User\\OICUser';
+        return 'Syntelix\\Bundle\\OidcRelyingPartyBundle\\Security\\Core\\User\\OICUser' === $class;
     }
 
     /**

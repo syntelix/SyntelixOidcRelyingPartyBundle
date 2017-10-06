@@ -128,7 +128,7 @@ class NonceHelper
      */
     public function isNonceEnabled()
     {
-        return $this->config['nonce'] === true;
+        return true === $this->config['nonce'];
     }
 
     /**
@@ -136,6 +136,6 @@ class NonceHelper
      */
     public function isStateEnabled()
     {
-        return $this->config['state'] === true;
+        return true === $this->config['state'];
     }
 }

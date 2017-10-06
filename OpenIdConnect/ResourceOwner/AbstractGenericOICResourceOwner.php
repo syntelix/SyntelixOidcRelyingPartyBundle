@@ -117,13 +117,13 @@ abstract class AbstractGenericOICResourceOwner implements ResourceOwnerInterface
             $urlParameters['state'] = $this->nonceHelper->buildNonceValue($request->getClientIp(), 'state');
         }
 
-        if ($this->options['authentication_ttl'] !== null && $this->options['authentication_ttl'] > 0) {
+        if (null !== $this->options['authentication_ttl'] && $this->options['authentication_ttl'] > 0) {
             $urlParameters['max_age'] = $this->options['authentication_ttl'];
         }
 
         $parametersToAdd = array('display', 'prompt', 'ui_locales');
         foreach ($parametersToAdd as $param) {
-            if (array_key_exists($param, $this->options) && $this->options[$param] !== null) {
+            if (array_key_exists($param, $this->options) && null !== $this->options[$param]) {
                 $urlParameters[$param] = $this->options[$param];
             }
         }
@@ -242,7 +242,7 @@ abstract class AbstractGenericOICResourceOwner implements ResourceOwnerInterface
         if (!$this->idTokenValidator->isValid()) {
             $errors = sprintf('%s', implode(', ', $this->idTokenValidator->getErrors()));
 
-            if ($this->logger !== null) {
+            if (null !== $this->logger) {
                 if (!is_array($content)) {
                     $this->logger->error('InvalidIdTokenException '.$errors);
                 } else {
@@ -276,7 +276,7 @@ abstract class AbstractGenericOICResourceOwner implements ResourceOwnerInterface
             }
         }
 
-        if ($oicToken->getAccessToken() === null) {
+        if (null === $oicToken->getAccessToken()) {
             throw new InvalidRequestException('no such access_token');
         }
 
@@ -285,7 +285,7 @@ abstract class AbstractGenericOICResourceOwner implements ResourceOwnerInterface
         );
 
         $request = new HttpClientRequest(
-                ($this->options['enduserinfo_request_method'] == RequestInterface::METHOD_POST
+                (RequestInterface::METHOD_POST == $this->options['enduserinfo_request_method']
                 ? RequestInterface::METHOD_POST
                 : RequestInterface::METHOD_GET),
                 $this->getUserinfoEndpointUrl());
@@ -301,7 +301,7 @@ abstract class AbstractGenericOICResourceOwner implements ResourceOwnerInterface
         // Check if the sub value return by the OpenID connect Provider is the
         // same as previous. If Not, that isn't good...
         if ($content['sub'] !== $oicToken->getIdToken()->claims['sub']) {
-            if ($this->logger !== null) {
+            if (null !== $this->logger) {
                 $this->logger->error('InvalidIdTokenException', $oicToken);
             }
 

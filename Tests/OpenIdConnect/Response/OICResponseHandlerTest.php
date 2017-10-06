@@ -146,7 +146,7 @@ class OICResponseHandlerTest extends TestCase
         $this->assertEquals('3600', $res['expires_in']);
         $this->assertInstanceOf('JOSE_JWT', $res['id_token']);
 
-        if ($alg != null) {
+        if (null != $alg) {
             $this->assertEquals('http://localhost/phpOp/op.jwk', $res['id_token']->header['jku']);
         }
         $this->assertEquals('1a08411743e829c787a0152d004c6d48a14e921ed5023a65bb39ad72661cca78', $res['id_token']->claims['sub']);

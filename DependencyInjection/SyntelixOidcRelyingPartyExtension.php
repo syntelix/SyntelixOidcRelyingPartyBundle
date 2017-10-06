@@ -52,7 +52,7 @@ class SyntelixOidcRelyingPartyExtension extends Extension
         $this->createResourceOwnerService($container, $name, $config);
 
         //Logout
-        if ($config['redirect_after_logout'] === null) {
+        if (null === $config['redirect_after_logout']) {
             $config['redirect_after_logout'] = $config['base_url'];
         }
         $container->getDefinition('syntelix_oidc_rp.logout')

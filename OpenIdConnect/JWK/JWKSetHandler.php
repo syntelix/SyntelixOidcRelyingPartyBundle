@@ -72,9 +72,9 @@ class JWKSetHandler
      */
     public function getJwk($jku = null)
     {
-        if ($jku === null && $this->jwkUrl === null) {
+        if (null === $jku && null === $this->jwkUrl) {
             return false;
-        } elseif ($jku === null && $this->jwkUrl !== null) {
+        } elseif (null === $jku && null !== $this->jwkUrl) {
             $jku = $this->jwkUrl;
         }
 
@@ -121,7 +121,7 @@ class JWKSetHandler
             $needToBeUpdate |= $ctime < $now;
         }
 
-        if ((bool) $needToBeUpdate === true) {
+        if (true === (bool) $needToBeUpdate) {
             $this->makeCache();
 
             return;

@@ -3,7 +3,11 @@
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\Tests\Security\Core\Authentication\Provider;
 
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
+use Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\ResourceOwnerInterface;
 use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Provider\OICProvider;
+use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token\OICToken;
 
 /**
  * OICProvider.
@@ -12,11 +16,11 @@ use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Provider
  */
 class OICProviderTest extends TestCase
 {
-    public function testAuthenticateShoulReturnToken()
+    public function testAuthenticateShouldReturnToken()
     {
-        $resouceOwner = $this->createMock("Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\ResourceOwnerInterface");
+        $resourceOwner = $this->createMock(ResourceOwnerInterface::class);
 
-        $user = $this->createMock('Symfony\Component\Security\Core\User\UserInterface');
+        $user = $this->createMock(UserInterface::class);
         $user->expects($this->once())
                 ->method('getUsername')
                 ->willReturn('amy.pond');
@@ -24,13 +28,13 @@ class OICProviderTest extends TestCase
                 ->method('getRoles')
                 ->willReturn(array('ROLE_FAKE'));
 
-        $userProvider = $this->createMock('Symfony\Component\Security\Core\User\UserProviderInterface');
+        $userProvider = $this->createMock(UserProviderInterface::class);
         $userProvider->expects($this->once())
                 ->method('loadUserByUsername')
                 ->with($this->equalTo('amy.pond'))
                 ->willReturn($user);
 
-        $token = $this->createMock('Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token\OICToken');
+        $token = $this->createMock(OICToken::class);
         $token->expects($this->exactly(2))
                 ->method('getUsername')
                 ->willReturn('amy.pond');
@@ -50,14 +54,14 @@ class OICProviderTest extends TestCase
                     ->willReturn($returnValue);
         }
 
-        $oicProvider = new OICProvider($userProvider, $resouceOwner);
+        $oicProvider = new OICProvider($userProvider, $resourceOwner);
 
         $resultToken = $oicProvider->authenticate($token);
 
         $this->assertEquals($tokenValue['getAccessToken'], $resultToken->getAccessToken());
         $this->assertEquals($tokenValue['getRefreshToken'], $resultToken->getRefreshToken());
         $this->assertEquals($tokenValue['getIdToken'], $resultToken->getIdToken());
-        $this->assertInstanceOf("Symfony\Component\Security\Core\User\UserInterface", $resultToken->getUser());
+        $this->assertInstanceOf(UserInterface::class, $resultToken->getUser());
         $this->assertCount(1, $resultToken->getRoles());
     }
 

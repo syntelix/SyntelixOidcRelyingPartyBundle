@@ -58,7 +58,7 @@ class OICResponseHandler
         $content = $this->getContent($response);
 
         if ($response->getStatusCode() >= Response::HTTP_UNAUTHORIZED) {
-            if (($authError = $response->getHeader('WWW-Authenticate')) !== null) {
+            if (null !== ($authError = $response->getHeader('WWW-Authenticate'))) {
                 preg_match('/^Basic realm="(.*)"$/', $authError, $matches);
 
                 if (empty($matches)) {
@@ -68,7 +68,7 @@ class OICResponseHandler
                 $content = array('error' => 'Authentication fail', 'error_description' => $matches[1]);
             }
         } elseif ($response->getStatusCode() >= Response::HTTP_BAD_REQUEST) {
-            if (($bearerError = $response->getHeader('WWW-Authenticate')) !== null) {
+            if (null !== ($bearerError = $response->getHeader('WWW-Authenticate'))) {
                 preg_match('/^Bearer error="(.*)", error_description="(.*)"$/', $bearerError, $matches);
                 $content = array('error' => $matches[1], 'error_description' => $matches[1]);
             }
@@ -92,7 +92,7 @@ class OICResponseHandler
     {
         $content = $this->handleHttpClientResponse($response);
 
-        if ($content == '') {
+        if ('' == $content) {
             return $content;
         }
 
@@ -191,20 +191,20 @@ class OICResponseHandler
             $key = null;
 
             // get the right key base on the algorithm
-            if (substr($jwt->header['alg'], 0, 2) == 'HS') {
+            if ('HS' == substr($jwt->header['alg'], 0, 2)) {
                 $key = $this->options['client_secret'];
-            } elseif (substr($jwt->header['alg'], 0, 2) == 'RS') {
+            } elseif ('RS' == substr($jwt->header['alg'], 0, 2)) {
                 $jwkSetJsonObject = $this->jwkHandler->getJwk();
                 $jwkSet = new \JOSE_JWKSet();
                 $jwkSet->setJwksFromJsonObject($jwkSetJsonObject);
                 $key = $jwkSet->filterJwk('use', \JOSE_JWK::JWK_USE_SIG);
 
-                if ($key === null && array_key_exists(0, $jwkSet->keys)) {
+                if (null === $key && array_key_exists(0, $jwkSet->keys)) {
                     $key = $jwkSet->keys[0];
                 }
             }
 
-            if ($key !== null) {
+            if (null !== $key) {
                 $jws = new \JOSE_JWS($jwt);
 
                 try {
@@ -277,6 +277,6 @@ class OICResponseHandler
     {
         json_decode($string);
 
-        return json_last_error() == JSON_ERROR_NONE;
+        return JSON_ERROR_NONE == json_last_error();
     }
 }

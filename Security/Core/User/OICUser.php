@@ -46,7 +46,7 @@ class OICUser implements AdvancedUserInterface, Serializable, EquatableInterface
      */
     public function getRoles()
     {
-        if (count($this->roles) == 0) {
+        if (0 == count($this->roles)) {
             return array('ROLE_USER', 'ROLE_OIC_USER');
         }
 

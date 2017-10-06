@@ -93,7 +93,7 @@ class OICToken extends AbstractToken
      */
     public function setIdToken($idToken)
     {
-        if ($this->getUser() === null) {
+        if (null === $this->getUser()) {
             $this->setUser(new OICUser($idToken->claims['sub']));
         }
 
@@ -153,7 +153,7 @@ class OICToken extends AbstractToken
 
     public function getUserinfo($key = null)
     {
-        if ($key !== null) {
+        if (null !== $key) {
             if (array_key_exists($key, $this->userinfo)) {
                 return $this->userinfo[$key];
             } else {

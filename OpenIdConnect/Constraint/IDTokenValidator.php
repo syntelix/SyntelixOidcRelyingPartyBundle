@@ -145,11 +145,11 @@ class IDTokenValidator implements ValidatorInterface
          * determines too much time has elapsed since the last End-User
          * authentication.
          */
-        if ($this->isValidAuthTime() === false) {
+        if (false === $this->isValidAuthTime()) {
             $this->errors[] = "The client's auth_time time is out of bound";
         }
 
-        return (bool) count($this->errors) == 0;
+        return 0 == (bool) count($this->errors);
     }
 
     /**
@@ -178,7 +178,7 @@ class IDTokenValidator implements ValidatorInterface
         if (is_string($aud)) {
             return true;
         } elseif (is_array($aud)) {
-            if (count($aud) == 1) {
+            if (1 == count($aud)) {
                 return true;
             } elseif (count($aud) > 1) {
                 if (array_key_exists('azp', $this->claims)) {
@@ -220,7 +220,7 @@ class IDTokenValidator implements ValidatorInterface
      */
     public function isValidAuthTime()
     {
-        if ($this->options['authentication_ttl'] !== null && $this->options['authentication_ttl'] > 0) {
+        if (null !== $this->options['authentication_ttl'] && $this->options['authentication_ttl'] > 0) {
             if ($this->claims && array_key_exists('auth_time', $this->claims)) {
                 $expirationAuthTime = new DateTime();
                 $expirationAuthTime->setTimestamp($this->claims['auth_time']);
