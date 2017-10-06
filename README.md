@@ -4,7 +4,7 @@
 
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/afb6df43-fad0-4007-a1f2-7643a44b010d/small.png)](https://insight.sensiolabs.com/projects/afb6df43-fad0-4007-a1f2-7643a44b010d)
 
-# SyntelixOidcRelyingPartyBundle
+# Syntelix OIDC Relying Party Bundle
 
 Integrate with an OpenID Connect Provider using the OAuth code flow.
 
