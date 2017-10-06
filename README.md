@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/syntelix/SyntelixOidcRelyingPartyBundle.svg?branch=master)](https://travis-ci.org/syntelix/SyntelixOidcRelyingPartyBundle)
 [![Latest Stable Version](https://poser.pugx.org/syntelix/oidc-relying-party-bundle/v/stable)](https://packagist.org/packages/syntelix/oidc-relying-party-bundle)
+[![Coverage Status](https://coveralls.io/repos/github/syntelix/SyntelixOidcRelyingPartyBundle/badge.svg?branch=master)](https://coveralls.io/github/syntelix/SyntelixOidcRelyingPartyBundle?branch=master)
 
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/afb6df43-fad0-4007-a1f2-7643a44b010d/small.png)](https://insight.sensiolabs.com/projects/afb6df43-fad0-4007-a1f2-7643a44b010d)
 
