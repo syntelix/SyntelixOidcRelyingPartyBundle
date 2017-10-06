@@ -102,15 +102,15 @@ class NonceHelper
         return $nonceEnc;
     }
 
-    /**
-     * Check if the nonce/state value is the right one.
-     *
-     * @param string $type          nonce ou state
-     * @param mixed  $uniqueValue   the same as this passed to the generateNonce mehode
-     * @param mixed  $responseNonce the nonce reply by the OpenID Connect Provider
-     *
-     * @return bool
-     */
+	/**
+	 * Check if the nonce/state value is the right one.
+	 *
+	 * @param string $type nonce ou state
+	 * @param mixed $responseNonce the nonce reply by the OpenID Connect Provider
+	 *
+	 * @return bool
+	 * @internal param mixed $uniqueValue the same as this passed to the generateNonce mehode
+	 */
     public function isNonceValid($type, $responseNonce)
     {
         $referenceNonce = unserialize($this->session->get('auth.oic.'.$type));

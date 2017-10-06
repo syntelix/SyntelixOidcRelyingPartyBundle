@@ -3,6 +3,7 @@
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Tests\JWK;
 
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Filesystem\Filesystem;
 use Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\JWK\JWKSetHandler;
 use Syntelix\Bundle\OidcRelyingPartyBundle\Tests\Mocks\HttpClientMock;
 use Buzz\Message\RequestInterface;
@@ -30,7 +31,7 @@ class JWKSetHandlerTest extends TestCase
     {
         $folder = sys_get_temp_dir().'/syntelix/OIC/jwk-cache/';
 
-        $fs = new \Symfony\Component\Filesystem\Filesystem();
+        $fs = new Filesystem();
 
         if (is_file($folder.'op.jwk')) {
             unlink($folder.'op.jwk');

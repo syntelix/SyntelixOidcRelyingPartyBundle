@@ -3,6 +3,8 @@
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\Test\Security\Core\User;
 
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\User\OICUserProvider;
 use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\User\OICUser;
 
@@ -17,13 +19,13 @@ class OICUserProviderTest extends TestCase
     {
         $username = 'amy.pond';
 
-        $oicUser = $this->getMockBuilder('Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\User\OICUser')
+        $oicUser = $this->getMockBuilder(OICUser::class)
                 ->disableOriginalConstructor()->getMock();
         $oicUser->expects($this->exactly(2))
                 ->method('getUsername')
                 ->willReturn($username);
 
-        $session = $this->createMock("Symfony\Component\HttpFoundation\Session\Session");
+        $session = $this->createMock(Session::class);
         $session->expects($this->once())
                 ->method('has')
                 ->willReturn(true);
@@ -43,7 +45,7 @@ class OICUserProviderTest extends TestCase
     {
         $oicUser = new OICUser('amy.pond');
 
-        $session = $this->createMock("Symfony\Component\HttpFoundation\Session\Session");
+        $session = $this->createMock(Session::class);
         $session->expects($this->once())
                 ->method('has')
                 ->willReturn(true);
@@ -61,11 +63,11 @@ class OICUserProviderTest extends TestCase
     /**
      * @expectedException \Symfony\Component\Security\Core\Exception\UnsupportedUserException
      */
-    public function testRefreshUsershouldFail()
+    public function testRefreshUserShouldFail()
     {
-        $oicUser = $this->createMock('Symfony\Component\Security\Core\User\UserInterface');
+        $oicUser = $this->createMock(UserInterface::class);
 
-        $session = $this->createMock("Symfony\Component\HttpFoundation\Session\Session");
+        $session = $this->createMock(Session::class);
 
         $oicUserProvider = new OICUserProvider($session);
 

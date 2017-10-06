@@ -5,6 +5,7 @@ namespace Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Tests\ResourceOwn
 use PHPUnit\Framework\TestCase;
 use Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\ResourceOwner\GenericOICResourceOwner;
 use Symfony\Component\HttpFoundation\Request;
+use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token\OICToken;
 
 /**
  * GenericOICResourceOwner.
@@ -94,7 +95,7 @@ class AbstractGenericOICResourceOwnerTest extends TestCase
 
         $resourseOwner = $this->createGenericOICResourceOwner(null, true, $responseHandler);
 
-        $oicToken = new \Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token\OICToken();
+        $oicToken = new OICToken();
 
         $resourseOwner->getEndUserinfo($oicToken);
     }
@@ -108,23 +109,23 @@ class AbstractGenericOICResourceOwnerTest extends TestCase
         $responseHandler = $this->getMockBuilder('Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Response\OICResponseHandler')
                 ->disableOriginalConstructor()->getMock();
 
-        $resourseOwner = $this->createGenericOICResourceOwner(null, true, $responseHandler);
+        $resourceOwner = $this->createGenericOICResourceOwner(null, true, $responseHandler);
 
         $claims = new \stdClass();
         $claims->claims = array('sub' => 'username');
 
-        $oicToken = new \Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token\OICToken();
+        $oicToken = new OICToken();
         $oicToken->setAccessToken('plop');
         $oicToken->setIdToken($claims);
 
-        $resourseOwner->getEndUserinfo($oicToken);
+        $resourceOwner->getEndUserinfo($oicToken);
     }
 
     public function testShouldReturnName()
     {
-        $resourseOwner = $this->createGenericOICResourceOwner();
+        $resourceOwner = $this->createGenericOICResourceOwner();
 
-        $this->assertEquals('generic', $resourseOwner->getName());
+        $this->assertEquals('generic', $resourceOwner->getName());
     }
 
     private function createGenericOICResourceOwner(
