@@ -39,3 +39,6 @@ before_script:
     - git config --global user.email travis@example.com
 
 script: vendor/bin/phpunit --coverage-text
+
+after_success:
+  - travis_retry php vendor/bin/coveralls
