@@ -34,7 +34,7 @@ interface ResourceOwnerInterface
     public function getUserinfoEndpointUrl();
 
     /**
-     * Use the code parameter set in request query for retrieve the enduser informations.
+     * Use the code parameter set in request query for retrieve the end user information.
      *
      * @param Request $request
      *

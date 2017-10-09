@@ -2,9 +2,14 @@
 
 namespace Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Tests\ResourceOwner;
 
+use Buzz\Client\AbstractCurl;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Security\Http\HttpUtils;
+use Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Constraint\ValidatorInterface;
+use Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\NonceHelper;
 use Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\ResourceOwner\GenericOICResourceOwner;
 use Symfony\Component\HttpFoundation\Request;
+use Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Response\OICResponseHandler;
 use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token\OICToken;
 
 /**
@@ -16,32 +21,32 @@ class AbstractGenericOICResourceOwnerTest extends TestCase
 {
     public function testShouldAuthenticationEndpointUrl()
     {
-        $resourseOwner = $this->createGenericOICResourceOwner('http://localhost/login_check');
+        $resourceOwner = $this->createGenericOICResourceOwner('http://localhost/login_check');
         $request = new Request();
 
-        $expected = 'http://oic.com/auth?client_id=my_client_id&display=page&max_age=300&redirect_uri=http%3A%2F%2Flocalhost%2Flogin_check&response_type=code&scope=openid%20profil%20other&ui_locales=F_fr';
-        $res = $resourseOwner->getAuthenticationEndpointUrl($request, 'plop_uri', array('display' => 'page'));
+        $expected = 'http://oic.com/auth?client_id=my_client_id&display=page&max_age=300&redirect_uri=http%3A%2F%2Flocalhost%2Flogin_check&response_type=code&scope=openid%20profile%20other&ui_locales=F_fr';
+        $res = $resourceOwner->getAuthenticationEndpointUrl($request, 'plop_uri', array('display' => 'page'));
 
         $this->assertEquals($expected, $res);
     }
 
     public function testShouldReturnTokenEndpointUrl()
     {
-        $resourseOwner = $this->createGenericOICResourceOwner();
+        $resourceOwner = $this->createGenericOICResourceOwner();
 
-        $this->assertEquals('http://oic.com/token', $resourseOwner->getTokenEndpointUrl());
+        $this->assertEquals('http://oic.com/token', $resourceOwner->getTokenEndpointUrl());
     }
 
     public function testShouldReturnUserinfoEndpointUrl()
     {
-        $resourseOwner = $this->createGenericOICResourceOwner();
+        $resourceOwner = $this->createGenericOICResourceOwner();
 
-        $this->assertEquals('http://oic.com/userinfo', $resourseOwner->getUserinfoEndpointUrl());
+        $this->assertEquals('http://oic.com/userinfo', $resourceOwner->getUserinfoEndpointUrl());
     }
 
     public function testShouldAuthenticateUser()
     {
-        $responseHandler = $this->getMockBuilder('Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Response\OICResponseHandler')
+        $responseHandler = $this->getMockBuilder(OICResponseHandler::class)
                 ->disableOriginalConstructor()->getMock();
 
         $jwt = new \JOSE_JWT(array('sub' => 'amy.pond'));
@@ -55,14 +60,14 @@ class AbstractGenericOICResourceOwnerTest extends TestCase
                     'id_token' => $jwt,
         ));
 
-        $resourseOwner = $this->createGenericOICResourceOwner(null, true, $responseHandler);
+        $resourceOwner = $this->createGenericOICResourceOwner(null, true, $responseHandler);
 
         $request = new Request();
         $request->query->set('code', 'anOicCode');
 
-        $res = $resourseOwner->authenticateUser($request);
+        $res = $resourceOwner->authenticateUser($request);
 
-        $this->assertInstanceOf("Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token\OICToken", $res);
+        $this->assertInstanceOf(OICToken::class, $res);
         $this->assertEquals('amy.pond', $res->getUsername());
     }
 
@@ -71,17 +76,12 @@ class AbstractGenericOICResourceOwnerTest extends TestCase
      */
     public function testShouldFailAuthenticateUser()
     {
-        $responseHandler = $this->getMockBuilder('Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Response\OICResponseHandler')
-                ->disableOriginalConstructor()->getMock();
-
-        $jwt = new \JOSE_JWT(array('sub' => 'amy.pond'));
-
-        $resourseOwner = $this->createGenericOICResourceOwner(null, false);
+        $resourceOwner = $this->createGenericOICResourceOwner(null, false);
 
         $request = new Request();
         $request->query->set('code', 'anOicCode');
 
-        $resourseOwner->authenticateUser($request);
+        $resourceOwner->authenticateUser($request);
     }
 
     /**
@@ -90,14 +90,14 @@ class AbstractGenericOICResourceOwnerTest extends TestCase
      */
     public function testShouldFailAuthenticateUserNoSuchAccessToken()
     {
-        $responseHandler = $this->getMockBuilder('Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Response\OICResponseHandler')
+        $responseHandler = $this->getMockBuilder(OICResponseHandler::class)
                 ->disableOriginalConstructor()->getMock();
 
-        $resourseOwner = $this->createGenericOICResourceOwner(null, true, $responseHandler);
+        $resourceOwner = $this->createGenericOICResourceOwner(null, true, $responseHandler);
 
         $oicToken = new OICToken();
 
-        $resourseOwner->getEndUserinfo($oicToken);
+        $resourceOwner->getEndUserinfo($oicToken);
     }
 
     /**
@@ -106,7 +106,7 @@ class AbstractGenericOICResourceOwnerTest extends TestCase
      */
     public function testShouldFailAuthenticateUserSubValueNotEqual()
     {
-        $responseHandler = $this->getMockBuilder('Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Response\OICResponseHandler')
+        $responseHandler = $this->getMockBuilder(OICResponseHandler::class)
                 ->disableOriginalConstructor()->getMock();
 
         $resourceOwner = $this->createGenericOICResourceOwner(null, true, $responseHandler);
@@ -133,16 +133,16 @@ class AbstractGenericOICResourceOwnerTest extends TestCase
             $idTokenValidatorRV = true,
             $responseHandler = null)
     {
-        $httpUtils = $this->getMockBuilder('\Symfony\Component\Security\Http\HttpUtils')
+        $httpUtils = $this->getMockBuilder(HttpUtils::class)
                 ->disableOriginalConstructor()->getMock();
         $httpUtils->expects($this->atMost(2))
                 ->method('generateUri')
                 ->willReturn($httpUtilsRV);
 
-        $httpClient = $this->getMockBuilder("Buzz\Client\AbstractCurl")
+        $httpClient = $this->getMockBuilder(AbstractCurl::class)
                 ->disableOriginalConstructor()->getMock();
 
-        $idTokenValidator = $this->getMockBuilder('Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Constraint\ValidatorInterface')
+        $idTokenValidator = $this->getMockBuilder(ValidatorInterface::class)
                 ->disableOriginalConstructor()->getMock();
         $idTokenValidator->expects($this->any())
                 ->method('isValid')
@@ -151,10 +151,10 @@ class AbstractGenericOICResourceOwnerTest extends TestCase
                 ->method('getErrors')
                 ->willReturn(array());
 
-        $responseHandler = $responseHandler ? $responseHandler : $this->getMockBuilder('Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\Response\OICResponseHandler')
+        $responseHandler = $responseHandler ? $responseHandler : $this->getMockBuilder(OICResponseHandler::class)
                 ->disableOriginalConstructor()->getMock();
 
-        $nonceHelper = $this->getMockBuilder('Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\NonceHelper')
+        $nonceHelper = $this->getMockBuilder(NonceHelper::class)
                 ->disableOriginalConstructor()->getMock();
 
         return new GenericOICResourceOwner(
@@ -166,7 +166,7 @@ class AbstractGenericOICResourceOwnerTest extends TestCase
                 array(
                     'client_id' => 'my_client_id',
                     'client_secret' => 'my_client_secret',
-                    'scope' => 'openid profil other',
+                    'scope' => 'openid profile other',
                     'authentication_ttl' => '300',
                     'ui_locales' => 'F_fr',
                     'enduserinfo_request_method' => 'POST',

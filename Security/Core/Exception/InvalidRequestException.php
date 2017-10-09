@@ -14,6 +14,6 @@ class InvalidRequestException extends InvalidArgumentException
      */
     public function getMessageKey()
     {
-        return 'Invalide request';
+        return 'Invalid request';
     }
 }

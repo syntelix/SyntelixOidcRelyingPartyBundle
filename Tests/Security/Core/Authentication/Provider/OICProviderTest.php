@@ -48,9 +48,9 @@ class OICProviderTest extends TestCase
             'getRefreshToken' => 'refresh',
             'getUser' => 'user',
         );
-        foreach ($tokenValue as $methode => $returnValue) {
+        foreach ($tokenValue as $method => $returnValue) {
             $token->expects($this->any())
-                    ->method($methode)
+                    ->method($method)
                     ->willReturn($returnValue);
         }
 
@@ -70,25 +70,25 @@ class OICProviderTest extends TestCase
      */
     public function testAuthenticationShouldFailed()
     {
-        $resouceOwner = $this->createMock("Syntelix\Bundle\OidcRelyingPartyBundle\OpenIdConnect\ResourceOwnerInterface");
+        $resourceOwner = $this->createMock(ResourceOwnerInterface::class);
 
-        $user = $this->createMock('Symfony\Component\Security\Core\User\UserInterface');
+        $user = $this->createMock(UserInterface::class);
         $user->expects($this->once())
                 ->method('getUsername')
                 ->willReturn('amy.pond');
 
-        $userProvider = $this->createMock('Symfony\Component\Security\Core\User\UserProviderInterface');
+        $userProvider = $this->createMock(UserProviderInterface::class);
         $userProvider->expects($this->once())
                 ->method('loadUserByUsername')
                 ->willReturn($user);
 
-        $token = $this->createMock('Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token\OICToken');
+        $token = $this->createMock(OICToken::class);
         $token->expects($this->exactly(2))
                 ->method('getUsername')
                 ->willReturn('rory.willialms');
 
-        $oicProvider = new OICProvider($userProvider, $resouceOwner);
+        $oicProvider = new OICProvider($userProvider, $resourceOwner);
 
-        $resultToken = $oicProvider->authenticate($token);
+        $oicProvider->authenticate($token);
     }
 }

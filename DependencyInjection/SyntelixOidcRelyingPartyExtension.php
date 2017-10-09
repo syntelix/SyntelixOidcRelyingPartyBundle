@@ -89,7 +89,7 @@ class SyntelixOidcRelyingPartyExtension extends Extension
     }
 
     /**
-     * Add issuer URL to the begining of each endpoint url.
+     * Add issuer URL to the beginning of each endpoint url.
      *
      * @param array $config
      */

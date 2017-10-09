@@ -19,7 +19,7 @@ class SyntelixOidcRelyingPartyExtensionTest extends TestCase
         $container = new ContainerBuilder();
         $loader = new SyntelixOidcRelyingPartyExtension();
         $config = array($this->getFullConfig());
-        $loader->load(array($this->getFullConfig()), $container);
+        $loader->load($config, $container);
 
         $definitionArray = array(
             'syntelix_oidc_rp.authentication.listener',

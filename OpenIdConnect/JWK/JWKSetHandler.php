@@ -6,8 +6,11 @@ use Buzz\Client\AbstractCurl;
 use Buzz\Message\Request as HttpClientRequest;
 use Buzz\Message\Response as HttpClientResponse;
 use Buzz\Message\RequestInterface;
+use DateInterval;
+use DateTime;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Serializer\Encoder\JsonDecode;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
@@ -110,13 +113,13 @@ class JWKSetHandler
 
         $needToBeUpdate = false;
 
-        $now = new \DateTime('Now');
+        $now = new DateTime('Now');
 
-        /* @var $file Symfony\Component\Finder\SplFileInfo */
+        /* @var $file SplFileInfo */
         foreach ($files as $file) {
-            $ctime = new \DateTime();
+            $ctime = new DateTime();
             $ctime->setTimestamp($file->getCTime());
-            $ctime->add(new \DateInterval(sprintf('PT%dS', $this->jwkCacheTtl)));
+            $ctime->add(new DateInterval(sprintf('PT%dS', $this->jwkCacheTtl)));
 
             $needToBeUpdate |= $ctime < $now;
         }

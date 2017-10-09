@@ -14,9 +14,19 @@ use Buzz\Message\MessageInterface;
  */
 class HttpClientMock extends AbstractCurl
 {
+    /**
+     * @var null
+     */
     public $response = null;
+    /**
+     * @var
+     */
     public $request;
 
+    /**
+     * @param RequestInterface $request
+     * @param MessageInterface $response
+     */
     public function send(RequestInterface $request, MessageInterface $response)
     {
         $this->request = $request;
@@ -25,11 +35,19 @@ class HttpClientMock extends AbstractCurl
         $response->setContent($this->response->getContent());
     }
 
+    /**
+     * @return mixed
+     */
     public function getRequest()
     {
         return $this->request;
     }
 
+    /**
+     * @param $isOk
+     * @param $headers
+     * @param $content
+     */
     public function setResponseContent($isOk, $headers, $content)
     {
         $this->response = new Response();

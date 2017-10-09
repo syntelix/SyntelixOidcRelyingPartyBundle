@@ -14,6 +14,6 @@ class InvalidResponseTypeException extends InvalidArgumentException
      */
     public function getMessageKey()
     {
-        return 'Response type used is unknow';
+        return 'Response type used is unknown';
     }
 }

@@ -109,7 +109,7 @@ class NonceHelper
 	 * @param mixed $responseNonce the nonce reply by the OpenID Connect Provider
 	 *
 	 * @return bool
-	 * @internal param mixed $uniqueValue the same as this passed to the generateNonce mehode
+	 * @internal param mixed $uniqueValue the same as this passed to the generateNonce method
 	 */
     public function isNonceValid($type, $responseNonce)
     {

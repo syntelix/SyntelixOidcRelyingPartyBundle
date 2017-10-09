@@ -62,7 +62,7 @@ class OICResponseHandlerTest extends TestCase
      * @expectedException \Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception\InvalidRequestException
      * @expectedExceptionMessage bumber
      */
-    public function testHandleUnknowError()
+    public function testHandleUnknownError()
     {
         $response = new Response();
 
@@ -83,7 +83,7 @@ class OICResponseHandlerTest extends TestCase
      * @expectedException \Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception\InvalidRequestException
      * @expectedExceptionMessage bumb
      */
-    public function testHandleErrorWhithoutDescription()
+    public function testHandleErrorWithoutDescription()
     {
         $response = new Response();
 
@@ -103,7 +103,7 @@ class OICResponseHandlerTest extends TestCase
     /**
      * @expectedException \Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Exception\InvalidAuthorizationCodeException
      */
-    public function testHandleHttpClientResponseInvalidAutorizationCode()
+    public function testHandleHttpClientResponseInvalidAuthorizationCode()
     {
         $response = new Response();
 

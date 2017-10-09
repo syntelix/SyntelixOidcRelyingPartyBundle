@@ -14,7 +14,7 @@ class IDTokenValidatorTest extends TestCase
 {
     private $options = array(
         'issuer' => 'anIssuer',
-        'client_id' => 'anclient_id',
+        'client_id' => 'a_client_id',
         'token_ttl' => 3600,
         'authentication_ttl' => 3600,
     );
@@ -25,8 +25,8 @@ class IDTokenValidatorTest extends TestCase
         $this->token = array(
             'claims' => array(
                 'iss' => 'anIssuer',
-                'aud' => 'anclient_id',
-                'azp' => 'anclient_id',
+                'aud' => 'a_client_id',
+                'azp' => 'a_client_id',
                 'exp' => (time() + 3600),
                 'iat' => time(),
                 'auth_time' => time(),
@@ -34,7 +34,7 @@ class IDTokenValidatorTest extends TestCase
         );
     }
 
-    public function testAllSouldBeGood()
+    public function testAllShouldBeGood()
     {
         $validator = new IDTokenValidator($this->options);
 
@@ -44,7 +44,7 @@ class IDTokenValidatorTest extends TestCase
         $this->assertTrue($res);
     }
 
-    public function testAllSouldBeGoodWithoutTime()
+    public function testAllShouldBeGoodWithoutTime()
     {
         $this->options['authentication_ttl'] = null;
         $validator = new IDTokenValidator($this->options);
@@ -55,7 +55,7 @@ class IDTokenValidatorTest extends TestCase
         $this->assertTrue($res);
     }
 
-    public function testAllSouldNotFailWithoutTime()
+    public function testAllShouldNotFailWithoutTime()
     {
         unset($this->token['claims']['auth_time']);
 
@@ -67,9 +67,9 @@ class IDTokenValidatorTest extends TestCase
         $this->assertTrue($res);
     }
 
-    public function testAllSouldBeGoodAud()
+    public function testAllShouldBeGoodAdd()
     {
-        $this->token['claims']['aud'] = array('anclient_id', 'anclient_id2');
+        $this->token['claims']['aud'] = array('a_client_id', 'a_client_id2');
 
         $validator = new IDTokenValidator($this->options);
 
@@ -79,9 +79,9 @@ class IDTokenValidatorTest extends TestCase
         $this->assertTrue($res);
     }
 
-    public function testAllSouldBeGoodAudSecond()
+    public function testAllShouldBeGoodAddSecond()
     {
-        $this->token['claims']['aud'] = array('anclient_id');
+        $this->token['claims']['aud'] = array('a_client_id');
 
         $validator = new IDTokenValidator($this->options);
 
@@ -91,7 +91,7 @@ class IDTokenValidatorTest extends TestCase
         $this->assertTrue($res);
     }
 
-    public function testAllSouldFaildAtIssuer()
+    public function testAllShouldFailAtIssuer()
     {
         $this->options['issuer'] = 'fake';
         $validator = new IDTokenValidator($this->options);
@@ -102,7 +102,7 @@ class IDTokenValidatorTest extends TestCase
         $this->assertFalse($res);
     }
 
-    public function testAllSouldFaildAtClient()
+    public function testAllShouldFailAtClient()
     {
         $this->token['claims']['aud'] = new IDTokenValidator($this->options);
         $this->token['claims']['azp'] = new IDTokenValidator($this->options);
@@ -114,9 +114,9 @@ class IDTokenValidatorTest extends TestCase
         $this->assertFalse($res);
     }
 
-    public function testAllSouldFaildAtAzp()
+    public function testAllShouldFailAtAzp()
     {
-        $this->token['claims']['aud'] = array('anclient_id', 'anclient_id2');
+        $this->token['claims']['aud'] = array('a_client_id', 'a_client_id2');
         unset($this->token['claims']['azp']);
         $validator = new IDTokenValidator($this->options);
 

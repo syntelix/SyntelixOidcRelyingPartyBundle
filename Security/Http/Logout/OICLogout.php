@@ -62,7 +62,7 @@ class OICLogout
 
         $redirectResponse = new RedirectResponse($this->getRedirectAfterLogoutURI($request));
 
-        if ($request->server->get('HTTP_REFERER') != $this->httpUtils->generateUri($request, '_oic_rp_logout')) {
+        if ($request->server->get('HTTP_REFERRER') != $this->httpUtils->generateUri($request, '_oic_rp_logout')) {
             $redirectResponse = new RedirectResponse($this->getRedirectAfterLogoutURI($request));
         }
 

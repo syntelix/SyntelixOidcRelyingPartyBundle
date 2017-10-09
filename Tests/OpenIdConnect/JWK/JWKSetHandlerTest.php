@@ -40,7 +40,7 @@ class JWKSetHandlerTest extends TestCase
         $fs->remove(sys_get_temp_dir().'/syntelix');
     }
 
-    public function testGetJwkShoulReturnFalse()
+    public function testGetJwkShouldReturnFalse()
     {
         $httpClient = new HttpClientMock();
         $jWKSetHandler = new JWKSetHandler(null, 1, '', $httpClient);

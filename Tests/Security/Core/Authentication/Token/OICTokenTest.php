@@ -12,7 +12,7 @@ use Syntelix\Bundle\OidcRelyingPartyBundle\Security\Core\Authentication\Token\OI
  */
 class OICTokenTest extends TestCase
 {
-    public function testIsAuthnticated()
+    public function testIsAuthenticated()
     {
         $oicToken = new OICToken();
         $this->assertFalse($oicToken->isAuthenticated());

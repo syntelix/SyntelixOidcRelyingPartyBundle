@@ -110,7 +110,7 @@ class Configuration implements ConfigurationInterface
                         ->ifTrue(function ($display) {
                             return !Configuration::isHttpMethodSupported($display);
                         })
-                        ->thenInvalid('Unknown request mathod "%s".')
+                        ->thenInvalid('Unknown request method "%s".')
                     ->end()
                     ->defaultValue('POST')->end()
 
